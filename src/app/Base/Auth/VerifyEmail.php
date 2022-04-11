@@ -42,7 +42,7 @@ class VerifyEmail
      */
     public function verifyEmail(int $user_id, string $hash)
     {
-        $hash = (new VerifyRepository)->getHashAndUser($user_id, $hash);
+        $hash = (new VerifyRepository)->getHash($user_id, $hash);
 
         if (empty($hash) || $hash->user_id != $user_id) {
             throw new HashException();

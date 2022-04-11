@@ -42,4 +42,18 @@ class User extends Repository
         $user->email_verified_at = now();
         $user->save();
     }
+
+    /**
+     * Удаление старых пользователей без подтвержденной почты
+     *
+     * @param int $days По умолчанию 1 день
+     * @return void
+     */
+    public function removeUsersUnconfirmedEmail(int $days = 1)
+    {
+        $this->getBuilder()
+            ->where('created_at', '<', now()->subDays($days))
+            ->where('email_verified_at', '=', null)
+            ->delete();
+    }
 }

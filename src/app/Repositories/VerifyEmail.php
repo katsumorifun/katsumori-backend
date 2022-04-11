@@ -18,18 +18,29 @@ class VerifyEmail extends Repository
         ]);
     }
 
-    public function getHashAndUser(int $user_id, string $hash)
+    /**
+     *
+     * @param int $user_id
+     * @param string $hash
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder|null
+     */
+    public function getHash(int $user_id, string $hash): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder|null
     {
-//        return $this->getBuilder()->join('users', 'users.id', '=', 'user_id')
-//          ->select('verify_emails.*', 'users.name', 'users.id', 'users.email_verified_at')
-//          ->firstWhere([
-//              'user_id' => $user_id,
-//              'verify_emails.hash'    => $hash,
-//          ]);
-
         return $this->getBuilder()->firstWhere([
-              'user_id' => $user_id,
-              'verify_emails.hash'    => $hash,
+              'user_id'            => $user_id,
+              'verify_emails.hash' => $hash,
           ]);
+    }
+
+    /**
+     * Удаление старых пользователей
+     *
+     * @param int $days
+     */
+    public function removeOldHash(int $days = 1)
+    {
+        $this->getBuilder()->where(
+            'created_at', '<', now()->subDays($days)
+        )->delete();
     }
 }
