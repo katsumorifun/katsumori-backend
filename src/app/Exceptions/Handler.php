@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Base\Auth\Exceptions\HashException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 

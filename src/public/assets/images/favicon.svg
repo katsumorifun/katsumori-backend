@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW 2021.5 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="12.192mm" height="12.192mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 1219.2 1219.2"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
+ <defs>
+  <font id="FontID0" horiz-adv-x="500" font-variant="normal" style="fill-rule:nonzero" font-weight="400">
+	<font-face 
+		font-family="MS Gothic">
+		<font-face-src>
+			<font-face-name name="MS Gothic"/>
+		</font-face-src>
+	</font-face>
+   <missing-glyph><path d="M0 0z"/></missing-glyph>
+   <glyph unicode="ゆ" horiz-adv-x="1000" d="M574.167 660.163c98.9996,0 173.161,-24.6613 222.661,-74.1611 47.0077,-46.9959 70.3344,-117.165 70.3344,-211.003 0,-85.9957 -22.1574,-151.003 -66.3304,-195.33 -46.9959,-46.8305 -127.665,-70.3344 -242.16,-70.3344 -18.3424,-62.5037 -49.4998,-124.996 -93.8382,-187.499l-89.8343 31.3345c54.673,70.3344 88.4997,127.499 101.504,171.826 -70.169,26.0078 -126.165,80.669 -167.834,164.007l62.5037 54.8266c31.1574,-67.8304 72.8265,-114.661 124.996,-140.657 7.66532,41.6573 11.6692,75.4958 11.6692,101.492l0 156.33c-5.17321,65.0076 -7.83068,102.838 -7.83068,113.173 -67.6769,-18.1653 -127.677,-53.3384 -179.669,-105.33 -104.173,-104.173 -156.342,-204.507 -156.342,-300.837 0,-31.3345 5.33856,-67.6651 15.6732,-109.334l-85.8304 -19.6653c-41.6691,213.672 -36.5077,430.994 15.496,652.332l78.165 -23.3267c28.6652,-10.5 28.6652,-20.8346 0,-31.3345 -23.5038,-75.5076 -36.4959,-170.503 -38.9998,-285.176 31.1692,62.5037 67.6651,114.673 109.334,156.342 75.4958,75.4958 154.995,122.326 238.334,140.669l-7.83068 156.165 74.1611 0c23.5038,-5.17321 26.0078,-15.6732 7.83068,-31.1692l3.83857 -113.338zm11.8346 -359.325c0,-39.1652 -4.00392,-78.165 -11.8346,-117.165 75.4958,0 131.503,18.1653 167.999,54.6612 28.6652,28.6652 43.0038,75.4958 43.0038,140.503 0,67.8304 -19.4999,121.169 -58.6651,160.169 -31.1692,31.3227 -79.3343,46.9959 -144.507,46.9959 2.66928,-31.3345 4.00392,-70.3344 4.00392,-117.165l0 -167.999z"/>
+  </font>
+  <style type="text/css">
+   <![CDATA[
+    @font-face { font-family:"MS Gothic";font-variant:normal;font-weight:normal;src:url("#FontID0") format(svg)}
+    .str0 {stroke:black;stroke-width:16.93;stroke-miterlimit:22.9256}
+    .fil0 {fill:black}
+    .fil1 {fill:white}
+    .fnt0 {font-weight:normal;font-size:846.67px;font-family:'MS Gothic'}
+   ]]>
+  </style>
+ </defs>
+ <g id="Слой_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <rect class="fil0 str0" y="-243.89" width="1219.2" height="1454.59"/>
+  <text x="226.76" y="805.89"  class="fil1 fnt0">ゆ</text>
+ </g>
+</svg>

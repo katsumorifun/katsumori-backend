@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::prefix('auth')->group(function (){
+    Route::get('registration', [\App\Http\Controllers\Api\V1\Auth\RegistrationController::class, 'view'])->name('auth.registration');
+    Route::get('login', [\App\Http\Controllers\Api\V1\Auth\RegistrationController::class, 'view'])->name('auth.login');
+});
+
+Route::get('/email/verify/{user_id}/{hash}', [\App\Http\Controllers\Auth\VerifyEmail::class, 'check'])->name('verification.verify');
