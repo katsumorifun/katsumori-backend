@@ -88,32 +88,29 @@ class RegistrationController extends ApiController
      *          response="422",
      *          description="Ошибки в заполнении полей",
      *          @OA\JsonContent(
-     *              type="array",
-     *              @OA\Items(
-     *                 type="object",
-     *                 @OA\Property(
-     *                     property="message",
-     *                     type="string",
-     *                     example="The email has already been taken. (and 1 more error)"
-     *                 ),
-     *                 @OA\Property(
-     *                     property="errors",
-     *                     type="array",
-     *                     @OA\Items(
-     *                        @OA\Property(
-     *                          property="email",
-     *                          type="string",
-     *                          example="The email has already been taken"
-     *                        ),
-     *                        @OA\Property(
-     *                          property="name",
-     *                          type="string",
-     *                          example="The name has already been taken"
-     *                        )
+     *              type="object",
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  example="The email has already been taken. (and 1 more error)"
+     *              ),
+     *              @OA\Property(
+     *                  property="errors",
+     *                  type="array",
+     *                  @OA\Items(
+     *                     @OA\Property(
+     *                       property="email",
+     *                       type="string",
+     *                       example="The email has already been taken"
+     *                     ),
+     *                     @OA\Property(
+     *                       property="name",
+     *                       type="string",
+     *                       example="The name has already been taken"
      *                     )
-     *                 )
+     *                  )
      *              )
-     *          )
+     *           )
      *      ),
      *
      * )
