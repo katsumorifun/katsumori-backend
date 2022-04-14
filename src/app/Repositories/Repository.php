@@ -22,13 +22,15 @@ class Repository
     }
 
     /**
-     * @param array $where
+     * @param string|array $column
+     * @param null $operator
+     * @param null $value
      * @param array $columns
      * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function findBy(array $where , array $columns = ['*'])
+    public function findBy(string|array $column, $operator = null, $value = null, array $columns = ['*'])
     {
-        return $this->query()->where($where)->get($columns);
+        return $this->query()->where($column, $operator, $value)->get();
     }
 
     /**

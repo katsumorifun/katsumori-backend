@@ -12,12 +12,12 @@ class User extends Repository
     }
 
     /**
-     * @param $name
-     * @param $email
-     * @param $password
+     * @param string $name
+     * @param string $email
+     * @param string $password
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
      */
-    public function createOrGetUser($name, $email, $password): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
+    public function createOrGetUser(string $name, string $email, string $password): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
     {
         return $this->getBuilder()->create([
             'name'    => $name,
@@ -27,15 +27,24 @@ class User extends Repository
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return \Illuminate\Database\Eloquent\Collection|array
      */
-    public function getByName($name): \Illuminate\Database\Eloquent\Collection|array
+    public function getByName(string $name): \Illuminate\Database\Eloquent\Collection|array
     {
         return $this->findBy(['name', '=', $name]);
     }
 
-    public function setEmailVerifiedNow($user_id)
+    /**
+     * @param string $email
+     * @return \Illuminate\Database\Eloquent\Collection|array
+     */
+    public function getByEmail(string $email): \Illuminate\Database\Eloquent\Collection|array
+    {
+        return $this->findBy('email', '=', $email);
+    }
+
+    public function setEmailVerifiedNow(int $user_id)
     {
         $user = $this->getBuilder()->find($user_id);
 

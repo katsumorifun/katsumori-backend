@@ -2,12 +2,17 @@
 
 namespace App\Base\Auth;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Request;
+
 class Auth
 {
 
-    protected string $refreshToken = '';
-    protected string $accessToken = '';
-
+    protected string $refresh_token = '';
+    protected string $access_token = '';
+    protected string $expires_in = '';
+    protected string $token_type = '';
 
     /**
      * @throws AuthException
@@ -30,10 +35,14 @@ class Auth
         try {
             $request = Request::create('/oauth/token', 'POST', $data);
             $data = json_decode(app()->handle($request)->getContent());
-            $this->accessToken = $data->access_token;
-            $this->refreshToken = $data->refresh_token;
+            $this->refresh_token = $data->access_token;
+            $this->access_token = $data->refresh_token;
+            $this->expires_in = $data->expires_in;
+            $this->token_type = $data->token_type;
 
         } catch (\ErrorException $ex) {
+
+        } catch (\Exception $e) {
 
         }
 
@@ -64,7 +73,7 @@ class Auth
      */
     public function getRefreshToken(): string
     {
-        return $this->refreshToken;
+        return $this->access_token;
     }
 
     /**
@@ -72,6 +81,22 @@ class Auth
      */
     public function getAccessToken(): string
     {
-        return $this->accessToken;
+        return $this->access_token;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExpiresIn(): string
+    {
+        return $this->expires_in;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTokenType(): string
+    {
+        return $this->token_type;
     }
 }

@@ -95,7 +95,7 @@ class Response
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function withBadRequest($message = 'Bad Request'): \Illuminate\Http\JsonResponse
+    public function withBadRequest(string $message = 'Bad Request'): \Illuminate\Http\JsonResponse
     {
         return $this->setStatusCode(
             HttpResponse::HTTP_BAD_REQUEST
@@ -109,7 +109,7 @@ class Response
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function withForbidden($message = 'Forbidden')
+    public function withForbidden(string $message = 'Forbidden')
     {
         return $this->setStatusCode(
             HttpResponse::HTTP_FORBIDDEN
@@ -123,7 +123,7 @@ class Response
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function withNotFound($message = 'Not Found'): \Illuminate\Http\JsonResponse
+    public function withNotFound(string $message = 'Not Found'): \Illuminate\Http\JsonResponse
     {
         return $this->setStatusCode(
             HttpResponse::HTTP_NOT_FOUND
