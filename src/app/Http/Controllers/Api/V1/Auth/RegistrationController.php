@@ -5,11 +5,19 @@ namespace App\Http\Controllers\Api\V1\Auth;
 use App\Base\Auth\VerifyEmail;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\RegistrationRequest;
+use App\Http\Resources\UserResource;
 use App\Repositories\User;
 use Illuminate\Support\Facades\Request;
 
 class RegistrationController extends ApiController
 {
+
+    public function __construct()
+    {
+        $this->resource = UserResource::class;
+        parent::__construct();
+    }
+
     public function view(Request $request)
     {
         return view('auth/registration/registration');
@@ -68,8 +76,12 @@ class RegistrationController extends ApiController
      *          response="200",
      *          description="Вернет зарегистрированного пользователя",
      *          @OA\JsonContent(
-     *              type="array",
-     *              @OA\Items(ref="#/components/schemas/User")
+     *              type="object",
+     *              @OA\Property(
+     *                     property="data",
+     *                     type="array",
+     *                     @OA\Items(ref="#/components/schemas/User")
+     *              ),
      *          )
      *      ),
      *     @OA\Response(
@@ -106,12 +118,15 @@ class RegistrationController extends ApiController
      *
      * )
      */
-    public function callBack(RegistrationRequest $request)
+    public function callBack(RegistrationRequest $request): \Illuminate\Http\JsonResponse
     {
         //Создание нового пользователя
        $user = app(User::class)->createOrGetUser($request->get('name'), $request->get('email'), $request->get('password'));
 
         //Отправка сообщения с подтверждением регистрации
        app(VerifyEmail::class)->send($user->id, $user->name);
+
+       //Отдаем пользователя
+       return $this->response->withItem($user);
     }
 }
