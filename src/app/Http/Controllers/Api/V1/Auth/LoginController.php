@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Api\V1\Auth;
 
 use App\Base\Auth\Auth;
+use App\Http\Controllers\Api\ApiController;
 
-class LoginController
+class LoginController extends ApiController
 {
     protected Auth $auth;
 
