@@ -22,13 +22,13 @@ class RegistrationController extends ApiController
      *     path="/auth/registration",
      *     tags = {"Auth"},
      *     summary="Регистрация нового пользователя",
-     *     description="Регистрация нового пользователя",
+     *     description="После регистрации в течении 24 часов пользователь должен подтвердить свою почту (придет письмо), иначе его аккаунт будет удален",
      *
      *     @OA\Parameter(
      *          name = "name",
      *          in = "query",
      *          description = "Имя пользователя",
-     *          required=false,
+     *          required=true,
      *          @OA\Schema(
      *             type="string"
      *         )
@@ -38,9 +38,9 @@ class RegistrationController extends ApiController
      *          name = "email",
      *          in = "query",
      *          description = "Почта пользователя",
-     *          required=false,
+     *          required=true,
      *          @OA\Schema(
-     *             type="string"
+     *             type="email"
      *         )
      *     ),
      *
@@ -48,7 +48,7 @@ class RegistrationController extends ApiController
      *          name = "password",
      *          in = "query",
      *          description = "Пароль пользователя",
-     *          required=false,
+     *          required=true,
      *          @OA\Schema(
      *             type="string"
      *         )
@@ -58,7 +58,7 @@ class RegistrationController extends ApiController
      *          name = "password_confirmation",
      *          in = "query",
      *          description = "Подтверждение пароля",
-     *          required=false,
+     *          required=true,
      *          @OA\Schema(
      *             type="string"
      *         )
