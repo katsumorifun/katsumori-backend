@@ -28,20 +28,20 @@ class User extends Repository
 
     /**
      * @param string $name
-     * @return \Illuminate\Database\Eloquent\Collection|array
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null
      */
-    public function getByName(string $name): \Illuminate\Database\Eloquent\Collection|array
+    public function getByName(string $name): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null
     {
-        return $this->findBy(['name', '=', $name]);
+        return $this->getBuilder()->firstWhere(['name', '=', $name]);
     }
 
     /**
      * @param string $email
-     * @return \Illuminate\Database\Eloquent\Collection|array
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null
      */
-    public function getByEmail(string $email): \Illuminate\Database\Eloquent\Collection|array
+    public function getByEmail(string $email): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null
     {
-        return $this->findBy('email', '=', $email);
+        return $this->getBuilder()->firstWhere('email', '=', $email);
     }
 
     public function setEmailVerifiedNow(int $user_id)

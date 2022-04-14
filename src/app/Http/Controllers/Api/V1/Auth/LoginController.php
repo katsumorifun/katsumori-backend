@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Auth;
 
 use App\Base\Auth\Auth;
+use App\Base\Auth\Exceptions\LoginException;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\LoginRequest;
 use App\Repositories\User as UserRepository;
@@ -58,8 +59,8 @@ class LoginController extends ApiController
      *          )
      *      ),
      *     @OA\Response(
-     *          response="422",
-     *          description="Ошибка авторизации",
+     *          response="404",
+     *          description="Пользователь не найден",
      *          @OA\JsonContent(
      *              @OA\Property(
      *                 property="messages",
@@ -72,6 +73,21 @@ class LoginController extends ApiController
      *              )
      *          )
      *      ),
+     *     @OA\Response(
+     *          response="400",
+     *          description="Неверный пароль",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                 property="messages",
+     *                 type="array",
+     *                  @OA\Items(
+     *                      type="string",
+     *                      example="wrong password",
+     *                      @OA\Schema(type="string")
+     *                  ),
+     *              )
+     *          )
+     *      ),
      *
      * )
      */
@@ -79,11 +95,16 @@ class LoginController extends ApiController
     {
         $user = app(UserRepository::class)->getByEmail($request->get('email'));
 
-        if ($user) {
+        if (empty($user)) {
             return $this->response->withNotFound('user not found');
         }
 
-        $tokens = $this->auth->login($request->get('email'), $request->get('password'));
+        try {
+            $tokens = $this->auth->login($request->get('email'), $request->get('password'));
+
+        } catch (LoginException $e) {
+            return $this->response->withError('wrong password');
+        }
 
         return $this->response->json([
             'tokens'=> [

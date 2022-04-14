@@ -2,6 +2,7 @@
 
 namespace App\Base\Auth;
 
+use App\Base\Auth\Exceptions\LoginException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Request;
@@ -15,7 +16,7 @@ class Auth
     protected string $token_type = '';
 
     /**
-     * @throws AuthException
+     * @throws LoginException
      */
     public function login(string $email, string $password)
     {
@@ -40,10 +41,8 @@ class Auth
             $this->expires_in = $data->expires_in;
             $this->token_type = $data->token_type;
 
-        } catch (\ErrorException $ex) {
-
-        } catch (\Exception $e) {
-
+        } catch (\ErrorException|\Exception $ex) {
+            throw new LoginException();
         }
 
         return $this;

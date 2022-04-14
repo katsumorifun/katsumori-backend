@@ -42,14 +42,19 @@ class Response
     /**
      * Return json
      *
-     * @param array|Collection $data
-     * @param array            $headers
-     *
+     * @param array $data
+     * @param array $headers
+     * @param bool $is_data
      * @return \Illuminate\Http\JsonResponse
      */
-    public function json($data = [], array $headers = []): \Illuminate\Http\JsonResponse
+    public function json($data = [], array $headers = [], bool $is_data = false): \Illuminate\Http\JsonResponse
     {
-        return $this->response->json(['data'=>$data], $this->statusCode, $headers);
+        if ($is_data){
+            return $this->response->json($data, $this->statusCode, $headers);
+
+        } else {
+            return $this->response->json(['data'=>$data], $this->statusCode, $headers);
+        }
     }
 
     /**
@@ -151,9 +156,9 @@ class Response
      */
     public function withError($message): \Illuminate\Http\JsonResponse
     {
-        return $this->response->json([
-            'messages' => is_array($message) ? $message : [$message],
-        ]);
+        return $this->setStatusCode(HttpResponse::HTTP_BAD_REQUEST)->json([
+            'messages' => is_array($message) ? $message : [$message]
+        ], [], true);
     }
 
     /**
