@@ -1,11 +1,12 @@
-#Использование
+# Использование
 
 В проекте присутствует конфиг Docker для быстрой развертки, для того, чтобы его использовать установите докер:
 - Windows https://docs.docker.com/desktop/windows/install/
 - Mac https://docs.docker.com/desktop/mac/install/
 - Linux https://docs.docker.com/desktop/linux/install/
 
-#Docker
+# Docker
+
 Перед развертыванием docker-а надо прописать переменные (ENV) для БД: 
 - MYSQL_ROOT_PASSWORD
 - MYSQL_PASSWORD
