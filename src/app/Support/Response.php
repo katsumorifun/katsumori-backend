@@ -47,13 +47,12 @@ class Response
      * @param bool $is_data
      * @return \Illuminate\Http\JsonResponse
      */
-    public function json($data = [], array $headers = [], bool $is_data = false): \Illuminate\Http\JsonResponse
+    public function json($data = [], array $headers = [], bool $is_data = true): \Illuminate\Http\JsonResponse
     {
         if ($is_data){
-            return $this->response->json($data, $this->statusCode, $headers);
-
-        } else {
             return $this->response->json(['data'=>$data], $this->statusCode, $headers);
+        } else {
+            return $this->response->json($data, $this->statusCode, $headers);
         }
     }
 
@@ -193,6 +192,16 @@ class Response
         return $this->withBadRequest(
             'There were no changes'
         );
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function unauthorized(): \Illuminate\Http\JsonResponse
+    {
+        return $this->setStatusCode(
+            HttpResponse::HTTP_UNAUTHORIZED
+        )->json(['messages' => 'User unauthorized'], [], true);
     }
 
     /**

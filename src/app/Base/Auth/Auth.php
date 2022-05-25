@@ -6,6 +6,8 @@ use App\Base\Auth\Exceptions\LoginException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Request;
+use Laravel\Passport\RefreshTokenRepository;
+use Laravel\Passport\TokenRepository;
 
 class Auth
 {
