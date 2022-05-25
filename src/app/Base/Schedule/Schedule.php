@@ -45,7 +45,7 @@ class Schedule
             } catch (Throwable $e) {
                 $this->scheduleTaskError(User::class, $e);
             }
-        })->everyMinute();
+        })->daily();
     }
 
     /**
@@ -56,6 +56,6 @@ class Schedule
      */
     protected function scheduleTaskError(string $task_name, Throwable $throwable)
     {
-        error_log($task_name . ' > ' . $throwable->getMessage(), 0);
+        error_log($task_name . ' > ' . $throwable->getMessage(), 0, 'schedule task error');
     }
 }
