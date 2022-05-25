@@ -36,8 +36,8 @@ class Auth
         try {
             $request = Request::create('/oauth/token', 'POST', $data);
             $data = json_decode(app()->handle($request)->getContent());
-            $this->refresh_token = $data->access_token;
-            $this->access_token = $data->refresh_token;
+            $this->refresh_token = $data->refresh_token;
+            $this->access_token = $data->access_token;
             $this->expires_in = $data->expires_in;
             $this->token_type = $data->token_type;
 
@@ -72,7 +72,7 @@ class Auth
      */
     public function getRefreshToken(): string
     {
-        return $this->access_token;
+        return $this->refresh_token;
     }
 
     /**
