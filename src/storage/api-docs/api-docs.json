@@ -1,0 +1,288 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "YukiDub API documentation",
+        "contact": {
+            "email": "administrator@yukidub.fun"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "0.0.1"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8081/api/v1",
+            "description": "v1"
+        }
+    ],
+    "paths": {
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Авторизация",
+                "description": "Авторизация через OAuth",
+                "operationId": "a6333667d3b1401df1b7534e61b5e57f",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Почта пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "email"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Пароль пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Вернет refresh/access токены и данные пользователя",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "tokens": {
+                                            "$ref": "#/components/schemas/Tokens"
+                                        },
+                                        "users": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/User"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Пользователь не найден",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "messages": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "user not found"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Неверный пароль",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "messages": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "wrong password"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/registration": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Регистрация нового пользователя",
+                "description": "После регистрации в течении 24 часов пользователь должен подтвердить свою почту (придет письмо), иначе его аккаунт будет удален",
+                "operationId": "964abc2561394655b913022a49c74093",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Имя пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Почта пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "email"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Пароль пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password_confirmation",
+                        "in": "query",
+                        "description": "Подтверждение пароля",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Вернет зарегистрированного пользователя",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/User"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Ошибки в заполнении полей",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The email has already been taken. (and 1 more error)"
+                                        },
+                                        "errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "email": {
+                                                        "type": "string",
+                                                        "example": "The email has already been taken"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "The name has already been taken"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Tokens": {
+                "title": "Tokens",
+                "description": "OAuth токены",
+                "properties": {
+                    "expires_in": {
+                        "title": "expires in",
+                        "description": "Время жизни токена",
+                        "type": "string",
+                        "format": "string",
+                        "example": "14400"
+                    },
+                    "token_type": {
+                        "title": "token type",
+                        "description": "Тип токена",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Bearer"
+                    },
+                    "access_token": {
+                        "title": "access token",
+                        "description": "Токен доступа",
+                        "type": "string",
+                        "format": "string",
+                        "example": "def5020098ed1216cc97f642a468e35eb8b5a3b8a456c7663a93c6d817e4401b14493a4b078073cab8e649c9e..."
+                    },
+                    "refresh_token": {
+                        "title": "refresh token",
+                        "description": "Токен обновления",
+                        "type": "string",
+                        "format": "string",
+                        "example": "def5020098ed1216cc97f642a468e35eb8b5a3b8a456c7663a93c6d817e4401b14493a4b078073cab8e649c9e..."
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "title": "User",
+                "description": "Модель пользователя",
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "Имя пользователя",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Admin"
+                    },
+                    "email": {
+                        "title": "email",
+                        "description": "Email пользователя",
+                        "type": "string",
+                        "format": "string",
+                        "example": "admin@google.com"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "Authorization": {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth"
+        },
+        {
+            "name": "User"
+        }
+    ]
+}

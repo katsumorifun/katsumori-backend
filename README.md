@@ -14,7 +14,9 @@
 
 После можно выполнить данные команды:
 - Запуск и сборка docker-compose контейнеров: docker-compose up --build -d yukidub
+- - Создание клиента для авторизации пользователей и т.д.:docker-compose run --rm composer install
 - Миграция таблицы бд: docker-compose run --rm artisan migrate
+- Миграция таблицы бд: docker-compose run --rm artisan key:generate
 - Создание клиента для авторизации пользователей и т.д.:docker-compose run --rm artisan passport:install
 - Генерация OpenAPI/Swagger документации: docker-compose run --rm artisan l5-swagger:generate
 
