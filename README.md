@@ -13,10 +13,10 @@
 - MYSQL_USER
 
 После можно выполнить данные команды:
-- docker-compose --build -d yukidub
-- docker-compose run --rm artisan migrate
-- docker-compose run --rm artisan passport:install (создание клиента для авторизации пользователей и т.д.)
-- docker-compose run --rm artisan l5-swagger:generate (генерация OpenAPI/Swagger документации)
+- Запуск и сборка docker-compose контейнеров: docker-compose up --build -d yukidub
+- Миграция таблицы бд: docker-compose run --rm artisan migrate
+- Создание клиента для авторизации пользователей и т.д.:docker-compose run --rm artisan passport:install
+- Генерация OpenAPI/Swagger документации: docker-compose run --rm artisan l5-swagger:generate
 
 
 После выполнения команд можно перейти по адресу http://127.0.0.1:8081.
