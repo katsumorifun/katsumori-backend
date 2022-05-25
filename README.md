@@ -7,10 +7,10 @@
 
 # Docker
 
-Перед развертыванием docker-а надо прописать переменные (ENV) для БД: 
-- MYSQL_ROOT_PASSWORD
-- MYSQL_PASSWORD
-- MYSQL_USER
+Перед развертыванием docker-а можно прописать прописать переменные среды (ENV) для БД: 
+- MYSQL_ROOT_PASSWORD (по умолчанию password)
+- MYSQL_PASSWORD (по умолчанию password)
+- MYSQL_USER (по умолчанию Laravel)
 
 После можно выполнить данные команды:
 - Запуск и сборка docker-compose контейнеров: docker-compose up --build -d yukidub
