@@ -25,8 +25,18 @@ class LogOutController extends ApiController
      *          response="200",
      *          description="Успех",
      *          @OA\JsonContent(
-     *
-     *          )
+     *              type="object",
+     *              @OA\Property(
+     *                  property="status",
+     *                  type="string",
+     *                  example="Ok"
+     *              ),
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  example="Logged out"
+     *              )
+     *           )
      *      ),
      *
      *     @OA\Response(
