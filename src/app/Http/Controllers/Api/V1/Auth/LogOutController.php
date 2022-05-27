@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api\V1\Auth;
 
+use App\Base\Auth\Auth;
 use App\Http\Controllers\Api\ApiController;
-use Illuminate\Support\Facades\Auth;
 
 class LogOutController extends ApiController
 {
@@ -55,8 +55,9 @@ class LogOutController extends ApiController
      */
     public function logOut(): \Illuminate\Http\JsonResponse
     {
-        $token = Auth::user()->token();
-        $token->revoke();
+        $token = \Auth::user()->token();
+
+        Auth::revokeTokens($token->id);
 
         return $this->response->json([
             'status' => 'Ok',

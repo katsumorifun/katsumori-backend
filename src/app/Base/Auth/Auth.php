@@ -70,6 +70,19 @@ class Auth
     }
 
     /**
+     * @param string $token_id
+     * @return void
+     */
+    public static function revokeTokens(string $token_id): void
+    {
+        $tokenRepository = app(TokenRepository::class);
+        $tokenRepository->revokeAccessToken($token_id);
+
+        $refreshTokenRepository = app(RefreshTokenRepository::class);
+        $refreshTokenRepository->revokeRefreshTokensByAccessTokenId($token_id);
+    }
+
+    /**
      * @return string
      */
     public function getRefreshToken(): string
