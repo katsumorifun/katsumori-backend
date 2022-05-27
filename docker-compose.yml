@@ -25,6 +25,7 @@ services:
       - php
       - redis
       - mysql
+      - schedule
     networks:
       - laravel
       - net
@@ -116,3 +117,16 @@ services:
     networks:
       - laravel
 
+  schedule:
+    build:
+      context: ./dockerfiles
+      dockerfile: php.dockerfile
+      args:
+        - UID=${_UID:-1000}
+        - GID=${GID:-1000}
+    restart: always
+    command: php artisan schedule:work
+    volumes:
+      - ./src:/var/www/html:delegated
+    networks:
+      - laravel
