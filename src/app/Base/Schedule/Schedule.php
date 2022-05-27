@@ -22,6 +22,20 @@ class Schedule
         $this->user($schedule);
 
         $this->email($schedule);
+
+        $this->system($schedule);
+    }
+
+    /**
+     * Системные команды (например очистка токенов Laravel passport)
+     *
+     *
+     * @param SystemSchedule $schedule
+     * @return void
+     */
+    protected function system(SystemSchedule $schedule)
+    {
+        $schedule->command('passport:purge')->monthly();
     }
 
     /**
