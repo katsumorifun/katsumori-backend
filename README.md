@@ -7,6 +7,15 @@
 
 # Docker
 
+## Быстрая установка
+
+Откройте командную строку и запустите bash скрипт:
+```
+./install.sh
+```
+
+## Ручная установка
+
 Перед развертыванием docker-а можно прописать переменные среды (ENV) для БД: 
 - MYSQL_ROOT_PASSWORD (по умолчанию password)
 - MYSQL_PASSWORD (по умолчанию password)
@@ -19,7 +28,7 @@ export MYSQL_ROOT_PASSWORD=password
 
 После можно выполнить данные команды:
 - Запуск и сборка docker-compose контейнеров: ````docker-compose up --build -d yukidub````
-- Создание клиента для авторизации пользователей и т.д.: ````docker-compose run --rm composer install````
+- Установка всех зависимостей Composer: ````docker-compose run --rm composer install````
 - Миграция таблицы бд: ````docker-compose run --rm artisan migrate````
 - Миграция таблицы бд: ````docker-compose run --rm artisan key:generate````
 - Создание клиента для авторизации пользователей и т.д.: ````docker-compose run --rm artisan passport:install````
