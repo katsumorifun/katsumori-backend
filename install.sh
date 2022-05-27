@@ -1,13 +1,19 @@
 #!/bin/bash
 # Copyright (c) YukiDub. Author: M. Daniil <den4ic2001@gmail.com>.
 
+# Copy .env file
+echo -en "Coping env file"
+echo -en "\n"
+cp src/.env.example src/.env
+
 echo -en "Database password (default: password):"
 
 read db_password
 size=${#db_password}
 
 if ((size > 0));then
-  export MYSQL_PASSWORD=$db_password
+  export MYSQL_PASSWORD=$db_password &&
+  sed -i "s/DB_PASSWORD=/DB_PASSWORD=$db_password/" src/.env
 fi
 
 echo -en "Database user (default: laravel):"
@@ -16,7 +22,8 @@ read mysql_user
 size=${#mysql_user}
 
 if ((size > 0));then
-  export MYSQL_USER=$mysql_user
+  export MYSQL_USER=$mysql_user &&
+  sed -i "s/DB_USERNAME=/DB_USERNAME=$mysql_user/" src/.env
 fi
 
 echo -en "Database root password (default: password):"
