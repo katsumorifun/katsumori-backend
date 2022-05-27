@@ -12,7 +12,7 @@ class NotifyLogin extends Notification
     use Queueable;
 
     protected string $app_name;
-    protected string $app_url;
+    protected string $activity_url;
     protected string $client_ip;
     protected string $country;
     protected string $city;
@@ -25,14 +25,14 @@ class NotifyLogin extends Notification
     public function __construct
     (
         string $app_name,
-        string $app_url,
+        string $activity_url,
         string $client_ip,
         string $country,
         string $city
     )
     {
         $this->app_name = $app_name;
-        $this->app_url = $app_url;
+        $this->activity_url = $activity_url;
         $this->client_ip = $client_ip;
         $this->country = $country;
         $this->city = $city;
@@ -66,7 +66,7 @@ class NotifyLogin extends Notification
                     ->subject(__('notifications.login.subject'))
                     ->greeting(__('notifications.login.message', ['app_name' => $this->app_name]))
                     ->line(__('notifications.login.location', ['ip' => $this->client_ip, 'city' => $this->city, 'country'=> $this->country]))
-                    ->action(__('notifications.login.actions.activity'), url($this->app_url));
+                    ->action(__('notifications.login.actions.activity'), url($this->activity_url));
     }
 
     /**
