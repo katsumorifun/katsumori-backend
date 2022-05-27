@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('o_auth_client_infos');
+        Schema::dropIfExists('oauth_clients_info');
     }
 };
