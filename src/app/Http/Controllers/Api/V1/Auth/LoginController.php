@@ -6,7 +6,11 @@ use App\Base\Auth\Auth;
 use App\Base\Auth\Exceptions\LoginException;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\LoginRequest;
+use App\Notifications\NotifyLogin;
+use App\Notifications\VerifyEmail;
 use App\Repositories\User as UserRepository;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 
 class LoginController extends ApiController
 {
@@ -105,6 +109,16 @@ class LoginController extends ApiController
         } catch (LoginException $e) {
             return $this->response->withError('wrong password');
         }
+
+        $geo_ip = geoip($request->getClientIp());
+
+        $user->notify(new NotifyLogin(
+            'site',
+            '/', //На данный момент фронтенда нет, поэтому и адреса тоже нет. В будущем надо переделать
+            $geo_ip->ip,
+            $geo_ip->country,
+            $geo_ip->city,
+        ));
 
         return $this->response->json([
             'tokens'=> [
