@@ -55,11 +55,6 @@ class LogOutController extends ApiController
      */
     public function logOut(): \Illuminate\Http\JsonResponse
     {
-        if (!Auth::check())
-        {
-            return $this->response->unauthorized();
-        }
-
         $token = Auth::user()->token();
         $token->revoke();
 
