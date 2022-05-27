@@ -35,7 +35,7 @@ class Schedule
      */
     protected function system(SystemSchedule $schedule)
     {
-        $schedule->command('passport:purge')->monthly();
+        $schedule->command('passport:purge --revoked')->monthly();
     }
 
     /**
