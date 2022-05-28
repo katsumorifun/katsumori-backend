@@ -23,3 +23,10 @@ Route::prefix('auth')->group(function (){
     Route::post('login', [\App\Http\Controllers\Api\V1\Auth\LoginController::class, 'callBack'])->name('auth.login.callback');
     Route::post('logout', [\App\Http\Controllers\Api\V1\Auth\LogOutController::class, 'logOut'])->name('auth.logout');
 });
+
+Route::prefix('devices')->group(function (){
+    Route::get('/', [\App\Http\Controllers\Api\V1\UserApiController::class, 'listDevices']);
+    Route::get('/current', [\App\Http\Controllers\Api\V1\UserApiController::class, 'currentDevice']);
+    Route::get('/logout/all', [\App\Http\Controllers\Api\V1\UserApiController::class, 'logoutAll']);
+    Route::get('/logout/{login_id}', [\App\Http\Controllers\Api\V1\UserApiController::class, 'logoutFromLoginId']);
+});

@@ -36,8 +36,17 @@ class Auth
         ];
 
         try {
-            $request = Request::create('/oauth/token', 'POST', $data);
+            $request = Request::create(
+                '/oauth/token',
+                'POST',
+                $data,
+                [],
+                [],
+                ['HTTP_USER_AGENT' => 'YukiDubFunWeb']
+            );
+
             $data = json_decode(app()->handle($request)->getContent());
+
             $this->refresh_token = $data->refresh_token;
             $this->access_token = $data->access_token;
             $this->expires_in = $data->expires_in;

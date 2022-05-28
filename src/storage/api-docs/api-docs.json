@@ -256,6 +256,250 @@
                     }
                 }
             }
+        },
+        "/devices": {
+            "post": {
+                "tags": [
+                    "Devices"
+                ],
+                "summary": "Отображение списка устройств, с которых был выполнен вход в учетную заапись",
+                "description": "Отображение всех устройств, с которых был выполнен вход в учетную заапись",
+                "operationId": "474b199876c0c7c594ab81500c66e1db",
+                "responses": {
+                    "200": {
+                        "description": "Cписка устройств",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Device"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Ошибка аутентификации (просроченный токен, либо его отсутствие)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        },
+        "/devices/current": {
+            "post": {
+                "tags": [
+                    "Devices"
+                ],
+                "summary": "Отображение информаци об устройстве, с которого была произведена авторизация",
+                "description": "Отображение информаци об устройстве, с которого была произведена авторизация",
+                "operationId": "fd58745d7f35fda996b05f3ea8daa039",
+                "responses": {
+                    "200": {
+                        "description": "Информация об устройстве",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Device"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Ошибка аутентификации (просроченный токен, либо его отсутствие)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        },
+        "/devices/logout/{id}": {
+            "post": {
+                "tags": [
+                    "Devices"
+                ],
+                "summary": "Выход с устройства по id авторизации, который можно узнать в списке /devices/",
+                "description": "Выход с устройства по id авторизации, который можно узнать в списке /devices/",
+                "operationId": "87770d60da21b672037bb36a96ca9387",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id логина",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успех",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Ok"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Logged out"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Ошибка аутентификации (просроченный токен, либо его отсутствие)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Id логина не найден",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "messages": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "error": {
+                                                        "type": "string",
+                                                        "example": "Login id not found"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        },
+        "/devices/logout/all": {
+            "post": {
+                "tags": [
+                    "Devices"
+                ],
+                "summary": "Выход со всех устройств",
+                "description": "Выход со всех устройств",
+                "operationId": "4c2ab791d96046acf2d43a154e521cd6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id логина",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успех",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Ok"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Logged out"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Ошибка аутентификации (просроченный токен, либо его отсутствие)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -291,6 +535,111 @@
                         "type": "string",
                         "format": "string",
                         "example": "def5020098ed1216cc97f642a468e35eb8b5a3b8a456c7663a93c6d817e4401b14493a4b078073cab8e649c9e..."
+                    }
+                },
+                "type": "object"
+            },
+            "Device": {
+                "title": "Device",
+                "description": "Модаль устройства, с которого был выполнен вход",
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "Id авторизации",
+                        "type": "string",
+                        "format": "integer",
+                        "example": "1"
+                    },
+                    "created_at": {
+                        "title": "created_at",
+                        "description": "Дата входа",
+                        "type": "string",
+                        "format": "string",
+                        "example": "2022-05-28T17:07:59.000000Z"
+                    },
+                    "updated_at": {
+                        "title": "updated_at",
+                        "description": "Дата обновления входа",
+                        "type": "string",
+                        "format": "string",
+                        "example": "2022-05-28T17:07:59.000000Z"
+                    },
+                    "user_agent": {
+                        "title": "user_agent",
+                        "description": "User agent",
+                        "type": "string",
+                        "format": "string",
+                        "example": "YukiDubFunWeb"
+                    },
+                    "ip": {
+                        "title": "ip",
+                        "description": "Ip пользователя",
+                        "type": "string",
+                        "format": "string",
+                        "example": "127.0.0.1"
+                    },
+                    "ip_data": {
+                        "title": "ip_data",
+                        "description": "Допллнительная информация (на данный момент всегда пустая)",
+                        "type": "string",
+                        "format": "string",
+                        "example": "null"
+                    },
+                    "device_type": {
+                        "title": "device_type",
+                        "description": "Тип устройства",
+                        "type": "string",
+                        "format": "string",
+                        "example": "null"
+                    },
+                    "device": {
+                        "title": "device",
+                        "description": "Устройство",
+                        "type": "string",
+                        "format": "string",
+                        "example": "null"
+                    },
+                    "platform": {
+                        "title": "platform",
+                        "description": "Платформа",
+                        "type": "string",
+                        "format": "string",
+                        "example": "null"
+                    },
+                    "browser": {
+                        "title": "browser",
+                        "description": "Браузер (если вход был произведен через него)",
+                        "type": "string",
+                        "format": "string",
+                        "example": "null"
+                    },
+                    "city": {
+                        "title": "city",
+                        "description": "Город",
+                        "type": "string",
+                        "format": "string",
+                        "example": "null"
+                    },
+                    "region": {
+                        "title": "region",
+                        "description": "Регион",
+                        "type": "string",
+                        "format": "string",
+                        "example": "null"
+                    },
+                    "country": {
+                        "title": "country",
+                        "description": "Страна",
+                        "type": "string",
+                        "format": "string",
+                        "example": "null"
+                    },
+                    "is_current": {
+                        "title": "is_current",
+                        "description": "Это устройство",
+                        "type": "string",
+                        "format": "string",
+                        "example": "null"
                     }
                 },
                 "type": "object"
@@ -331,6 +680,9 @@
         },
         {
             "name": "User"
+        },
+        {
+            "name": "Devices"
         }
     ]
 }

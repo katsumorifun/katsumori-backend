@@ -50,9 +50,9 @@ class Response
     public function json($data = [], array $headers = [], bool $is_data = true): \Illuminate\Http\JsonResponse
     {
         if ($is_data){
-            return $this->response->json(['data'=>$data], $this->statusCode, $headers);
-        } else {
             return $this->response->json($data, $this->statusCode, $headers);
+        } else {
+            return $this->response->json(['data'=>$data], $this->statusCode, $headers);
         }
     }
 
@@ -131,7 +131,7 @@ class Response
     {
         return $this->setStatusCode(
             HttpResponse::HTTP_NOT_FOUND
-        )->withError($message);
+        )->withError(['error' => $message]);
     }
 
     /**
