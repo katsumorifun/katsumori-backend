@@ -445,17 +445,6 @@
                 "summary": "Выход со всех устройств",
                 "description": "Выход со всех устройств",
                 "operationId": "4c2ab791d96046acf2d43a154e521cd6",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Id логина",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "Успех",
