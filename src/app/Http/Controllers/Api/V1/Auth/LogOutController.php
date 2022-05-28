@@ -21,6 +21,10 @@ class LogOutController extends ApiController
      *     summary="Отзыв токенов для выхода из учетной записи",
      *     description="Отзыв токенов для выхода из учетной записи",
      *
+     *     security={
+     *       {"Authorization": {}},
+     *     },
+     *
      *     @OA\Response(
      *          response="200",
      *          description="Успех",
