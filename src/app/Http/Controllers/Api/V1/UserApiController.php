@@ -189,16 +189,6 @@ class UserApiController extends ApiController
      *       {"Authorization": {}},
      *     },
      *
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         description="Id логина",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="integer",
-     *         )
-     *     ),
-     *
      *     @OA\Response(
      *          response="200",
      *          description="Успех",
