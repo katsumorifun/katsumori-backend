@@ -61,8 +61,8 @@ class UsersApiController extends ApiController
      * @OA\Get  (
      *     path="/users/{user_id}",
      *     tags = {"Users"},
-     *     summary="Отображение списка пользователей",
-     *     description="Отображение списка пользователей",
+     *     summary="Вывод информации о пользователе по его id",
+     *     description="Вывод информации о пользователе по его id",
      *
      *     @OA\Parameter(
      *         name="user_id",
