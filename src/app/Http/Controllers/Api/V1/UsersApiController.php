@@ -105,6 +105,10 @@ class UsersApiController extends ApiController
      *     summary="Редактирование информации о пользователе",
      *     description="Редактирование информации о пользователе",
      *
+     *     security={
+     *       {"Authorization": {}},
+     *     },
+     *
      *     @OA\Parameter(
      *         name="user_id",
      *         in="path",
