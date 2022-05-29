@@ -579,6 +579,24 @@
                         "schema": {
                             "type": "integer"
                         }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Имя пользователя",
+                        "required": false,
+                        "schema": {
+                            "type": "String"
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Оаписание пользователя (обо мне)",
+                        "required": false,
+                        "schema": {
+                            "type": "String"
+                        }
                     }
                 ],
                 "responses": {

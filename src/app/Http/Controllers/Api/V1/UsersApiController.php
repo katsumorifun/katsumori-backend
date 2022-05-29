@@ -115,9 +115,29 @@ class UsersApiController extends ApiController
      *         )
      *     ),
      *
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="query",
+     *         description="Имя пользователя",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="String",
+     *         )
+     *     ),
+     *
+     *     @OA\Parameter(
+     *         name="description",
+     *         in="query",
+     *         description="Оаписание пользователя (обо мне)",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="String",
+     *         )
+     *     ),
+     *
      *     @OA\Response(
      *          response="200",
-     *          description="Успех"
+     *          description="Информация о пользователе успешно обновлена, вывод статуса и новых данных пользователя"
      *      ),
      *      @OA\Response(
      *          response="400",
