@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Base\Auth\Auth;
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Requests\EditUsersRequest;
 use App\Http\Requests\GetUsersListRequest;
 use App\Repositories\User;
 
@@ -94,5 +96,59 @@ class UsersApiController extends ApiController
         }
 
         return $user;
+    }
+
+    /**
+     *
+     * @OA\Post  (
+     *     path="/users/{user_id}/edit",
+     *     tags = {"Users"},
+     *     summary="Редактирование информации о пользователе",
+     *     description="Редактирование информации о пользователе",
+     *
+     *     @OA\Parameter(
+     *         name="user_id",
+     *         in="path",
+     *         description="Id пользователя",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *          response="200",
+     *          description="Успех"
+     *      ),
+     *      @OA\Response(
+     *          response="400",
+     *          description="Пользователь с таким id не найден"
+     *      )
+     *
+     * )
+     */
+    public function editProfile($user_id, EditUsersRequest $request)
+    {
+        $user = app(User::class)->findById($user_id);
+
+        if (!$user) {
+            return $this->response->withNotFound('User not found');
+        }
+
+        if ($user->id !== Auth()->user()->id){
+            return $this->response->withForbidden("Failed to save changes. You don't have enough rights");
+        }
+
+        if($request->get('name')) {
+            $user->name = $request->get('name');
+        }
+
+        if ($request->get('description')) {
+            $user->description = $request->get('description');
+        }
+
+        $user->save();
+
+        return $this->response->json(['status' =>'Update successfully', 'user' => $user], [], false);
     }
 }

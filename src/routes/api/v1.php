@@ -33,5 +33,6 @@ Route::prefix('devices')->group(function (){
 
 Route::prefix('users')->group(function (){
     Route::get('/', [\App\Http\Controllers\Api\V1\UsersApiController::class, 'getList']);
+    Route::post('/{user_id}/edit', [\App\Http\Controllers\Api\V1\UsersApiController::class, 'editProfile'])->middleware('auth:api');
     Route::get('/{user_id}', [\App\Http\Controllers\Api\V1\UsersApiController::class, 'getById']);
 });
