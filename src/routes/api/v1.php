@@ -25,8 +25,8 @@ Route::prefix('auth')->group(function (){
 });
 
 Route::prefix('devices')->group(function (){
-    Route::get('/', [\App\Http\Controllers\Api\V1\UserApiController::class, 'listDevices']);
-    Route::get('/current', [\App\Http\Controllers\Api\V1\UserApiController::class, 'currentDevice']);
-    Route::get('/logout/all', [\App\Http\Controllers\Api\V1\UserApiController::class, 'logoutAll']);
-    Route::get('/logout/{login_id}', [\App\Http\Controllers\Api\V1\UserApiController::class, 'logoutFromLoginId']);
+    Route::get('/', [\App\Http\Controllers\Api\V1\DevicesApiController::class, 'listDevices']);
+    Route::get('/current', [\App\Http\Controllers\Api\V1\DevicesApiController::class, 'currentDevice']);
+    Route::get('/logout/all', [\App\Http\Controllers\Api\V1\DevicesApiController::class, 'logoutAll']);
+    Route::get('/logout/{login_id}', [\App\Http\Controllers\Api\V1\DevicesApiController::class, 'logoutFromLoginId']);
 });
