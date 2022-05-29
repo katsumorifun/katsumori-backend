@@ -146,6 +146,10 @@ class UsersApiController extends ApiController
      *      @OA\Response(
      *          response="400",
      *          description="Пользователь с таким id не найден"
+     *      ),
+     *      @OA\Response(
+     *          response="422",
+     *          description="Ошибка валидации"
      *      )
      *
      * )
