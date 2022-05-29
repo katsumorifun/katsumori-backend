@@ -530,12 +530,7 @@
                     "422": {
                         "description": "Ошибка валидации"
                     }
-                },
-                "security": [
-                    {
-                        "Authorization": []
-                    }
-                ]
+                }
             }
         },
         "/users/{user_id}": {
@@ -543,8 +538,8 @@
                 "tags": [
                     "Users"
                 ],
-                "summary": "Отображение списка пользователей",
-                "description": "Отображение списка пользователей",
+                "summary": "Вывод информации о пользователе по его id",
+                "description": "Вывод информации о пользователе по его id",
                 "operationId": "16e787ca3e3c38a53758b8dfca2b81ec",
                 "parameters": [
                     {
@@ -564,12 +559,7 @@
                     "400": {
                         "description": "Пользователь с таким id не найден"
                     }
-                },
-                "security": [
-                    {
-                        "Authorization": []
-                    }
-                ]
+                }
             }
         }
     },
