@@ -33,4 +33,5 @@ Route::prefix('devices')->group(function (){
 
 Route::prefix('users')->group(function (){
     Route::get('/', [\App\Http\Controllers\Api\V1\UsersApiController::class, 'getList']);
+    Route::get('/{user_id}', [\App\Http\Controllers\Api\V1\UsersApiController::class, 'getById']);
 });

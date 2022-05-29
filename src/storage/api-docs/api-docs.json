@@ -508,7 +508,7 @@
                         "name": "page",
                         "in": "query",
                         "description": "Страница (по умолчанию 1). Минимум 1",
-                        "required": true,
+                        "required": false,
                         "schema": {
                             "type": "integer"
                         }
@@ -517,7 +517,7 @@
                         "name": "per_page",
                         "in": "query",
                         "description": "Кол-во пользователей на странице (по умолчанию 6) Минимум 1, максимум 20",
-                        "required": true,
+                        "required": false,
                         "schema": {
                             "type": "integer"
                         }
@@ -529,6 +529,40 @@
                     },
                     "422": {
                         "description": "Ошибка валидации"
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        },
+        "/users/{user_id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Отображение списка пользователей",
+                "description": "Отображение списка пользователей",
+                "operationId": "16e787ca3e3c38a53758b8dfca2b81ec",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "Id пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Вернет информацию о пользователе"
+                    },
+                    "400": {
+                        "description": "Пользователь с таким id не найден"
                     }
                 },
                 "security": [
