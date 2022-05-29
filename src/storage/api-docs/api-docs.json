@@ -592,7 +592,7 @@
                     {
                         "name": "description",
                         "in": "query",
-                        "description": "Оаписание пользователя (обо мне)",
+                        "description": "Описание пользователя (обо мне)",
                         "required": false,
                         "schema": {
                             "type": "String"
@@ -601,12 +601,17 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Успех"
+                        "description": "Информация о пользователе успешно обновлена, вывод статуса и новых данных пользователя"
                     },
                     "400": {
                         "description": "Пользователь с таким id не найден"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
             }
         }
     },

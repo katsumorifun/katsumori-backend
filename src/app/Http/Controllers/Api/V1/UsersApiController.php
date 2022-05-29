@@ -132,7 +132,7 @@ class UsersApiController extends ApiController
      *     @OA\Parameter(
      *         name="description",
      *         in="query",
-     *         description="Оаписание пользователя (обо мне)",
+     *         description="Описание пользователя (обо мне)",
      *         required=false,
      *         @OA\Schema(
      *             type="String",
