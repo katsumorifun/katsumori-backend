@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Base\Auth\Auth;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\EditUsersRequest;
 use App\Http\Requests\GetUsersListRequest;
@@ -91,7 +90,7 @@ class UsersApiController extends ApiController
     {
         $user = app(User::class)->findById($user_id);
 
-        if (!$user) {
+        if (empty($user)) {
             return $this->response->withNotFound('User not found');
         }
 
@@ -131,7 +130,7 @@ class UsersApiController extends ApiController
     {
         $user = app(User::class)->findById($user_id);
 
-        if (!$user) {
+        if (empty($user)) {
             return $this->response->withNotFound('User not found');
         }
 

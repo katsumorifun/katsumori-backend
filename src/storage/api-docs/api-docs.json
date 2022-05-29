@@ -561,6 +561,35 @@
                     }
                 }
             }
+        },
+        "/users/{user_id}/edit": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Редактирование информации о пользователе",
+                "description": "Редактирование информации о пользователе",
+                "operationId": "ed09872a4003cd49fa2ef527c7a58583",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "Id пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успех"
+                    },
+                    "400": {
+                        "description": "Пользователь с таким id не найден"
+                    }
+                }
+            }
         }
     },
     "components": {
