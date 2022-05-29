@@ -30,3 +30,7 @@ Route::prefix('devices')->group(function (){
     Route::get('/logout/all', [\App\Http\Controllers\Api\V1\DevicesApiController::class, 'logoutAll']);
     Route::get('/logout/{login_id}', [\App\Http\Controllers\Api\V1\DevicesApiController::class, 'logoutFromLoginId']);
 });
+
+Route::prefix('users')->group(function (){
+    Route::get('/', [\App\Http\Controllers\Api\V1\UsersApiController::class, 'getList']);
+});

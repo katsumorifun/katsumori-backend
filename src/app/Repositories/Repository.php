@@ -22,6 +22,24 @@ class Repository
     }
 
     /**
+     * @param array $columns
+     * @param bool $paginate
+     * @param int $per_page
+     * @param int $page
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Contracts\Pagination\LengthAwarePaginator|array
+     */
+    public function getList(array $columns = ['*'], bool $paginate = false, int $page = 1, int $per_page = 6): \Illuminate\Database\Eloquent\Collection|\Illuminate\Contracts\Pagination\LengthAwarePaginator|array
+    {
+        if ($paginate)
+        {
+            return $this->query()->paginate($per_page, $columns, 'page', $page);
+        }
+
+        return $this->query()->get();
+
+    }
+
+    /**
      * @param string|array $column
      * @param null $operator
      * @param null $value

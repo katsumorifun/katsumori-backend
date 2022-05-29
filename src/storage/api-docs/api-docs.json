@@ -63,7 +63,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
             }
         },
         "/auth/login": {
@@ -262,9 +267,9 @@
                 "tags": [
                     "Devices"
                 ],
-                "summary": "Отображение списка устройств, с которых был выполнен вход в учетную заапись",
-                "description": "Отображение всех устройств, с которых был выполнен вход в учетную заапись",
-                "operationId": "474b199876c0c7c594ab81500c66e1db",
+                "summary": "Отображение списка устройств, с которых был выполнен вход в учетную запись",
+                "description": "Отображение всех устройств, с которых был выполнен вход в учетную запись",
+                "operationId": "abc5c12998275c2baab51c06b84fe311",
                 "responses": {
                     "200": {
                         "description": "Cписка устройств",
@@ -310,7 +315,7 @@
                 ],
                 "summary": "Отображение информаци об устройстве, с которого была произведена авторизация",
                 "description": "Отображение информаци об устройстве, с которого была произведена авторизация",
-                "operationId": "fd58745d7f35fda996b05f3ea8daa039",
+                "operationId": "51409af7f668b0bc9a9739298f1c0cde",
                 "responses": {
                     "200": {
                         "description": "Информация об устройстве",
@@ -356,7 +361,7 @@
                 ],
                 "summary": "Выход с устройства по id авторизации, который можно узнать в списке /devices/",
                 "description": "Выход с устройства по id авторизации, который можно узнать в списке /devices/",
-                "operationId": "87770d60da21b672037bb36a96ca9387",
+                "operationId": "3cb264d349dfd2caf2a8e9a056389f98",
                 "parameters": [
                     {
                         "name": "id",
@@ -444,7 +449,7 @@
                 ],
                 "summary": "Выход со всех устройств",
                 "description": "Выход со всех устройств",
-                "operationId": "4c2ab791d96046acf2d43a154e521cd6",
+                "operationId": "04931e5d242c4bad8790ee6a11073924",
                 "responses": {
                     "200": {
                         "description": "Успех",
@@ -481,6 +486,49 @@
                                 }
                             }
                         }
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        },
+        "/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Отображение списка пользователей",
+                "description": "Отображение списка пользователей",
+                "operationId": "861a805c789e8b659f4abb99d02dfc0e",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Страница (по умолчанию 1). Минимум 1",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Кол-во пользователей на странице (по умолчанию 6) Минимум 1, максимум 20",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Вернет список пользователей"
+                    },
+                    "422": {
+                        "description": "Ошибка валидации"
                     }
                 },
                 "security": [
@@ -668,7 +716,7 @@
             "name": "Auth"
         },
         {
-            "name": "User"
+            "name": "Users"
         },
         {
             "name": "Devices"

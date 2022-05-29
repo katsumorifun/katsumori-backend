@@ -20,7 +20,7 @@ namespace App\Http\Controllers\Api;
  * )
  *
  * @OA\Tag(
- *     name="User"
+ *     name="Users"
  * )
  *
  * @OA\Tag(
