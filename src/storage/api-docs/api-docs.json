@@ -616,6 +616,52 @@
                     }
                 ]
             }
+        },
+        "/users/{user_id}/upload_avatar": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Обновление аватара пользователя",
+                "description": "Обновление аватара пользователя",
+                "operationId": "8f174067faa637922d65f937caeb8647",
+                "parameters": [
+                    {
+                        "name": "avatar",
+                        "in": "query",
+                        "description": "Аватар, обязательные требования к размеру: 640x640px",
+                        "required": false,
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "Id пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Данный статус сигнализирует о том, что аватар пользователя был успешно загружен."
+                    },
+                    "401": {
+                        "description": "Ошибка аутентификации."
+                    },
+                    "422": {
+                        "description": "Ошибка валидации."
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
         }
     },
     "components": {

@@ -177,8 +177,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        \Torann\GeoIP\GeoIPServiceProvider::class
-
+        \Torann\GeoIP\GeoIPServiceProvider::class,
+        \Intervention\Image\ImageServiceProvider::class,
     ],
 
     /*
@@ -194,7 +194,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-        'geoIp' => \Torann\GeoIP\Facades\GeoIP::class
+        'geoIp' => \Torann\GeoIP\Facades\GeoIP::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ])->toArray(),
 
 ];
