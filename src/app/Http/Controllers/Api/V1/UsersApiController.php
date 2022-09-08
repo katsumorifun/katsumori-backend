@@ -180,7 +180,7 @@ class UsersApiController extends ApiController
 
         $user->save();
 
-        return $this->response->json(['status' =>'Update successfully', 'user' => $user], [], false);
+        return $this->response->json(['status' =>'Update successfully', 'user' => $user]);
     }
 
     /**
@@ -260,6 +260,6 @@ class UsersApiController extends ApiController
 
         MinimizeImage::dispatch($avatar_path, [32, 64, 128], 'avatars')->onQueue('avatars')->afterResponse();
 
-        return $this->response->json(['status' =>'Avatar upload successfully'], [], false);
+        return $this->response->json(['status' =>'Avatar upload successfully']);
     }
 }

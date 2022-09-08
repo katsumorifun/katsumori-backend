@@ -44,16 +44,11 @@ class Response
      *
      * @param array $data
      * @param array $headers
-     * @param bool $is_data
      * @return \Illuminate\Http\JsonResponse
      */
-    public function json($data = [], array $headers = [], bool $is_data = true): \Illuminate\Http\JsonResponse
+    public function json(array $data = [], array $headers = []): \Illuminate\Http\JsonResponse
     {
-        if (!$is_data){
-            return $this->response->json($data, $this->statusCode, $headers);
-        } else {
-            return $this->response->json(['data'=>$data], $this->statusCode, $headers);
-        }
+        return $this->response->json($data, $this->statusCode, $headers);
     }
 
     /**

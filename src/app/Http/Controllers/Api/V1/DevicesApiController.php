@@ -174,7 +174,7 @@ class DevicesApiController extends ApiController
         return $this->response->json([
             'status' => 'Ok',
             'message' => 'Logged out'
-        ], [], false);
+        ]);
     }
 
     /**
@@ -227,6 +227,6 @@ class DevicesApiController extends ApiController
         return $this->response->json([
             'status' => 'Ok',
             'message' => 'Logged out'
-        ], [], false);
+        ]);
     }
 }

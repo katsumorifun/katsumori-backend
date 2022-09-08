@@ -66,6 +66,6 @@ class LogOutController extends ApiController
         return $this->response->json([
             'status' => 'Ok',
             'message' => 'Logged out'
-        ], [], false);
+        ]);
     }
 }
