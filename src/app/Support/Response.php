@@ -112,7 +112,7 @@ class Response
     {
         return $this->setStatusCode(
             HttpResponse::HTTP_FORBIDDEN
-        )->json(['message' => $message], [], false);
+        )->json(['message' => $message]);
     }
 
     /**
@@ -150,7 +150,7 @@ class Response
      * Make an error response.
      *
      * @param $message
-     *
+     * @param array $errors
      * @return \Illuminate\Http\JsonResponse
      */
     public function withError($message, array $errors = []): \Illuminate\Http\JsonResponse
@@ -164,7 +164,7 @@ class Response
         }
 
         return $this->setStatusCode(HttpResponse::HTTP_BAD_REQUEST)
-            ->json($json, [], false);
+            ->json($json);
     }
 
     /**
@@ -174,7 +174,8 @@ class Response
     {
         return $this->json(
             [
-                'status'=> 'accepted',
+                'message' => 'application is being processed',
+                'status' => 'accepted',
             ]
         );
     }
@@ -186,6 +187,7 @@ class Response
     {
         return $this->json(
             [
+                'message' => 'application is being processed',
                 'status'=> 'moderated',
             ]
         );
@@ -208,7 +210,7 @@ class Response
     {
         return $this->setStatusCode(
             HttpResponse::HTTP_UNAUTHORIZED
-        )->json(['messages' => 'User unauthorized'], [], true);
+        )->json(['messages' => 'User unauthorized']);
     }
 
     /**
