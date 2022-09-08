@@ -103,7 +103,7 @@ class Response
     {
         return $this->setStatusCode(
             HttpResponse::HTTP_BAD_REQUEST
-        )->withError($message);
+        )->json(['message' => $message]);
     }
 
     /**
