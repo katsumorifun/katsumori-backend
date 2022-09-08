@@ -117,7 +117,7 @@ class Response
     {
         return $this->setStatusCode(
             HttpResponse::HTTP_FORBIDDEN
-        )->withError($message);
+        )->json(['message' => $message], [], false);
     }
 
     /**
