@@ -100,7 +100,7 @@ class LoginController extends ApiController
         $user = app(UserRepository::class)->getByEmail($request->get('email'));
 
         if (empty($user)) {
-            return $this->response->withNotFound('user not found');
+            return $this->response->withNotFound('user');
         }
 
         try {

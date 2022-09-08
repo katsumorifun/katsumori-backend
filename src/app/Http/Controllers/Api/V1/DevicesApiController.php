@@ -168,7 +168,7 @@ class DevicesApiController extends ApiController
 
         if (!$status)
         {
-            return $this->response->withNotFound('Login id not found');
+            return $this->response->withNotFound('Login id');
         }
 
         return $this->response->json([

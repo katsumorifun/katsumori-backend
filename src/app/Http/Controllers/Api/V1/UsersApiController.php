@@ -95,7 +95,7 @@ class UsersApiController extends ApiController
         $user = app(User::class)->findById($user_id);
 
         if (empty($user)) {
-            return $this->response->withNotFound('User not found');
+            return $this->response->withNotFound('user');
         }
 
         return $user;
@@ -163,7 +163,7 @@ class UsersApiController extends ApiController
         $user = app(User::class)->findById($user_id);
 
         if (empty($user)) {
-            return $this->response->withNotFound('User not found');
+            return $this->response->withNotFound('user');
         }
 
         if ($user->id !== Auth()->user()->id){
@@ -241,7 +241,7 @@ class UsersApiController extends ApiController
         $user = app(User::class)->findById($user_id);
 
         if (empty($user)) {
-            return $this->response->withNotFound('User not found');
+            return $this->response->withNotFound('user');
         }
 
         if ($user->id !== Auth()->user()->id){

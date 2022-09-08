@@ -123,15 +123,20 @@ class Response
     /**
      * Make a 404 'Not Found' response.
      *
-     * @param string $message
-     *
+     * @param string|null $item
      * @return \Illuminate\Http\JsonResponse
      */
-    public function withNotFound(string $message = 'Not Found'): \Illuminate\Http\JsonResponse
+    public function withNotFound(string $item = null): \Illuminate\Http\JsonResponse
     {
+        if (is_null($item)) {
+            return $this->setStatusCode(
+                HttpResponse::HTTP_NOT_FOUND
+            )->json(['message' => 'Not found']);
+        }
+
         return $this->setStatusCode(
             HttpResponse::HTTP_NOT_FOUND
-        )->withError(['error' => $message]);
+        )->json(['message' => $item . ' not found', 'errors' => [$item => $item . ' not found']]);
     }
 
     /**
@@ -153,11 +158,18 @@ class Response
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function withError($message): \Illuminate\Http\JsonResponse
+    public function withError($message, array $errors = []): \Illuminate\Http\JsonResponse
     {
-        return $this->setStatusCode(HttpResponse::HTTP_BAD_REQUEST)->json([
-            'messages' => is_array($message) ? $message : [$message]
-        ], [], true);
+        $json = [
+            'message' => $message,
+        ];
+
+        if (!empty($errors)) {
+            $json['errors'] = $errors;
+        }
+
+        return $this->setStatusCode(HttpResponse::HTTP_BAD_REQUEST)
+            ->json($json, [], false);
     }
 
     /**
