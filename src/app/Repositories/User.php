@@ -19,11 +19,13 @@ class User extends Repository
      */
     public function createOrGetUser(string $name, string $email, string $password): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
     {
-        return $this->getBuilder()->create([
-            'name'    => $name,
-            'email'   => $email,
-            'password'=> bcrypt($password),
-        ]);
+        return $this
+            ->getBuilder()
+            ->create([
+                'name'    => $name,
+                'email'   => $email,
+                'password'=> bcrypt($password),
+            ]);
     }
 
     /**
@@ -32,7 +34,9 @@ class User extends Repository
      */
     public function getByName(string $name): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null
     {
-        return $this->getBuilder()->firstWhere(['name', '=', $name]);
+        return $this
+            ->getBuilder()
+            ->firstWhere(['name', '=', $name]);
     }
 
     /**
@@ -41,12 +45,16 @@ class User extends Repository
      */
     public function getByEmail(string $email): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null
     {
-        return $this->getBuilder()->firstWhere('email', '=', $email);
+        return $this
+            ->getBuilder()
+            ->firstWhere('email', '=', $email);
     }
 
     public function setEmailVerifiedNow(int $user_id)
     {
-        $user = $this->getBuilder()->find($user_id);
+        $user = $this
+            ->getBuilder()
+            ->find($user_id);
 
         $user->email_verified_at = now();
         $user->save();
@@ -56,11 +64,11 @@ class User extends Repository
      * Удаление старых пользователей без подтвержденной почты
      *
      * @param int $days По умолчанию 1 день
-     * @return void
      */
     public function removeUsersUnconfirmedEmail(int $days = 1)
     {
-        $this->getBuilder()
+        $this
+            ->getBuilder()
             ->where('created_at', '<', now()->subDays($days))
             ->where('email_verified_at', '=', null)
             ->delete();
@@ -74,7 +82,10 @@ class User extends Repository
      */
     public function updateAvatar(int $user_id, string $avatar_name, bool $minimizeLoading = true)
     {
-        $user = $this->getBuilder()->find($user_id);
+        $user = $this
+            ->getBuilder()
+            ->find($user_id);
+
         $user->avatar = $avatar_name;
 
         if ($minimizeLoading) {

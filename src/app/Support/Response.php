@@ -82,9 +82,9 @@ class Response
      */
     public function withNoContent(): \Illuminate\Http\JsonResponse
     {
-        return $this->setStatusCode(
-            HttpResponse::HTTP_NO_CONTENT
-        )->json();
+        return $this
+            ->setStatusCode(HttpResponse::HTTP_NO_CONTENT)
+            ->json();
     }
 
     /**
@@ -96,9 +96,9 @@ class Response
      */
     public function withBadRequest(string $message = 'Bad Request'): \Illuminate\Http\JsonResponse
     {
-        return $this->setStatusCode(
-            HttpResponse::HTTP_BAD_REQUEST
-        )->json(['message' => $message]);
+        return $this
+            ->setStatusCode(HttpResponse::HTTP_BAD_REQUEST)
+            ->json(['message' => $message]);
     }
 
     /**
@@ -110,9 +110,9 @@ class Response
      */
     public function withForbidden(string $message = 'Forbidden')
     {
-        return $this->setStatusCode(
-            HttpResponse::HTTP_FORBIDDEN
-        )->json(['message' => $message]);
+        return $this
+            ->setStatusCode(HttpResponse::HTTP_FORBIDDEN)
+            ->json(['message' => $message]);
     }
 
     /**
@@ -124,14 +124,14 @@ class Response
     public function withNotFound(string $item = null): \Illuminate\Http\JsonResponse
     {
         if (is_null($item)) {
-            return $this->setStatusCode(
-                HttpResponse::HTTP_NOT_FOUND
-            )->json(['message' => 'Not found']);
+            return $this
+                ->setStatusCode(HttpResponse::HTTP_NOT_FOUND)
+                ->json(['message' => 'Not found']);
         }
 
-        return $this->setStatusCode(
-            HttpResponse::HTTP_NOT_FOUND
-        )->json(['message' => $item . ' not found', 'errors' => [$item => $item . ' not found']]);
+        return $this
+            ->setStatusCode(HttpResponse::HTTP_NOT_FOUND)
+            ->json(['message' => $item . ' not found', 'errors' => [$item => $item . ' not found']]);
     }
 
     /**
@@ -163,7 +163,8 @@ class Response
             $json['errors'] = $errors;
         }
 
-        return $this->setStatusCode(HttpResponse::HTTP_BAD_REQUEST)
+        return $this
+            ->setStatusCode(HttpResponse::HTTP_BAD_REQUEST)
             ->json($json);
     }
 
@@ -198,9 +199,7 @@ class Response
      */
     public function noChanges(): \Illuminate\Http\JsonResponse
     {
-        return $this->withBadRequest(
-            'There were no changes'
-        );
+        return $this->withBadRequest('There were no changes');
     }
 
     /**
@@ -208,9 +207,9 @@ class Response
      */
     public function unauthorized(): \Illuminate\Http\JsonResponse
     {
-        return $this->setStatusCode(
-            HttpResponse::HTTP_UNAUTHORIZED
-        )->json(['messages' => 'User unauthorized']);
+        return $this
+            ->setStatusCode(HttpResponse::HTTP_UNAUTHORIZED)
+            ->json(['messages' => 'User unauthorized']);
     }
 
     /**

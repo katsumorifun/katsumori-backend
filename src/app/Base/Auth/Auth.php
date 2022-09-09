@@ -59,7 +59,7 @@ class Auth
         return $this;
     }
 
-    public static function updateAccessToken($refreshToken)
+    public static function updateAccessToken(string $refreshToken)
     {
         $client = DB::table('oauth_clients')
             ->where('password_client', true)

@@ -25,10 +25,10 @@ class NotifyLogin extends Notification
     public function __construct
     (
         string $app_name,
-        string $activity_url,
-        string $client_ip,
-        string $country,
-        string $city
+        $activity_url,
+        $client_ip,
+        $country,
+        $city
     )
     {
         $this->app_name = $app_name;

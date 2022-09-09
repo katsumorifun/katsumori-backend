@@ -12,8 +12,6 @@ class Schedule
 
     /**
      * Запуск планировщика.
-     *
-     * @param \Illuminate\Console\Scheduling\Schedule $schedule
      */
     public function run(SystemSchedule $schedule)
     {
@@ -28,29 +26,22 @@ class Schedule
 
     /**
      * Системные команды (например очистка токенов Laravel passport)
-     *
-     *
-     * @param SystemSchedule $schedule
-     * @return void
      */
     protected function system(SystemSchedule $schedule)
     {
-        $schedule->command('passport:purge --revoked')->monthly();
+        $schedule
+            ->command('passport:purge --revoked')
+            ->monthly();
     }
 
     /**
      * Рассылка почты
-     *
-     * @param \Illuminate\Console\Scheduling\Schedule $schedule
      */
     protected function email(SystemSchedule $schedule)
     {
 
     }
 
-    /**
-     * @param \Illuminate\Console\Scheduling\Schedule $schedule
-     */
     protected function user(SystemSchedule $schedule)
     {
         $schedule->call(function () {
@@ -64,9 +55,6 @@ class Schedule
 
     /**
      * Обработка ошибки при выполнении задачи по расписанию.
-     *
-     * @param string $task_name
-     * @param Throwable $throwable
      */
     protected function scheduleTaskError(string $task_name, Throwable $throwable)
     {

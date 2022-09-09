@@ -27,7 +27,7 @@ class EditUsersRequest extends FormRequest
     {
         return [
             'name' => 'string',
-            'gender' => 'in:male,female,other,null'
+            'gender' => 'in:male,female,other,null',
         ];
     }
 }

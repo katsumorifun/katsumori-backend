@@ -32,11 +32,14 @@ class Repository
     {
         if ($paginate)
         {
-            return $this->query()->paginate($per_page, $columns, 'page', $page);
+            return $this
+                ->query()
+                ->paginate($per_page, $columns, 'page', $page);
         }
 
-        return $this->query()->get();
-
+        return $this
+            ->query()
+            ->get();
     }
 
     /**
@@ -48,7 +51,10 @@ class Repository
      */
     public function findBy(string|array $column, $operator = null, $value = null, array $columns = ['*'])
     {
-        return $this->query()->where($column, $operator, $value)->get();
+        return $this
+            ->query()
+            ->where($column, $operator, $value)
+            ->get();
     }
 
     /**
@@ -58,6 +64,8 @@ class Repository
      */
     public function findById(int $id , array $columns = ['*'])
     {
-        return $this->query()->find($id, $columns);
+        return $this
+            ->query()
+            ->find($id, $columns);
     }
 }

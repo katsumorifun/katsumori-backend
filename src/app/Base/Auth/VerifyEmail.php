@@ -20,10 +20,6 @@ class VerifyEmail
         return $this->hash = md5(rand(4, 47) . $user_name . date('D, d M Y H:i:s') . rand(8, 35));
     }
 
-    /**
-     * @param int $user_id
-     * @param string $user_name
-     */
     public function send(int $user_id, string $user_name)
     {
         $hash = $this->generateHash($user_name);

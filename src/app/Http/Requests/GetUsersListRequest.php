@@ -26,7 +26,7 @@ class GetUsersListRequest extends FormRequest
     {
         return [
             'page' => 'integer|min:1',
-            'per_page' => 'integer|min:1|max:20'
+            'per_page' => 'integer|min:1|max:20',
         ];
     }
 }

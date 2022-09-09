@@ -117,13 +117,10 @@ class RegistrationController extends ApiController
      */
     public function callBack(RegistrationRequest $request): \Illuminate\Http\JsonResponse
     {
-        //Создание нового пользователя
        $user = app(User::class)->createOrGetUser($request->get('name'), $request->get('email'), $request->get('password'));
 
-        //Отправка сообщения с подтверждением регистрации
        app(VerifyEmail::class)->send($user->id, $user->name);
 
-       //Отдаем пользователя
        return $this->response->withItem($user);
     }
 }
