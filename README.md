@@ -56,3 +56,5 @@ export MYSQL_ROOT_PASSWORD=password
 - mysql - 3306:3306
 - php - 9000:9000
 - redis - 6379:6379
+
+### [Code style и другие рекомендации](https://github.com/YukiDub/php-conventions)
