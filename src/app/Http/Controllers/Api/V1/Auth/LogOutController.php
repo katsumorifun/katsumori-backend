@@ -44,8 +44,8 @@ class LogOutController extends ApiController
      *      ),
      *
      *     @OA\Response(
-     *          response="404",
-     *          description="Неверный пароль",
+     *          response="401",
+     *          description="Не авторизован",
      *          @OA\JsonContent(
      *              @OA\Property(
      *                 property="message",
