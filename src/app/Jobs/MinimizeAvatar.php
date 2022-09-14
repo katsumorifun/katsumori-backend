@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Repositories\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
 use Image;
 
-class MinimizeImage implements ShouldQueue
+class MinimizeAvatar implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -21,21 +22,21 @@ class MinimizeImage implements ShouldQueue
      * Example: [32, 64, 128]
      */
     private array $sizes;
-
     private string $path;
-
-    private string $storage_disk;
+    private string $user_id;
+    private string $extension;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(string $path, array $sizes, string $storage_disk)
+    public function __construct(string $path, array $sizes, int $user_id, string $extension)
     {
         $this->path = $path;
         $this->sizes = $sizes;
-        $this->storage_disk = $storage_disk;
+        $this->user_id = $user_id;
+        $this->extension = $extension;
     }
 
     /**
@@ -45,6 +46,13 @@ class MinimizeImage implements ShouldQueue
      */
     public function handle()
     {
+        $this->minimizeImage();
+
+        app(User::class)->updateMinimizedAvatars($this->user_id, $this->extension);
+    }
+
+    protected function minimizeImage()
+    {
         foreach ($this->sizes as $size) {
             $fileName = explode('/', $this->path);
             $fileName = end($fileName);
@@ -52,11 +60,11 @@ class MinimizeImage implements ShouldQueue
             $extension = explode('.', $fileName);
             $extension = end($extension);
 
-            $path = Storage::disk($this->storage_disk)->path($this->path);
+            $path = Storage::disk('avatars')->path($this->path);
 
             $image = Image::make($path)->resize($size, $size)->encode($extension);
 
-            Storage::disk($this->storage_disk)->put('x' . $size . '/' . $fileName, $image->__toString());
+            Storage::disk('avatars')->put('x' . $size . '/' . $fileName, $image->__toString());
         }
     }
 }

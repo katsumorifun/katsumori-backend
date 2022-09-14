@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\EditUsersRequest;
 use App\Http\Requests\GetUsersListRequest;
-use App\Jobs\MinimizeImage;
 use App\Repositories\User;
+use App\Services\Images\Facade\Avatar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -248,17 +248,7 @@ class UsersApiController extends ApiController
             return $this->response->withForbidden("Failed to save changes. You do not have permission to update the user avatar.");
         }
 
-        $avatar = $request->file('avatar');
-        $name = $user->id . '_' . $user->name . '.' . $avatar->extension();
-        $avatar_path = $avatar->storeAs('original', $name, ['disk' => 'avatars']);
-
-        if (!$avatar_path) {
-            return $this->response->withForbidden("Failed to save changes. Server error.");
-        }
-
-        app(User::class)->updateAvatar($user->id, $avatar_path);
-
-        MinimizeImage::dispatch($avatar_path, [32, 64, 128], 'avatars')->onQueue('avatars')->afterResponse();
+        Avatar::update($user, $request->file('avatar'));
 
         return $this->response->json(['status' =>'Avatar upload successfully']);
     }

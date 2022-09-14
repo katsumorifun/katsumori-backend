@@ -47,8 +47,8 @@
                             }
                         }
                     },
-                    "404": {
-                        "description": "Неверный пароль",
+                    "401": {
+                        "description": "Не авторизован",
                         "content": {
                             "application/json": {
                                 "schema": {

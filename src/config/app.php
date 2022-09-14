@@ -179,6 +179,7 @@ return [
 
         \Torann\GeoIP\GeoIPServiceProvider::class,
         \Intervention\Image\ImageServiceProvider::class,
+        App\Providers\AvatarServiceProvider::class,
     ],
 
     /*
@@ -196,6 +197,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'geoIp' => \Torann\GeoIP\Facades\GeoIP::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'avatar' => \App\Services\Images\Facade\Avatar::class
     ])->toArray(),
 
 ];

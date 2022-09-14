@@ -74,26 +74,27 @@ class User extends Repository
             ->delete();
     }
 
-    /**
-     * Обновление аватара
-     * @param int $user_id
-     * @param string $avatar_name
-     * @param bool $minimizeLoading если true, то будут прописаны загрушки loading.png
-     */
-    public function updateAvatar(int $user_id, string $avatar_name, bool $minimizeLoading = true)
+    public function updateAvatar(int $user_id, string $avatar_path)
     {
         $user = $this
             ->getBuilder()
             ->find($user_id);
 
-        $user->avatar = $avatar_name;
+        $user->avatar = $avatar_path;
 
-        if ($minimizeLoading) {
-            $user->avatar_x32 = '/x32/loading.png';
-            $user->avatar_x64 = '/x64/loading.png';
-            $user->avatar_x128 = '/x128/loading.png';
-        }
+        $user->update();
+    }
 
-        $user->save();
+    public function updateMinimizedAvatars(int $user_id, string $extension)
+    {
+        $user = $this
+            ->getBuilder()
+            ->find($user_id);
+
+        $user->avatar_x32 = '/x32/' . $user->id . '_' . $user->name . '.' . $extension;
+        $user->avatar_x64 = '/x64/' . $user->id . '_' . $user->name . '.' . $extension;
+        $user->avatar_x128 = '/x128/' . $user->id . '_' . $user->name . '.' . $extension;
+
+        $user->update();
     }
 }
