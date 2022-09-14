@@ -130,3 +130,17 @@ services:
       - ./src:/var/www/html:delegated
     networks:
       - laravel
+
+  work:
+    build:
+      context: ./dockerfiles
+      dockerfile: php.dockerfile
+      args:
+        - UID=${_UID:-1000}
+        - GID=${GID:-1000}
+    restart: always
+    command: php artisan queue:work --queue=high,default
+    volumes:
+      - ./src:/var/www/html:delegated
+    networks:
+      - laravel
