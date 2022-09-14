@@ -56,7 +56,7 @@ class MinimizeImage implements ShouldQueue
 
             $image = Image::make($path)->resize($size, $size)->encode($extension);
 
-            Storage::disk('avatars')->put('x' . $size . '/' . $fileName, $image->__toString());
+            Storage::disk($this->storage_disk)->put('x' . $size . '/' . $fileName, $image->__toString());
         }
     }
 }

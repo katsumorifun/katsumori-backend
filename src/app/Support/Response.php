@@ -42,11 +42,11 @@ class Response
     /**
      * Return json
      *
-     * @param array $data
+     * @param $data
      * @param array $headers
      * @return \Illuminate\Http\JsonResponse
      */
-    public function json(array $data = [], array $headers = []): \Illuminate\Http\JsonResponse
+    public function json($data = [], array $headers = []): \Illuminate\Http\JsonResponse
     {
         return $this->response->json($data, $this->statusCode, $headers);
     }
