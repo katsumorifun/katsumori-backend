@@ -61,7 +61,12 @@ class LogOutController extends ApiController
     {
         $token = \Auth::user()->token();
 
-        Auth::revokeTokens($token->id);
+
+        /**
+         * @var \App\Contracts\Auth\Auth $auth
+         */
+        $auth = app('app.auth');
+        $auth->revokeTokens($token->id);
 
         return $this->response->json([
             'status' => 'Ok',

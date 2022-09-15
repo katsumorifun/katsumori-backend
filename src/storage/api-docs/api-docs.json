@@ -78,7 +78,7 @@
                 ],
                 "summary": "Авторизация",
                 "description": "Авторизация через OAuth",
-                "operationId": "a6333667d3b1401df1b7534e61b5e57f",
+                "operationId": "54638e37d9f0234a58f20a85428250c0",
                 "parameters": [
                     {
                         "name": "email",
@@ -158,6 +158,44 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/auth/access_token": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Обновлениме access_token через refresh_token",
+                "description": "Обновлениме access_token через refresh_token",
+                "operationId": "e15d91b0da3f862e7218ed6b804f6277",
+                "parameters": [
+                    {
+                        "name": "refresh_token",
+                        "in": "query",
+                        "description": "Токен обновления",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "В случае успеха будут возвращены новые access и refresh токены",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "tokens": {
+                                            "$ref": "#/components/schemas/Tokens"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Ошибка получения новых токенов"
                     }
                 }
             }

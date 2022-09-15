@@ -20,7 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('auth')->group(function (){
     Route::post('registration', [\App\Http\Controllers\Api\V1\Auth\RegistrationController::class, 'callBack'])->name('auth.registration.callback');
-    Route::post('login', [\App\Http\Controllers\Api\V1\Auth\LoginController::class, 'callBack'])->name('auth.login.callback');
+    Route::post('login', [\App\Http\Controllers\Api\V1\Auth\LoginController::class, 'login'])->name('auth.login.callback');
+    Route::post('access_token', [\App\Http\Controllers\Api\V1\Auth\LoginController::class, 'updateTokens']);
     Route::post('logout', [\App\Http\Controllers\Api\V1\Auth\LogOutController::class, 'logOut'])->name('auth.logout');
 });
 

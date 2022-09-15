@@ -180,6 +180,7 @@ return [
         \Torann\GeoIP\GeoIPServiceProvider::class,
         \Intervention\Image\ImageServiceProvider::class,
         App\Providers\AvatarServiceProvider::class,
+        App\Providers\GuardServiceProvider::class,
     ],
 
     /*

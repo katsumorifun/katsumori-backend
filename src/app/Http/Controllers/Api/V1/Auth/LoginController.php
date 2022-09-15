@@ -2,23 +2,17 @@
 
 namespace App\Http\Controllers\Api\V1\Auth;
 
-use App\Base\Auth\Auth;
-use App\Base\Auth\Exceptions\LoginException;
+use App\Exceptions\OperationError;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\UpdateTokens;
 use App\Notifications\NotifyLogin;
-use App\Notifications\VerifyEmail;
 use App\Repositories\User as UserRepository;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Notification;
 
 class LoginController extends ApiController
 {
-    protected Auth $auth;
-
     public function __construct()
     {
-        $this->auth = new Auth();
         parent::__construct();
     }
 
@@ -95,7 +89,7 @@ class LoginController extends ApiController
      *
      * )
      */
-    public function callback(LoginRequest $request)
+    public function login(LoginRequest $request)
     {
         $user = app(UserRepository::class)->getByEmail($request->get('email'));
 
@@ -104,30 +98,74 @@ class LoginController extends ApiController
         }
 
         try {
-            $tokens = $this->auth->login($request->get('email'), $request->get('password'));
 
-        } catch (LoginException $e) {
-            return $this->response->withError('wrong password');
+            /**
+             * @var \App\Contracts\Auth\Auth $auth
+             */
+            $auth = app('app.auth');
+            $auth->attempt($request->get('email'), $request->get('password'));
+
+            $geo_ip = geoip($request->getClientIp());
+
+            $user->notify(new NotifyLogin(
+                'site',
+                '/', //На данный момент фронтенда нет, поэтому и адреса тоже нет. В будущем надо переделать
+                $geo_ip->ip,
+                $geo_ip->country,
+                $geo_ip->city,
+            ));
+
+            return $this
+                ->response
+                ->json(['tokens' => $auth->getData(), 'user' => $user]);
+
+        } catch (OperationError $e) {
+            return $this->response->withError($e->getMessage());
+        }
+    }
+
+    /**
+     * @OA\Post (
+     *     path="/auth/access_token",
+     *     tags = {"Auth"},
+     *     summary="Обновлениме access_token через refresh_token",
+     *     description="Обновлениме access_token через refresh_token",
+     *
+     *
+     *     @OA\Parameter(
+     *          name = "refresh_token",
+     *          in = "query",
+     *          description = "Токен обновления",
+     *          required=true
+     *     ),
+     *
+     *     @OA\Response(
+     *          response="200",
+     *          description="В случае успеха будут возвращены новые access и refresh токены",
+     *          @OA\JsonContent(
+     *              @OA\Property(ref="#/components/schemas/Tokens", property="tokens")
+     *          )
+     *      ),
+     *     @OA\Response(
+     *          response="400",
+     *          description="Ошибка получения новых токенов"
+     *          )
+     *      )
+     *
+     * )
+     */
+    public function updateTokens(UpdateTokens $request)
+    {
+        /**
+         * @var \App\Contracts\Auth\Auth $auth
+         */
+        $auth = app('app.auth');
+        $data = $auth->updateAccessToken($request->get('refresh_token'));
+
+        if (isset($data->error)) {
+            return $this->response->withError($data->message);
         }
 
-        $geo_ip = geoip($request->getClientIp());
-
-        $user->notify(new NotifyLogin(
-            'site',
-            '/', //На данный момент фронтенда нет, поэтому и адреса тоже нет. В будущем надо переделать
-            $geo_ip->ip,
-            $geo_ip->country,
-            $geo_ip->city,
-        ));
-
-        return $this->response->json([
-            'tokens'=> [
-                'expires_in'     => $tokens->getExpiresIn(),
-                'token_type'     => $tokens->getTokenType(),
-                'access_token'   => $tokens->getAccessToken(),
-                'refresh_token'  => $tokens->getRefreshToken(),
-            ],
-            'user'  => $user
-        ]);
+        return $this->response->json(['tokens' => $data]);
     }
 }
