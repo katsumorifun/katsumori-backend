@@ -119,7 +119,11 @@ class RegistrationController extends ApiController
     {
        $user = app(User::class)->createOrGetUser($request->get('name'), $request->get('email'), $request->get('password'));
 
-       app(VerifyEmail::class)->send($user->id, $user->name);
+        /**
+         * @var \App\Contracts\Auth\VerifyEmail $email
+         */
+       $email = app('app.auth.email');
+       $email->send($user->id, $user->name);
 
        return $this->response->withItem($user);
     }

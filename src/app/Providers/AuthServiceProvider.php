@@ -45,5 +45,8 @@ class AuthServiceProvider extends ServiceProvider
 
         $this->app->singleton(\App\Contracts\Auth\Auth::class, \App\Services\Auth\Auth::class);
         $this->app->alias(\App\Contracts\Auth\Auth::class, 'app.auth');
+
+        $this->app->singleton(\App\Contracts\Auth\VerifyEmail::class, \App\Services\Auth\VerifyEmail::class);
+        $this->app->alias(\App\Contracts\Auth\VerifyEmail::class, 'app.auth.email');
     }
 }
