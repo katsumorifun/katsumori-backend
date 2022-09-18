@@ -47,6 +47,24 @@ services:
     networks:
       - laravel
 
+  mysql_testing:
+    image: mariadb:10.8.2-rc-focal
+    container_name: mysql_testing
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 3307:3307
+    environment:
+      MYSQL_DATABASE: yukidub_testing
+      MYSQL_USER: testing
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+      MYSQL_TCP_PORT: 3307
+    networks:
+      - laravel
+
   php:
     build:
       context: ./dockerfiles
