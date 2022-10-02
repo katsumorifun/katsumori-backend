@@ -6,7 +6,6 @@ use App\Exceptions\OperationError;
 use App\Models\User;
 use App\Repositories\User as UserRepository;
 use App\Repositories\VerifyEmail as VerifyRepository;
-use Illuminate\Contracts\Foundation\Application;
 
 class VerifyEmail implements VerifyEmailContract
 {

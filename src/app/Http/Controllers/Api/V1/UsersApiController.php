@@ -92,7 +92,7 @@ class UsersApiController extends ApiController
      */
     public function getById($user_id)
     {
-        $user = app(User::class)->findById($user_id);
+        $user = app(User::class)->getUserProfile($user_id);
 
         if (empty($user)) {
             return $this->response->withNotFound('user');
@@ -166,8 +166,8 @@ class UsersApiController extends ApiController
             return $this->response->withNotFound('user');
         }
 
-        if ($user->id !== Auth()->user()->id){
-            return $this->response->withForbidden("Failed to save changes. You don't have enough rights");
+        if ($request->user()->cannot('edit', User::class)) {
+            return $this->response->withForbidden("Failed to save changes. You do not have permission to update the user profile.");
         }
 
         if($request->get('name')) {

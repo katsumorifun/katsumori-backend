@@ -16,4 +16,15 @@ class User
         app(VerifyEmail::class)->removeOldHash();
         app(UserRepository::class)->removeUsersUnconfirmedEmail();
     }
+
+    /**
+     * Смена группы guest у пользователей с датой гергистрации выше days на группу user
+     *
+     * @param int $days
+     * @return void
+     */
+    public function changeUserGroupToUsers(int $days = 2)
+    {
+        app(UserRepository::class)->changeUserGroupToUsers($days);
+    }
 }

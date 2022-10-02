@@ -51,6 +51,14 @@ class Schedule
                 $this->scheduleTaskError(User::class, $e);
             }
         })->daily();
+
+        $schedule->call(function () {
+            try {
+                app(User::class)->changeUserGroupToUsers();
+            } catch (Throwable $e) {
+                $this->scheduleTaskError(User::class, $e);
+            }
+        })->days(2);
     }
 
     /**

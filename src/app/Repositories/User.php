@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Models\Role;
 use \App\Models\User as UserModel;
+use Carbon\Carbon;
 
 class User extends Repository
 {
@@ -19,13 +21,19 @@ class User extends Repository
      */
     public function createOrGetUser(string $name, string $email, string $password): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
     {
-        return $this
+        $role = Role::where(['en_name' => 'guest'])->first();
+
+        $user = $this
             ->getBuilder()
             ->create([
                 'name'    => $name,
                 'email'   => $email,
                 'password'=> bcrypt($password),
-            ]);
+                ]);
+
+        $user->roles()->attach($role);
+
+        return $user;
     }
 
     /**
@@ -96,5 +104,38 @@ class User extends Repository
         $user->avatar_x128 = '/x128/' . $user->id . '_' . $user->name . '.' . $extension;
 
         $user->update();
+    }
+
+    public function getUserProfile(int $id): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder|array|null
+    {
+        return $this->getBuilder()->with('roles')->find($id);
+    }
+
+    /**
+     * Смена группы guest у пользователей с датой гергистрации выше days на группу user
+     *
+     * @param int $dayAgo
+     * @return void
+     */
+    public function changeUserGroupToUsers(int $days = 2)
+    {
+        $role = Role::where(['en_name' => 'user'])->first();
+
+        $guests = $this->getBuilder()
+            ->whereHas('roles', function ($query) {
+                $query->where(['en_name' => 'guest']);
+            })
+            ->get();
+
+        $guests->each(function ($user) use ($role, $days) {
+            if ($user->hasVerifiedEmail()) {
+                $dayToCheck = Carbon::parse($user->created_at)->addDays($days);
+
+                if ($user->email_verified_at > $dayToCheck) {
+                    $user->roles()->attach($role);
+                }
+            }
+
+        });
     }
 }

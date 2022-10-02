@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Base\Auth\Exceptions\HashException;
+use App\Exceptions\OperationError;
 
 class VerifyEmail
 {
@@ -13,9 +13,13 @@ class VerifyEmail
         }
 
         try {
-            app(\App\Base\Auth\VerifyEmail::class)->verifyEmail($user_id, $hash);
+            /**
+             * @var \App\Contracts\Auth\VerifyEmail $email
+             */
+            $email = app('app.auth.email');
+            $email->verifyEmail($user_id, $hash);
 
-        } catch (HashException $ex) {
+        } catch (OperationError $ex) {
             return view('auth.email.confirm', ['status' => false]);
         }
 
