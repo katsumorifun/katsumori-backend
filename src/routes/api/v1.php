@@ -38,3 +38,9 @@ Route::prefix('users')->group(function (){
     Route::post('/{user_id}/edit', [\App\Http\Controllers\Api\V1\UsersApiController::class, 'editProfile'])->middleware('auth:api');
     Route::post('/{user_id}/upload_avatar', [\App\Http\Controllers\Api\V1\UsersApiController::class, 'uploadAvatar'])->middleware('auth:api');
 });
+
+Route::prefix('anime')->group(function (){
+    Route::get('/', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'list']);
+    Route::get('/{id}', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'get']);
+    Route::post('/{id}', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'update']);
+});

@@ -18,6 +18,158 @@
         }
     ],
     "paths": {
+        "/anime": {
+            "get": {
+                "tags": [
+                    "Anime"
+                ],
+                "summary": "Получение списка аниме тайтлов",
+                "operationId": "e5bff3bde08d2b68e3ebc66d37f8fd5f",
+                "responses": {
+                    "200": {
+                        "description": "Cписка тайтлов",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/AnimeListItem"
+                                            }
+                                        },
+                                        "pagination": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/PaginationMeta"
+                                            }
+                                        },
+                                        "links": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/PaginationLinks"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Ошибка валидации"
+                    }
+                }
+            }
+        },
+        "/anime/{id}": {
+            "get": {
+                "tags": [
+                    "Anime"
+                ],
+                "summary": "Получение информации о тайтле",
+                "operationId": "122395091efd8c3f960a879b9604bd5c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id аниме",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Информация о тайтле",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Device"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "тайтл не найден",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Device"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Anime"
+                ],
+                "summary": "Обновление информации о тайтле",
+                "description": "Для выполнения данного запроса требуется право доступа anime.update",
+                "operationId": "223a2acec636abfe6e4060d8a402a434",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id аниме",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Информация о тайтле",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Device"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "тайтл не найден",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Device"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "недостаточно прав доступа",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Device"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/auth/logout": {
             "post": {
                 "tags": [
@@ -704,6 +856,208 @@
     },
     "components": {
         "schemas": {
+            "Aired": {
+                "title": "Aired",
+                "description": "Информация о выходе",
+                "properties": {
+                    "from": {
+                        "description": "Дата начала показа тайтла",
+                        "type": "string",
+                        "example": "2022-07-06 12:53:13"
+                    },
+                    "to": {
+                        "description": "Дата выхода следующей серии",
+                        "type": "string",
+                        "example": "2022-07-06 12:53:13"
+                    },
+                    "prop": {
+                        "$ref": "#/components/schemas/AiredProp"
+                    }
+                },
+                "type": "object"
+            },
+            "AiredProp": {
+                "title": "AiredProp",
+                "properties": {
+                    "from": {
+                        "description": "$from",
+                        "type": "string"
+                    },
+                    "to": {
+                        "description": "$to",
+                        "type": "array",
+                        "items": {
+                            "type": "array",
+                            "items": {}
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "AnimeImages": {
+                "title": "AnimeImages",
+                "description": "",
+                "properties": {
+                    "original": {
+                        "description": "Оригинальная версия постера",
+                        "type": "string",
+                        "example": "/images/anime/original/default.png"
+                    },
+                    "x32": {
+                        "description": "Версия постера в размере 32 на 32 пикселя",
+                        "type": "string",
+                        "example": "/images/anime/x32/default.png"
+                    },
+                    "x64": {
+                        "description": "Версия постера в размере 64 на 64 пикселя",
+                        "type": "string",
+                        "example": "/images/anime/x64/default.png"
+                    },
+                    "x128": {
+                        "description": "Версия постера в размере 128 на 128 пикселей",
+                        "type": "string",
+                        "example": "/images/anime/x128/default.png"
+                    }
+                },
+                "type": "object"
+            },
+            "AnimeListItem": {
+                "title": "AnimeListItem",
+                "description": "",
+                "properties": {
+                    "id": {
+                        "description": "Id тайтла",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "mal_id": {
+                        "description": "Id тайтла на MyAnimeList",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "images": {
+                        "$ref": "#/components/schemas/AnimeImages"
+                    },
+                    "title_jp": {
+                        "description": "Название тайтла на японском",
+                        "type": "string",
+                        "example": "異世界おじさん"
+                    },
+                    "title_en": {
+                        "description": "Название тайтла на английском",
+                        "type": "string",
+                        "example": "Isekai Ojisan"
+                    },
+                    "title_ru": {
+                        "description": "Название тайтла на русском",
+                        "type": "string",
+                        "example": "Перерождение Дяди"
+                    },
+                    "title_synonyms": {
+                        "$ref": "#/components/schemas/AnimeTitleSynonyms"
+                    },
+                    "type": {
+                        "description": "$type",
+                        "type": "string",
+                        "example": "tv"
+                    },
+                    "source": {
+                        "description": "$source",
+                        "type": "string",
+                        "example": "manga"
+                    },
+                    "episodes": {
+                        "description": "$episodes",
+                        "type": "integer",
+                        "example": "10"
+                    },
+                    "status": {
+                        "description": "$status",
+                        "type": "string",
+                        "example": "ongoing"
+                    },
+                    "airing": {
+                        "description": "$airing",
+                        "type": "boolean",
+                        "example": "false"
+                    },
+                    "aired": {
+                        "$ref": "#/components/schemas/Aired"
+                    },
+                    "duration": {
+                        "description": "$duration",
+                        "type": "string",
+                        "example": "24 min per ep"
+                    },
+                    "age_rating": {
+                        "description": "$age_rating",
+                        "type": "string",
+                        "example": "pg-13"
+                    },
+                    "mal_score": {
+                        "description": "$mal_score",
+                        "type": "number",
+                        "format": "float",
+                        "example": "7.93"
+                    },
+                    "score": {
+                        "description": "$score",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "statistics": {
+                        "description": "$statistics",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "synopsis": {
+                        "$ref": "#/components/schemas/Synopsis"
+                    },
+                    "season": {
+                        "description": "$season",
+                        "type": "string"
+                    },
+                    "year": {
+                        "description": "$year",
+                        "type": "string"
+                    },
+                    "producers": {
+                        "$ref": "#/components/schemas/Staff"
+                    },
+                    "licensors": {
+                        "$ref": "#/components/schemas/Licensor"
+                    },
+                    "studio": {
+                        "$ref": "#/components/schemas/Studio"
+                    },
+                    "genres": {
+                        "$ref": "#/components/schemas/Genre"
+                    },
+                    "theme": {
+                        "$ref": "#/components/schemas/Theme"
+                    }
+                },
+                "type": "object"
+            },
+            "AnimeTitleSynonyms": {
+                "title": "AnimeTitleSynonyms",
+                "description": "Альтернативные названия тайтла",
+                "properties": {
+                    "type": {
+                        "description": "Оригинальная версия постера",
+                        "type": "string",
+                        "format": "string",
+                        "example": "English"
+                    },
+                    "title": {
+                        "description": "Оригинальная версия постера",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Ojisan in Another World"
+                    }
+                },
+                "type": "object"
+            },
             "Tokens": {
                 "title": "Tokens",
                 "description": "OAuth токены",
@@ -844,6 +1198,262 @@
                 },
                 "type": "object"
             },
+            "Genre": {
+                "title": "Genre",
+                "description": "Информация о выходе",
+                "properties": {
+                    "id": {
+                        "description": "$id",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "mal_id": {
+                        "description": "$mal_id",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "name_jp": {
+                        "description": "$name_jp",
+                        "type": "string",
+                        "example": "河合 滋樹"
+                    },
+                    "name_en": {
+                        "description": "$name_en",
+                        "type": "string",
+                        "example": "En"
+                    },
+                    "name_ru": {
+                        "description": "$name_ru",
+                        "type": "string",
+                        "example": "Сигэки Кавай"
+                    }
+                },
+                "type": "object"
+            },
+            "Licensor": {
+                "title": "Licensor",
+                "description": "Информация о выходе",
+                "properties": {
+                    "id": {
+                        "description": "$id",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "name": {
+                        "description": "$name",
+                        "type": "string",
+                        "example": "name"
+                    }
+                },
+                "type": "object"
+            },
+            "PaginationLinks": {
+                "title": "PaginationLinks",
+                "description": "Мета информация для пангинации",
+                "properties": {
+                    "first": {
+                        "description": "$first",
+                        "type": "string",
+                        "example": "http://localhost:8081/api/v1/anime?page=1"
+                    },
+                    "last": {
+                        "description": "$last",
+                        "type": "string",
+                        "example": "http://localhost:8081/api/v1/anime?page=1"
+                    },
+                    "prev": {
+                        "description": "$prev",
+                        "type": "string",
+                        "example": "null"
+                    },
+                    "next": {
+                        "description": "$next",
+                        "type": "string",
+                        "example": "null"
+                    }
+                },
+                "type": "object"
+            },
+            "PaginationMeta": {
+                "title": "PaginationMeta",
+                "description": "Мета информация для пангинации",
+                "properties": {
+                    "current_page": {
+                        "description": "$current_page",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "from": {
+                        "description": "$from",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "last_page": {
+                        "description": "$last_page",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/PaginationMetaLinks"
+                    },
+                    "path": {
+                        "description": "$path",
+                        "type": "string",
+                        "example": "http://localhost:8081/api/v1/anime"
+                    },
+                    "per_page": {
+                        "description": "$per_page",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "to": {
+                        "description": "$to",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "total": {
+                        "description": "$total",
+                        "type": "integer",
+                        "example": "1"
+                    }
+                },
+                "type": "object"
+            },
+            "PaginationMetaLinks": {
+                "title": "PaginationMetaLinks",
+                "description": "Мета информация для пангинации",
+                "properties": {
+                    "url": {
+                        "description": "$current_page",
+                        "type": "string",
+                        "example": "null"
+                    },
+                    "label": {
+                        "description": "$label",
+                        "type": "string",
+                        "example": "&laquo; Previous"
+                    },
+                    "active": {
+                        "description": "$active",
+                        "type": "boolean",
+                        "example": "false"
+                    }
+                },
+                "type": "object"
+            },
+            "Staff": {
+                "title": "Staff",
+                "description": "Информация о выходе",
+                "properties": {
+                    "id": {
+                        "description": "$id",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "mal_id": {
+                        "description": "$mal_id",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "name_jp": {
+                        "description": "$name_jp",
+                        "type": "string",
+                        "example": "河合 滋樹"
+                    },
+                    "name_en": {
+                        "description": "$name_en",
+                        "type": "string",
+                        "example": "En"
+                    },
+                    "name_ru": {
+                        "description": "$name_ru",
+                        "type": "string",
+                        "example": "Сигэки Кавай"
+                    },
+                    "image_x32": {
+                        "description": "$image_x32",
+                        "type": "string",
+                        "example": "/images/staff/x32/default.png"
+                    },
+                    "image_x64": {
+                        "description": "$image_x64",
+                        "type": "string",
+                        "example": "/images/staff/x64/default.png"
+                    },
+                    "image_original": {
+                        "description": "$image_original",
+                        "type": "string",
+                        "example": "/original/staff/x64/default.png"
+                    }
+                },
+                "type": "object"
+            },
+            "Studio": {
+                "title": "Studio",
+                "description": "Информация о выходе",
+                "properties": {
+                    "id": {
+                        "description": "$id",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "name": {
+                        "description": "$name",
+                        "type": "string",
+                        "example": "AtelierPontdarc"
+                    }
+                },
+                "type": "object"
+            },
+            "Synopsis": {
+                "title": "Synopsis",
+                "description": "Модаль устройства, с которого был выполнен вход",
+                "properties": {
+                    "ru": {
+                        "description": "$ru",
+                        "type": "string",
+                        "example": "Кто же не мечтает хоть разок побывать в ином мире, наполненном магией и дивными существами?! Хотя обычный семнадцатилетний паре..."
+                    },
+                    "en": {
+                        "description": "$en",
+                        "type": "string",
+                        "example": "Lorem i...."
+                    }
+                },
+                "type": "object"
+            },
+            "Theme": {
+                "title": "Theme",
+                "description": "Информация о выходе",
+                "properties": {
+                    "id": {
+                        "description": "$id",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "mal_id": {
+                        "description": "$mal_id",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "name_jp": {
+                        "description": "$name_jp",
+                        "type": "string",
+                        "example": "河合 滋樹"
+                    },
+                    "name_en": {
+                        "description": "$name_en",
+                        "type": "string",
+                        "example": "En"
+                    },
+                    "name_ru": {
+                        "description": "$name_ru",
+                        "type": "string",
+                        "example": "Сигэки Кавай"
+                    }
+                },
+                "type": "object"
+            },
             "User": {
                 "title": "User",
                 "description": "Модель пользователя",
@@ -883,6 +1493,9 @@
         },
         {
             "name": "Devices"
+        },
+        {
+            "name": "Anime"
         }
     ]
 }
