@@ -26,6 +26,7 @@ services:
       - redis
       - mysql
       - schedule
+      - elasticsearch
     networks:
       - laravel
       - net
@@ -44,6 +45,21 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-password}
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
+    networks:
+      - laravel
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.4.3
+    volumes:
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,z
+      - elasticsearch:/usr/share/elasticsearch/data:z
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-password} # Password for the 'elastic' user
+      discovery.type: single-node
     networks:
       - laravel
 
@@ -162,3 +178,6 @@ services:
       - ./src:/var/www/html:delegated
     networks:
       - laravel
+
+volumes:
+  elasticsearch:
