@@ -26,6 +26,14 @@ if ((size > 0));then
   sed -i "s/DB_USERNAME=/DB_USERNAME=$mysql_user/" src/.env
 fi
 
+read elastic_password
+size=${#elastic_password}
+
+if ((size > 0));then
+  export ELASTIC_PASSWORD=elastic_password &&
+  sed -i "s/ELASTIC_PASSWORD=/ELASTIC_PASSWORD=$elastic_password/" src/.env
+fi
+
 echo -en "Database root password (default: password):"
 
 read root_password
