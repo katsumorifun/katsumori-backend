@@ -31,4 +31,11 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'search' => [
+        'enabled' => env('ELASTICSEARCH_ENABLED', false),
+        'host' => explode(',', env('ELASTICSEARCH_HOSTS')),
+        'user' => env('ELASTICSEARCH_USER'),
+        'password' => env('ELASTICSEARCH_PASS'),
+    ],
+
 ];

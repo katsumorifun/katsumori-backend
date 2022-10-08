@@ -36,7 +36,7 @@ return new class extends Migration
             $table->integer('episodes_aired')->nullable();
             $table->dateTime('episodes_from')->nullable()->default(null);
             $table->dateTime('episodes_to')->nullable()->default(null);;
-            $table->integer('duration')->default(0)->default(null);;
+            $table->integer('duration')->default(0);
             $table->enum('age_rating', ['g', 'pg', 'pg-13', 'r-17', 'r+'])->nullable();
             $table->enum('season', ['summer', 'autumn', 'winter', 'spring'])->nullable();
         });

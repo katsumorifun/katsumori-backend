@@ -62,6 +62,35 @@
                 }
             }
         },
+        "/anime/search/{value}": {
+            "get": {
+                "tags": [
+                    "Anime"
+                ],
+                "summary": "Получение списка аниме тайтлов",
+                "operationId": "65c13f50e38e4981478e56f1732efcaf",
+                "responses": {
+                    "200": {
+                        "description": "Cписка тайтлов",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/AnimeSearchItem"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/anime/{id}": {
             "get": {
                 "tags": [
@@ -1035,6 +1064,109 @@
                     },
                     "theme": {
                         "$ref": "#/components/schemas/Theme"
+                    }
+                },
+                "type": "object"
+            },
+            "AnimeSearchItem": {
+                "title": "AnimeSearchItem",
+                "description": "",
+                "properties": {
+                    "id": {
+                        "description": "Id тайтла",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "mal_id": {
+                        "description": "Id тайтла на MyAnimeList",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "images": {
+                        "$ref": "#/components/schemas/AnimeImages"
+                    },
+                    "title_jp": {
+                        "description": "Название тайтла на японском",
+                        "type": "string",
+                        "example": "異世界おじさん"
+                    },
+                    "title_en": {
+                        "description": "Название тайтла на английском",
+                        "type": "string",
+                        "example": "Isekai Ojisan"
+                    },
+                    "title_ru": {
+                        "description": "Название тайтла на русском",
+                        "type": "string",
+                        "example": "Перерождение Дяди"
+                    },
+                    "title_synonyms": {
+                        "$ref": "#/components/schemas/AnimeTitleSynonyms"
+                    },
+                    "type": {
+                        "description": "$type",
+                        "type": "string",
+                        "example": "tv"
+                    },
+                    "source": {
+                        "description": "$source",
+                        "type": "string",
+                        "example": "manga"
+                    },
+                    "episodes": {
+                        "description": "$episodes",
+                        "type": "integer",
+                        "example": "10"
+                    },
+                    "status": {
+                        "description": "$status",
+                        "type": "string",
+                        "example": "ongoing"
+                    },
+                    "airing": {
+                        "description": "$airing",
+                        "type": "boolean",
+                        "example": "false"
+                    },
+                    "duration": {
+                        "description": "$duration",
+                        "type": "string",
+                        "example": "24 min per ep"
+                    },
+                    "age_rating": {
+                        "description": "$age_rating",
+                        "type": "string",
+                        "example": "pg-13"
+                    },
+                    "mal_score": {
+                        "description": "$mal_score",
+                        "type": "number",
+                        "format": "float",
+                        "example": "7.93"
+                    },
+                    "score": {
+                        "description": "$score",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "statistics": {
+                        "description": "$statistics",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "season": {
+                        "description": "$season",
+                        "type": "string"
+                    },
+                    "year": {
+                        "description": "$year",
+                        "type": "string"
+                    },
+                    "studio": {
+                        "$ref": "#/components/schemas/Studio"
+                    },
+                    "genres": {
+                        "$ref": "#/components/schemas/Genre"
                     }
                 },
                 "type": "object"

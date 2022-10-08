@@ -41,6 +41,7 @@ Route::prefix('users')->group(function (){
 
 Route::prefix('anime')->group(function (){
     Route::get('/', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'list']);
+    Route::get('search/{value}', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'search']);
     Route::get('/{id}', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'get']);
     Route::post('/{id}', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'update']);
 });

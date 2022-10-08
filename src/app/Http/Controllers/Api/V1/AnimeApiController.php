@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use \App\Http\Controllers\Api\ApiController;
+use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\AnimeListRequest;
 use App\Http\Resources\AnimeListResource;
 use App\Repositories\Anime;
+use App\Services\SearchService\ElasticSearch;
+use App\Services\SearchService\Search;
 use OpenApi\Annotations as OA;
 
 class AnimeApiController extends ApiController
@@ -52,8 +54,34 @@ class AnimeApiController extends ApiController
 
         $data = app(Anime::class)->getListAndGeneralInfoPaginate($per_page, $page);
 
-        return AnimeListResource::collection($data);
+        return $this->response->json(AnimeListRequest::collection($data));
 
+    }
+
+    /**
+     *
+     * @OA\Get (
+     *     path="/anime/search/{value}",
+     *     tags = {"Anime"},
+     *     summary="Получение списка аниме тайтлов",
+     *     @OA\Response(
+     *          response="200",
+     *          description="Cписка тайтлов",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="data",
+     *                  type="array",
+     *                  @OA\Items(ref="#/components/schemas/AnimeSearchItem"),
+     *              )
+     *          )
+     *      )
+     * )
+     */
+    public function search($value)
+    {
+        $anime = app(Search::class)->anime($value);
+
+        return $this->response->json(AnimeListResource::collection($anime));
     }
 
     /**

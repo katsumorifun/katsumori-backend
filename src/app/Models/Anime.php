@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Services\SearchService\Traits\Model\Searchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Anime extends Model
 {
+    use Searchable;
     use HasFactory;
 
     protected $table = 'anime';
