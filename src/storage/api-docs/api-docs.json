@@ -1082,8 +1082,21 @@
                         "type": "integer",
                         "example": "1"
                     },
-                    "images": {
-                        "$ref": "#/components/schemas/AnimeImages"
+                    "image_x32": {
+                        "description": "$image_x32",
+                        "type": "string"
+                    },
+                    "image_x64": {
+                        "description": "$image_x64",
+                        "type": "string"
+                    },
+                    "image_x128": {
+                        "description": "$image_x128",
+                        "type": "string"
+                    },
+                    "image_original": {
+                        "description": "$image_original",
+                        "type": "string"
                     },
                     "title_jp": {
                         "description": "Название тайтла на японском",
@@ -1128,6 +1141,18 @@
                         "type": "boolean",
                         "example": "false"
                     },
+                    "episodes_aired": {
+                        "description": "$episodes_aired",
+                        "type": "string"
+                    },
+                    "episodes_from": {
+                        "description": "$episodes_from",
+                        "type": "string"
+                    },
+                    "episodes_to": {
+                        "description": "$episodes_to",
+                        "type": "string"
+                    },
                     "duration": {
                         "description": "$duration",
                         "type": "string",
@@ -1154,6 +1179,14 @@
                         "type": "number",
                         "format": "float"
                     },
+                    "synopsis_en": {
+                        "description": "$synopsis_en",
+                        "type": "string"
+                    },
+                    "synopsis_ru": {
+                        "description": "$synopsis_ru",
+                        "type": "string"
+                    },
                     "season": {
                         "description": "$season",
                         "type": "string"
@@ -1161,12 +1194,6 @@
                     "year": {
                         "description": "$year",
                         "type": "string"
-                    },
-                    "studio": {
-                        "$ref": "#/components/schemas/Studio"
-                    },
-                    "genres": {
-                        "$ref": "#/components/schemas/Genre"
                     }
                 },
                 "type": "object"

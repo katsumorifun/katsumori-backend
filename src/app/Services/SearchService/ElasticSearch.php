@@ -40,11 +40,6 @@ class ElasticSearch extends Repository implements Search
     }
     private function buildCollection($items)
     {
-        $ids = \Arr::pluck($items['hits']['hits'], '_id');
-
-        return Anime::whereIn('id', $ids)
-            ->with('studios')
-            ->with('genres')
-            ->get();
+        return \Arr::pluck($items['hits']['hits'], '_source');
     }
 }

@@ -33,11 +33,32 @@ class AnimeSearchItem
     public int $mal_id;
 
     /**
-     * @OA\Property(ref="#/components/schemas/AnimeImages")
+     * @OA\Property()
      *
-     * @var array
+     * @var string $image_x32
      */
-    public array $images;
+    public string $image_x32;
+
+    /**
+     * @OA\Property()
+     *
+     * @var string $image_x64
+     */
+    public string $image_x64;
+
+    /**
+     * @OA\Property()
+     *
+     * @var string $image_x128
+     */
+    public string $image_x128;
+
+    /**
+     * @OA\Property()
+     *
+     * @var string $image_original
+     */
+    public string $image_original;
 
     /**
      * @OA\approved(
@@ -132,11 +153,25 @@ class AnimeSearchItem
     public bool $airing;
 
     /**
-     * @OA\Property(ref="#/components/schemas/Aired")
+     * @OA\Property()
      *
-     * @var array $aired
+     * @var string $episodes_aired
      */
-    public array $aired;
+    public string $episodes_aired;
+
+    /**
+     * @OA\Property()
+     *
+     * @var string $episodes_from
+     */
+    public string $episodes_from;
+
+    /**
+     * @OA\Property()
+     *
+     * @var string $episodes_to
+     */
+    public string $episodes_to;
 
     /**
      * @OA\Property(
@@ -180,11 +215,18 @@ class AnimeSearchItem
     public float $statistics;
 
     /**
-     * @OA\Property(ref="#/components/schemas/Synopsis")
+     * @OA\Property()
      *
-     * @var array $synopsis
+     * @var string $synopsis_en
      */
-    public array $synopsis;
+    public string $synopsis_en;
+
+    /**
+     * @OA\Property()
+     *
+     * @var string $synopsis_ru
+     */
+    public string $synopsis_ru;
 
     /**
      * @OA\Property()
@@ -199,27 +241,4 @@ class AnimeSearchItem
      * @var string $year
      */
     public string $year;
-
-    /**
-     * @OA\Property(ref="#/components/schemas/Staff", property="producers")
-     *
-     * @var array $producers
-     */
-    public array $producers;
-
-    /**
-     * @OA\Property(ref="#/components/schemas/Studio")
-     *
-     * @var array $studio
-     */
-    public array $studio;
-
-    /**
-     * @OA\Property(ref="#/components/schemas/Genre")
-     *
-     * @var array $genres
-     */
-    public array $genres;
-
-
 }

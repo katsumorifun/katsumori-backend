@@ -79,9 +79,9 @@ class AnimeApiController extends ApiController
      */
     public function search($value)
     {
-        $anime = app(Search::class)->anime($value);
+        $data = app(Search::class)->anime($value);
 
-        return $this->response->json(AnimeListResource::collection($anime));
+        return $this->response->json($data);
     }
 
     /**

@@ -12,8 +12,6 @@ class EquivalentSearch implements Search
             ->where('title_en', 'like', "%{$query}%")
             ->orWhere('title_jp', 'like', "%{$query}%")
             ->orWhere('title_ru', 'like', "%{$query}%")
-            ->with('studios')
-            ->with('genres')
             ->get();
     }
 }
