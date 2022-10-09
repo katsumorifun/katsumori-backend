@@ -19,4 +19,9 @@ class Character extends Model
         'image_original',
     ];
 
+    public function staff(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Staff::class, 'characters_voice_actors');
+    }
+
 }

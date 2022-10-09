@@ -65,9 +65,15 @@ class Anime extends Model
     {
         return $this->belongsToMany(Genre::class);
     }
+
     public function themes(): BelongsToMany
     {
         return $this->belongsToMany(Theme::class);
+    }
+
+    public function characters(): BelongsToMany
+    {
+        return $this->belongsToMany(Character::class);
     }
 
 }
