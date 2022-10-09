@@ -6,6 +6,7 @@ use App\Services\SearchService\Traits\Model\Searchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Contracts\Database\Query\Builder;
 
 class Anime extends Model
 {
@@ -46,6 +47,14 @@ class Anime extends Model
         'episodes_from' => 'datetime',
     ];
 
+    protected $relations = [
+        'studios'   => '',
+        'licensors' => '',
+        'staff'     => '',
+        'genres'    => '',
+        'themes'    => '',
+    ];
+
     public function studios(): BelongsToMany
     {
         return $this->belongsToMany(Studio::class);
@@ -74,6 +83,39 @@ class Anime extends Model
     public function characters(): BelongsToMany
     {
         return $this->belongsToMany(Character::class);
+    }
+
+    public function scopeOfStudios(Builder $query, array $studio_ids): Builder
+    {
+        foreach ($studio_ids as $studio_id) {
+            $query->with('studios')->whereHas('studios', function (Builder $query) use ($studio_id) {
+                $query->where('id', '=', $studio_id);
+            });
+        }
+
+        return $query;
+    }
+
+    public function scopeOfGenres(Builder $query, array $genre_ids): Builder
+    {
+        foreach ($genre_ids as $genre_id) {
+            $query->with('genres')->whereHas('genres', function (Builder $query) use ($genre_id) {
+                $query->where('id', '=', $genre_id);
+            });
+        }
+
+        return $query;
+    }
+
+    public function scopeOfStaff(Builder $query, array $staff_ids): Builder
+    {
+        foreach ($staff_ids as $staff_id) {
+            $query->with('staff')->whereHas('staff', function (Builder $query) use ($staff_id) {
+                $query->where('id', '=', $staff_id);
+            });
+        }
+
+        return $query;
     }
 
 }

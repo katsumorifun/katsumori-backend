@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Base\Filter\FilterDTO;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\AnimeListRequest;
 use App\Http\Resources\AnimeListResource;
 use App\Repositories\Anime;
-use App\Services\SearchService\ElasticSearch;
 use App\Services\SearchService\Search;
 use OpenApi\Annotations as OA;
 
@@ -52,7 +52,8 @@ class AnimeApiController extends ApiController
         $per_page = $request->get('per_page') ? $request->get('per_page'): 12;
         $page = $request->get('page') ? $request->get('page'): 1;
 
-        $data = app(Anime::class)->getListAndGeneralInfoPaginate($per_page, $page);
+        $data = app(Anime::class)
+            ->getListAndGeneralInfoPaginate($per_page, $page, (new FilterDTO())->transform(\App\Models\Anime::class, $request));
 
         return AnimeListResource::collection($data);
     }
