@@ -30,10 +30,10 @@ class AnimeFactory extends Factory
             'type'            => $this->faker->randomElement(['serial',  'film', 'ova', 'ona', 'clip', 'special', 'tv']),
             'approved'        => mt_rand(0, 1),
             'status'          => $this->faker->randomElement(['announced', 'ongoing', 'finished']),
-            'image_x32'       => '/x32/' . $this->faker->name,
-            'image_x64'       => '/x64/' . $this->faker->name,
-            'image_x128'      => '/x128/' . $this->faker->name,
-            'image_original'  => '/original/' . $this->faker->name,
+            'image_x32'       => '/x32/' . $this->faker->name. '.png',
+            'image_x64'       => '/x64/' . $this->faker->name. '.png',
+            'image_x128'      => '/x128/' . $this->faker->name. '.png',
+            'image_original'  => '/original/' . $this->faker->lastName . '.png',
             'title_synonyms'  => [
                 [
                     "type"  => $this->faker->randomElement(['japanese',  'english', 'russian']),
