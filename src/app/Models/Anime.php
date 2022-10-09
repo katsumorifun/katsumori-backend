@@ -46,12 +46,12 @@ class Anime extends Model
 
     public function studios(): BelongsToMany
     {
-        return $this->belongsToMany(Studios::class);
+        return $this->belongsToMany(Studio::class);
     }
 
     public function licensors(): BelongsToMany
     {
-        return $this->belongsToMany(Licensors::class);
+        return $this->belongsToMany(Licensor::class);
     }
 
     public function staff(): BelongsToMany
@@ -61,11 +61,11 @@ class Anime extends Model
 
     public function genres(): BelongsToMany
     {
-        return $this->belongsToMany(Genres::class);
+        return $this->belongsToMany(Genre::class);
     }
     public function themes(): BelongsToMany
     {
-        return $this->belongsToMany(Themes::class);
+        return $this->belongsToMany(Theme::class);
     }
 
 }

@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('anime_characters', function (Blueprint $table) {
+        Schema::create('anime_theme', function (Blueprint $table) {
             $table->unsignedBigInteger('anime_id')->nullable(false);
-            $table->unsignedBigInteger('characters_id')->nullable(false);
+            $table->unsignedBigInteger('theme_id')->nullable(false);
 
             $table->foreign('anime_id')->on('anime')->references('id')->onDelete('cascade');
-            $table->foreign('characters_id')->on('characters')->references('id')->onDelete('cascade');
-            $table->primary(['anime_id', 'characters_id']);
+            $table->foreign('theme_id')->on('themes')->references('id')->onDelete('cascade');
+            $table->primary(['anime_id', 'theme_id']);
         });
     }
 
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('anime_characters');
+        Schema::dropIfExists('anime_theme');
     }
 };

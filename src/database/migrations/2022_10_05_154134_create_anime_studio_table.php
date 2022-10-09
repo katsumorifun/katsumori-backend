@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('anime_studios', function (Blueprint $table) {
+        Schema::create('anime_studio', function (Blueprint $table) {
             $table->unsignedBigInteger('anime_id')->nullable(false);
-            $table->unsignedBigInteger('studios_id')->nullable(false);
+            $table->unsignedBigInteger('studio_id')->nullable(false);
 
             $table->foreign('anime_id')->on('anime')->references('id')->onDelete('cascade');
-            $table->foreign('studios_id')->on('studios')->references('id')->onDelete('cascade');
+            $table->foreign('studio_id')->on('studios')->references('id')->onDelete('cascade');
 
-            $table->primary(['anime_id', 'studios_id']);
+            $table->primary(['anime_id', 'studio_id']);
         });
     }
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('anime_studios');
+        Schema::dropIfExists('anime_studio');
     }
 };
