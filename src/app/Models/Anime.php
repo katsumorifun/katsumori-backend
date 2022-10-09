@@ -41,7 +41,9 @@ class Anime extends Model
     ];
 
     protected $casts = [
-        'title_synonyms' => 'array'
+        'title_synonyms' => 'array',
+        'episodes_to' => 'datetime',
+        'episodes_from' => 'datetime',
     ];
 
     public function studios(): BelongsToMany
