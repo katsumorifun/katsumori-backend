@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Genre;
 use App\Models\Licensor;
 use App\Models\Studio;
+use App\Models\Theme;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -22,6 +23,7 @@ class DatabaseSeeder extends Seeder
              ->has(Studio::factory()->count(mt_rand(0, 4)))
              ->has(Genre::factory()->count(mt_rand(1, 8)))
              ->has(Licensor::factory()->count(mt_rand(0, 10)))
+             ->has(Theme::factory()->count(mt_rand(0, 6)))
              ->create();
     }
 }
