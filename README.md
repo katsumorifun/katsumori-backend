@@ -35,6 +35,7 @@ http://127.0.0.1:8081
 - MYSQL_ROOT_PASSWORD (по умолчанию password)
 - MYSQL_PASSWORD (по умолчанию password)
 - MYSQL_USER (по умолчанию Laravel)
+- ELASTIC_PASSWORD (по умолчанию password)
 
 Пример на Linux:
 ````
@@ -45,9 +46,9 @@ export MYSQL_ROOT_PASSWORD=password
 - Запуск и сборка docker-compose контейнеров: ````docker-compose up --build -d yukidub````
 - Установка всех зависимостей Composer: ````docker-compose run --rm composer install````
 - Миграция таблицы бд: ````docker-compose run --rm artisan migrate````
-- Миграция таблицы бд: ````docker-compose run --rm artisan key:generate````
-- Создание клиента для авторизации пользователей и т.д.: ````docker-compose run --rm artisan passport:install````
+- Генерация ключей passport: ````docker-compose run --rm artisan key:generate````
 - Генерация OpenAPI/Swagger документации: ````docker-compose run --rm artisan l5-swagger:generate````
+- Индексация всех записей для Elasticsearch (если они есть в бд): ````docker-compose run --rm artisan search:reindex````
 
 
 После выполнения команд можно перейти по адресу http://127.0.0.1:8081.
