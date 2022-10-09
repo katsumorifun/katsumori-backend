@@ -38,7 +38,10 @@ class Anime extends Model
         'duration',
         'age_rating',
         'season',
-        'year',
+    ];
+
+    protected $casts = [
+        'title_synonyms' => 'array'
     ];
 
     public function studios(): BelongsToMany
