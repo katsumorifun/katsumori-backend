@@ -54,7 +54,7 @@ class AnimeApiController extends ApiController
 
         $data = app(Anime::class)->getListAndGeneralInfoPaginate($per_page, $page);
 
-        return $this->response->json(AnimeListResource::collection($data));
+        return AnimeListResource::collection($data);
     }
 
     /**
