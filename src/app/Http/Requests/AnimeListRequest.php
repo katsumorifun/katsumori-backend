@@ -24,7 +24,7 @@ class AnimeListRequest extends FormRequest
     public function rules()
     {
         return [
-            'per_page' => 'integer|min:4',
+            'limit' => 'integer|min:4',
             'page'     => 'integer|min:1',
         ];
     }

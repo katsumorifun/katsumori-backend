@@ -49,7 +49,7 @@ class AnimeApiController extends ApiController
      */
     public function list(AnimeListRequest $request)
     {
-        $per_page = $request->get('per_page') ? $request->get('per_page'): 12;
+        $per_page = $request->get('limit') ? $request->get('limit'): 12;
         $page = $request->get('page') ? $request->get('page'): 1;
 
         $data = app(Anime::class)
