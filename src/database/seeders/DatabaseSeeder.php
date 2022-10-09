@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Genre;
+use App\Models\Licensor;
 use App\Models\Studio;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
          \App\Models\Anime::factory(100)
              ->has(Studio::factory()->count(mt_rand(0, 4)))
              ->has(Genre::factory()->count(mt_rand(1, 8)))
+             ->has(Licensor::factory()->count(mt_rand(0, 10)))
              ->create();
     }
 }
