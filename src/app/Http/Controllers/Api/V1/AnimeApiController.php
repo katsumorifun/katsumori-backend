@@ -67,13 +67,10 @@ class AnimeApiController extends ApiController
      *          response="200",
      *          description="Cписка тайтлов",
      *          @OA\JsonContent(
-     *              @OA\Property(
-     *                  property="data",
-     *                  type="array",
-     *                  @OA\Items(ref="#/components/schemas/AnimeSearchItem"),
-     *              )
+     *              type="array",
+     *              @OA\Items(ref="#/components/schemas/AnimeSearchItem"),
      *          )
-     *      )
+     * )
      * )
      */
     public function search($value)
