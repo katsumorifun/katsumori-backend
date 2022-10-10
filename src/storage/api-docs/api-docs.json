@@ -61,6 +61,16 @@
                             "type": "string",
                             "example": "1,2"
                         }
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "Фильтр по типу тайтла",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "tv"
+                        }
                     }
                 ],
                 "responses": {

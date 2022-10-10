@@ -45,6 +45,16 @@ class AnimeApiController extends ApiController
      *             example="1,2"
      *         ),
      *     ),
+     *     @OA\Parameter(
+     *         name="type",
+     *         in="query",
+     *         description="Фильтр по типу тайтла",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="tv"
+     *         ),
+     *     ),
      *
      *
      *     @OA\Response(
