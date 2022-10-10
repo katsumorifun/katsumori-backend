@@ -40,6 +40,10 @@ class Anime extends Repository
            $builder = $builder->where($name, $param);
         }
 
+        if (!empty($search->order)) {
+            $builder = $builder->orderBy($search->order);
+        }
+
         return $builder->paginate($perPage, ['*'], 'page', $page);
     }
 

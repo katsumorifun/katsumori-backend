@@ -8,6 +8,7 @@ class FilterDTO
 {
     public array $relations = [];
     public array $fields = [];
+    public string $order = '';
 
     public function transform(string $model, Request $request): FilterDTO
     {
@@ -17,7 +18,11 @@ class FilterDTO
 
         foreach ($request->query as $name => $params) {
 
-            if (array_key_exists(lcfirst($name), $relations)) {
+            if (lcfirst($name) == 'order') {
+                $searchDTO->order = $params;
+
+            } else if(array_key_exists(lcfirst($name), $relations)) {
+
                 $ids = str_replace(' ', '', $params);
                 $ids = explode(',', $ids);
 

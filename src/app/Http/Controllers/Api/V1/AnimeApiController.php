@@ -63,7 +63,7 @@ class AnimeApiController extends ApiController
      * @OA\Get (
      *     path="/anime/search/{value}",
      *     tags = {"Anime"},
-     *     summary="Получение списка аниме тайтлов",
+     *     summary="Поиск тайтлов",
      *     @OA\Response(
      *          response="200",
      *          description="Cписка тайтлов",

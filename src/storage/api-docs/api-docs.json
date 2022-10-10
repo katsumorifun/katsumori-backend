@@ -67,7 +67,7 @@
                 "tags": [
                     "Anime"
                 ],
-                "summary": "Получение списка аниме тайтлов",
+                "summary": "Поиск тайтлов",
                 "operationId": "65c13f50e38e4981478e56f1732efcaf",
                 "responses": {
                     "200": {
