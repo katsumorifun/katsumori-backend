@@ -15,12 +15,12 @@ class Anime extends Repository
 
     /**
      * Метод возвращает список тайтлов + студии, наличие лицензий, жанры, темы и продюсеров (таблица staff)
+     * @param FilterDTO $search
      * @param int $perPage
      * @param int $page
-     * @param array $search
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getListAndGeneralInfoPaginate(int $perPage = 12, int $page = 1, FilterDTO $search)
+    public function getListAndGeneralInfoPaginate(FilterDTO $search, int $perPage = 12, int $page = 1)
     {
 
         $builder = $this->getBuilder()

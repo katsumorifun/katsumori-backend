@@ -18,6 +18,35 @@ class AnimeApiController extends ApiController
      *     path="/anime",
      *     tags = {"Anime"},
      *     summary="Получение списка аниме тайтлов",
+     *     @OA\Parameter(
+     *         name="order",
+     *         in="query",
+     *         description="Сортировка",
+     *         required=false,
+     *         schema={"type": "string", "enum": {"id", "episodes", "mal_id", "mal_score"}, "default": "id"}
+     *     ),
+     *     @OA\Parameter(
+     *         name="studios",
+     *         in="query",
+     *         description="Фильтр по студиям (принимает в себя id студий через запятую)",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="1,2"
+     *         ),
+     *     ),
+     *     @OA\Parameter(
+     *         name="genres",
+     *         in="query",
+     *         description="Фильтр по жанрам (принимает в себя id жанров через запятую)",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="1,2"
+     *         ),
+     *     ),
+     *
+     *
      *     @OA\Response(
      *          response="200",
      *          description="Cписка тайтлов",
@@ -53,7 +82,7 @@ class AnimeApiController extends ApiController
         $page = $request->get('page') ? $request->get('page'): 1;
 
         $data = app(Anime::class)
-            ->getListAndGeneralInfoPaginate($per_page, $page, (new FilterDTO())->transform(\App\Models\Anime::class, $request));
+            ->getListAndGeneralInfoPaginate((new FilterDTO())->transform(\App\Models\Anime::class, $request), $per_page, $page);
 
         return AnimeListResource::collection($data);
     }

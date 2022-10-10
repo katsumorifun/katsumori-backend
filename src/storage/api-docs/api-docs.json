@@ -25,6 +25,44 @@
                 ],
                 "summary": "Получение списка аниме тайтлов",
                 "operationId": "e5bff3bde08d2b68e3ebc66d37f8fd5f",
+                "parameters": [
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "Сортировка",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "id",
+                                "episodes",
+                                "mal_id",
+                                "mal_score"
+                            ],
+                            "default": "id"
+                        }
+                    },
+                    {
+                        "name": "studios",
+                        "in": "query",
+                        "description": "Фильтр по студиям (принимает в себя id студий через запятую)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "1,2"
+                        }
+                    },
+                    {
+                        "name": "genres",
+                        "in": "query",
+                        "description": "Фильтр по жанрам (принимает в себя id жанров через запятую)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "1,2"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Cписка тайтлов",
