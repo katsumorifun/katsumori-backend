@@ -14,6 +14,7 @@ class FilterDTO
     {
         $model = new $model;
         $relations = $model->getRelations();
+        $fields = $model->getFillable();
         $searchDTO = new self();
 
         foreach ($request->query as $name => $params) {
@@ -28,8 +29,7 @@ class FilterDTO
 
                 $name = 'of' . ucfirst($name);
                 $searchDTO->relations[lcfirst($name)] = $ids;
-            } else {
-
+            } else if (array_key_exists(lcfirst($name), $fields)) {
                 $searchDTO->fields[lcfirst($name)] = $params;
             }
         }
