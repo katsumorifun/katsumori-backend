@@ -18,6 +18,7 @@ class Character extends Model
         'image_x64',
         'image_original',
     ];
+    protected $hidden = ['pivot'];
 
     public function staff(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {

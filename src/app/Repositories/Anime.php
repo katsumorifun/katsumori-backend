@@ -47,4 +47,16 @@ class Anime extends Repository
         return $builder->paginate($perPage, ['*'], 'page', $page);
     }
 
+    public function getItemWithRelations($id)
+    {
+        return $this->getBuilder()
+            ->with(['studios', 'licensors', 'genres', 'themes', 'characters'])
+            ->where('approved', true)
+            ->with('staff', function (Builder $query) {
+                $query
+                    ->select(['id', 'mal_id', 'name_jp', 'name_en', 'name_ru', 'image_x32', 'image_x64', 'image_original']);
+            })
+            ->find($id);
+    }
+
 }

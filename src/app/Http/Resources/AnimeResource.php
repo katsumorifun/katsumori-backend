@@ -2,11 +2,15 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Carbon\Carbon;
+use Illuminate\Http\Resources\MissingValue;
 
-class AnimeListResource extends JsonResource
+class AnimeResource extends JsonResource
 {
+    private bool $producers = false;
+
     /**
      * Transform the resource into an array.
      *
@@ -72,12 +76,24 @@ class AnimeListResource extends JsonResource
             ],
             'season'     => $this->episodes_from ? $this->getSeason($aired_from->monthName) : null,
             'year'       => $this->episodes_from ? $aired_from->year : null,
-            'producers'  => $this->staff,
-            'licensors' => $this->licensors,
-            'studios' => $this->studios,
-            'genres'  => $this->genres,
-            'themes' => $this->themes
+            'producers'  => $this->when($this->producers, $this->staff),
+            'staff'      => $this->when(!$this->producers, $this->staff),
+            'licensors'  => $this->licensors,
+            'studios'    => $this->studios,
+            'genres'     => $this->genres,
+            'themes'     => $this->themes
         ];
+    }
+
+    public static function collection($resource, callable $each = null)
+    {
+        $collection = new AnonymousResourceCollection($resource, \get_called_class());
+
+        if ($resource && (! $resource instanceof MissingValue) && $each) {
+            $collection->resource->each($each);
+        }
+
+        return $collection;
     }
 
     public function getSeason(string $monthName): string
@@ -95,5 +111,13 @@ class AnimeListResource extends JsonResource
         }
 
         return 'spring';
+    }
+
+    /**
+     * @param bool $producers
+     */
+    public function setProducers(bool $producers): void
+    {
+        $this->producers = $producers;
     }
 }

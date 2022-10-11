@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Base\Filter\FilterDTO;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\AnimeListRequest;
-use App\Http\Resources\AnimeListResource;
+use App\Http\Resources\AnimeResource;
 use App\Repositories\Anime;
 use App\Services\SearchService\Search;
 use OpenApi\Annotations as OA;
@@ -94,7 +94,9 @@ class AnimeApiController extends ApiController
         $data = app(Anime::class)
             ->getListAndGeneralInfoPaginate((new FilterDTO())->transform(\App\Models\Anime::class, $request), $per_page, $page);
 
-        return AnimeListResource::collection($data);
+        return AnimeResource::collection($data, function (AnimeResource $resource) {
+            $resource->setProducers(true);
+        });
     }
 
     /**
@@ -125,7 +127,7 @@ class AnimeApiController extends ApiController
      * @OA\Get (
      *     path="/anime/{id}",
      *     tags = {"Anime"},
-     *     summary="Получение информации о тайтле",
+     *     summary="Получение информации о тайтле по его id",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -140,9 +142,7 @@ class AnimeApiController extends ApiController
      *          description="Информация о тайтле",
      *          @OA\JsonContent(
      *              type="array",
-     *              @OA\Items(ref="#/components/schemas/Device"),
-     *              @OA\Items(ref="#/components/schemas/Device"),
-     *              @OA\Items(ref="#/components/schemas/Device")
+     *              @OA\Items(ref="#/components/schemas/AnimeItem")
      *          )
      *      ),
      *     @OA\Response(
@@ -150,14 +150,25 @@ class AnimeApiController extends ApiController
      *          description="тайтл не найден",
      *          @OA\JsonContent(
      *              type="array",
-     *              @OA\Items(ref="#/components/schemas/Device"),
+     *              @OA\Items(
+     *                  example={
+     *                      "message": "Anime not found",
+     *                      "errors" = {"Anime": "Anime not found"}
+     *                  }
+     *              )
      *          )
      *      )
      * )
      */
-    public function getItem()
+    public function getItem($id)
     {
+        $data = app(Anime::class)->getItemWithRelations($id);
 
+        if (empty($data)) {
+            return $this->response->withNotFound('Anime');
+        }
+
+        return new AnimeResource($data);
     }
 
     /**
