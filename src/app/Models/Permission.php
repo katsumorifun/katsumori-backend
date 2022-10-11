@@ -15,6 +15,6 @@ class Permission extends Model
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'role_permissions', 'role_id', 'permission_id');
+        return $this->belongsToMany(User::class);
     }
 }

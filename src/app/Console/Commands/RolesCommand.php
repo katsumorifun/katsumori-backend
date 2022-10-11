@@ -23,6 +23,8 @@ class RolesCommand extends Command
      */
     protected $description = 'Create users roles and permissions';
 
+    private $userModel = User::class;
+
     /**
      * Execute the console command.
      *
@@ -34,16 +36,17 @@ class RolesCommand extends Command
         $user_comment = Permission::create(['name' => 'users.comments']);
         $user_admin_block_comments = Permission::create(['name' => 'users.admin.block.comments']);
         $user_admin_ban = Permission::create(['name' => 'users.admin.ban']);
+        $anime_update = Permission::create(['name' => 'anime.update']);
 
-        $role_guest = Role::create(['id'=> User::GUEST_GROUP_ID, 'en_name' => 'guest', 'russian_name' => 'гость']);
-        $role_user = Role::create(['en_name' => 'user', 'russian_name' => 'пользователь']);
-        $role_admin = Role::create(['en_name' => 'administrator', 'russian_name' => 'администратор']);
-        $role_anime_moder = Role::create(['en_name' => 'anime moderator', 'russian_name' => 'модератор аниме']);
-        $role_manga_moder = Role::create(['en_name' => 'manga moderator', 'russian_name' => 'модератор манги']);
-        $role_ranobe_moder = Role::create(['en_name' => 'ranobe moderator', 'russian_name' => 'модератор ранобэ']);
-        $role_super_moder = Role::create(['en_name' => 'super moderator', 'russian_name' => 'супер модератор']);
-        $role_user_moderator = Role::create(['en_name' => 'user moderator', 'russian_name' => 'модератор пользователей']);
-        $role_youtuber = Role::create(['en_name' => 'Youtuber', 'russian_name' => 'ютубер']);
+        $role_guest = Role::create(['id'=> $this->userModel::GUEST_GROUP_ID, 'en_name' => 'guest', 'russian_name' => 'гость']);
+        $role_user = Role::create(['id'=> $this->userModel::USER_GROUP_ID, 'en_name' => 'user', 'russian_name' => 'пользователь']);
+        $role_admin = Role::create(['id'=> $this->userModel::ADMIN_GROUP_ID, 'en_name' => 'administrator', 'russian_name' => 'администратор']);
+        $role_anime_moder = Role::create(['id'=> $this->userModel::ANIME_MODER_GROUP_ID, 'en_name' => 'anime moderator', 'russian_name' => 'модератор аниме']);
+        $role_manga_moder = Role::create(['id'=> $this->userModel::MANGA_MODER_GROUP_ID, 'en_name' => 'manga moderator', 'russian_name' => 'модератор манги']);
+        $role_ranobe_moder = Role::create(['id'=> $this->userModel::RANOBE_MODER_GROUP_ID, 'en_name' => 'ranobe moderator', 'russian_name' => 'модератор ранобэ']);
+        $role_super_moder = Role::create(['id'=> $this->userModel::SUPER_MODER_GROUP_ID, 'en_name' => 'super moderator', 'russian_name' => 'супер модератор']);
+        $role_user_moderator = Role::create(['id'=> $this->userModel::USER_MODER_GROUP_ID, 'en_name' => 'user moderator', 'russian_name' => 'модератор пользователей']);
+        $role_youtuber = Role::create(['id'=> $this->userModel::STEAMER_GROUP_ID, 'en_name' => 'Youtuber', 'russian_name' => 'ютубер']);
 
         $role_guest->permissions()->attach($user_edit);
 
@@ -52,9 +55,13 @@ class RolesCommand extends Command
 
         $role_admin->permissions()->attach($user_admin_block_comments);
         $role_admin->permissions()->attach($user_admin_ban);
+        $role_admin->permissions()->attach($anime_update);
 
         $role_super_moder->permissions()->attach($user_admin_block_comments);
         $role_super_moder->permissions()->attach($user_admin_ban);
+        $role_super_moder->permissions()->attach($anime_update);
+
+        $role_anime_moder->permissions()->attach($anime_update);
 
         $role_user_moderator->permissions()->attach($user_admin_block_comments);
         $role_user_moderator->permissions()->attach($user_admin_ban);

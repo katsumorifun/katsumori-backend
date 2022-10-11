@@ -34,6 +34,16 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
     ];
 
+    const GUEST_GROUP_ID = 1;
+    const USER_GROUP_ID = 2;
+    const ADMIN_GROUP_ID = 3;
+    const ANIME_MODER_GROUP_ID = 4;
+    const MANGA_MODER_GROUP_ID = 5;
+    const RANOBE_MODER_GROUP_ID = 6;
+    const SUPER_MODER_GROUP_ID = 7;
+    const USER_MODER_GROUP_ID = 8;
+    const STEAMER_GROUP_ID = 9;
+
     /**
      * The attributes that should be cast.
      *

@@ -16,6 +16,7 @@ class Role extends Model
     protected $fillable = [
         'en_name',
         'russian_name',
+        'id',
     ];
 
     /**
@@ -23,7 +24,7 @@ class Role extends Model
      */
     public function permissions()
     {
-        return $this->belongsToMany(Permission::class, 'role_permissions', 'role_id', 'permission_id');
+        return $this->belongsToMany(Permission::class);
     }
 
     /**
