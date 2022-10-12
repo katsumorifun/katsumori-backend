@@ -36,6 +36,7 @@ class RolesCommand extends Command
         $user_comment = Permission::create(['name' => 'users.comments']);
         $user_admin_block_comments = Permission::create(['name' => 'users.admin.block.comments']);
         $user_admin_ban = Permission::create(['name' => 'users.admin.ban']);
+        $user_admin_edit = Permission::create(['name' => 'users.admin.edit']);
         $anime_update = Permission::create(['name' => 'anime.update']);
 
         $role_guest = Role::create(['id'=> $this->userModel::GUEST_GROUP_ID, 'en_name' => 'guest', 'russian_name' => 'гость']);
@@ -55,6 +56,7 @@ class RolesCommand extends Command
 
         $role_admin->permissions()->attach($user_admin_block_comments);
         $role_admin->permissions()->attach($user_admin_ban);
+        $role_admin->permissions()->attach($user_admin_edit);
         $role_admin->permissions()->attach($anime_update);
 
         $role_super_moder->permissions()->attach($user_admin_block_comments);

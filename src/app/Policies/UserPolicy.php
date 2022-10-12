@@ -12,16 +12,11 @@ class UserPolicy extends PolicyBase
     public function edit(User $user)
     {
         if (Auth()->user()->id != $user->id) {
-
-            if ($this->checkPermission($user, 'user.admin.edit')) {
-                return true;
-            }
-
-            return false;
+            return $this->checkPermission($user, 'users.admin.edit');
         }
 
-        if (Auth()->user()->id = $user->id && $this->checkPermission($user, 'user.edit')) {
-            return true;
+        if (Auth()->user()->id == $user->id) {
+            return $this->checkPermission($user, 'users.edit');
         }
 
         return false;

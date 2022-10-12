@@ -12,9 +12,11 @@ abstract class PolicyBase
      */
     public function checkPermission($user, string $permissionName): bool
     {
-        if ($user->roles()->with('permissions')->whereHas('permissions', function ($permissions) use ($permissionName) {
+        $permission = $user->roles()->with('permissions')->whereHas('permissions', function ($permissions) use ($permissionName) {
             $permissions->whereName($permissionName);
-        })->first()) {
+        })->first();
+
+        if ($permission) {
             return true;
         }
 

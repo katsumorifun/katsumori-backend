@@ -166,7 +166,7 @@ class UsersApiController extends ApiController
             return $this->response->withNotFound('user');
         }
 
-        if ($request->user()->cannot('edit', User::class)) {
+        if ($request->user()->cannot('edit', $user)) {
             return $this->response->withForbidden("Failed to save changes. You do not have permission to update the user profile.");
         }
 
