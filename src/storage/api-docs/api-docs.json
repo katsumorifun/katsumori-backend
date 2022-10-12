@@ -827,16 +827,14 @@
                         "description": "Пользователь с таким id не найден"
                     }
                 }
-            }
-        },
-        "/users/{user_id}/edit": {
+            },
             "post": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Редактирование информации о пользователе",
                 "description": "Редактирование информации о пользователе",
-                "operationId": "ed09872a4003cd49fa2ef527c7a58583",
+                "operationId": "3609eff3fee48860e6217c99aed69565",
                 "parameters": [
                     {
                         "name": "user_id",

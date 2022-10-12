@@ -104,7 +104,7 @@ class UsersApiController extends ApiController
     /**
      *
      * @OA\Post  (
-     *     path="/users/{user_id}/edit",
+     *     path="/users/{user_id}",
      *     tags = {"Users"},
      *     summary="Редактирование информации о пользователе",
      *     description="Редактирование информации о пользователе",
