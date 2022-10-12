@@ -16,29 +16,29 @@ class Anime extends Model
     protected $table = 'anime';
 
     protected $fillable = [
-        'mal_id'         => '',
-        'mal_score'      => '',
-        'title_jp'       => '',
-        'title_en'       => '',
-        'title_ru'       => '',
-        'synopsis_en'    => '',
-        'synopsis_ru'    => '',
-        'type'           => '',
-        'approved'       => '',
-        'status'         => '',
-        'image_x32'      => '',
-        'image_x64'      => '',
-        'image_x128'     => '',
-        'image_original' => '',
-        'title_synonyms' => '',
-        'source'         => '',
-        'episodes'       => '',
-        'episodes_aired' => '',
-        'episodes_to'    => '',
-        'episodes_from'  => '',
-        'duration'       => '',
-        'age_rating'     => '',
-        'season'         => '',
+        'mal_id',
+        'mal_score',
+        'title_jp',
+        'title_en',
+        'title_ru',
+        'synopsis_en',
+        'synopsis_ru',
+        'type',
+        'approved',
+        'status',
+        'image_x32',
+        'image_x64',
+        'image_x128',
+        'image_original',
+        'title_synonyms',
+        'source',
+        'episodes',
+        'episodes_aired',
+        'episodes_to',
+        'episodes_from',
+        'duration',
+        'age_rating',
+        'season',
     ];
 
     protected $casts = [
@@ -48,11 +48,11 @@ class Anime extends Model
     ];
 
     protected $relations = [
-        'studios'   => '',
-        'licensors' => '',
-        'staff'     => '',
-        'genres'    => '',
-        'themes'    => '',
+        'studios',
+        'licensors',
+        'staff',
+        'genres',
+        'themes',
     ];
 
     public function studios(): BelongsToMany

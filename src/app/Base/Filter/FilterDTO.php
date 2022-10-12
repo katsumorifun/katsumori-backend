@@ -13,8 +13,17 @@ class FilterDTO
     public function transform(string $model, Request $request): FilterDTO
     {
         $model = new $model;
-        $relations = $model->getRelations();
-        $fields = $model->getFillable();
+        $relations = [];
+        $fields = [];
+
+        foreach ($model->getFillable() as $name) {
+            $fields[$name] = '';
+        }
+
+        foreach ($model->getRelations() as $name) {
+            $relations[$name] = '';
+        }
+
         $searchDTO = new self();
 
         foreach ($request->query as $name => $params) {
