@@ -68,4 +68,36 @@ class Repository
             ->query()
             ->find($id, $columns);
     }
+
+    /**
+     * Обновление информации о пользоователе по его id
+     *
+     * @param int $id
+     * @param array $data
+     * @param array $allowData данные которые разрешено редактировать
+     * @param array $columns
+     * @return false|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
+     */
+    public function update(int $id, array $data = [], array $allowData = [], array $columns = ['*'])
+    {
+        $item = $this
+            ->query()
+            ->find($id, $columns);
+
+        if (empty($item)) {
+            return false;
+        }
+
+        $allow = [];
+
+        foreach ($allowData as $name) {
+            $allow[$name] = '';
+        }
+
+        $data = array_intersect_key($data, $allow);
+        $item->update($data);
+
+        return $item;
+
+    }
 }

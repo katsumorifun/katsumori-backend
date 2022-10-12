@@ -832,6 +832,20 @@
                         "schema": {
                             "type": "String"
                         }
+                    },
+                    {
+                        "name": "gender",
+                        "in": "query",
+                        "description": "Пол",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "male",
+                                "female",
+                                "other"
+                            ]
+                        }
                     }
                 ],
                 "responses": {
@@ -910,6 +924,20 @@
                         "required": false,
                         "schema": {
                             "type": "String"
+                        }
+                    },
+                    {
+                        "name": "gender",
+                        "in": "query",
+                        "description": "Пол",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "male",
+                                "female",
+                                "other"
+                            ]
                         }
                     }
                 ],

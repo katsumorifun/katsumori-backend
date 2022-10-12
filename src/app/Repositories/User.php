@@ -88,9 +88,7 @@ class User extends Repository
             ->getBuilder()
             ->find($user_id);
 
-        $user->avatar = $avatar_path;
-
-        $user->update();
+        $user->update(['avatar' => $avatar_path]);
     }
 
     public function updateMinimizedAvatars(int $user_id, string $extension)

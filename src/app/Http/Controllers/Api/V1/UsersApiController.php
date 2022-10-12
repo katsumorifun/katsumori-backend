@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Base\RequestDTO;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\EditUsersRequest;
 use App\Http\Requests\GetUsersListRequest;
@@ -108,7 +109,6 @@ class UsersApiController extends ApiController
      *     tags = {"Users"},
      *     summary="Редактирование информации о пользователе",
      *     description="Редактирование информации о пользователе",
-     *
      *     security={
      *       {"Authorization": {}},
      *     },
@@ -122,7 +122,6 @@ class UsersApiController extends ApiController
      *             type="integer",
      *         )
      *     ),
-     *
      *     @OA\Parameter(
      *         name="name",
      *         in="query",
@@ -132,7 +131,6 @@ class UsersApiController extends ApiController
      *             type="String",
      *         )
      *     ),
-     *
      *     @OA\Parameter(
      *         name="description",
      *         in="query",
@@ -141,6 +139,13 @@ class UsersApiController extends ApiController
      *         @OA\Schema(
      *             type="String",
      *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="gender",
+     *         in="query",
+     *         description="Пол",
+     *         required=false,
+     *         schema={"type": "string", "enum": {"male", "female", "other"}}
      *     ),
      *
      *     @OA\Response(
@@ -160,25 +165,20 @@ class UsersApiController extends ApiController
      */
     public function editProfile($user_id, EditUsersRequest $request)
     {
-        $user = app(User::class)->findById($user_id);
+        if (empty($request->all())) {
+            return $this->response->noChanges();
+        }
 
-        if (empty($user)) {
+        $user = app(User::class)
+            ->update($user_id, $request->all(),  ['name', 'description', 'gender']);
+
+        if (!$user) {
             return $this->response->withNotFound('user');
         }
 
-        if ($request->user()->cannot('edit', $user)) {
+        if ($request->user()->cannot('edit', new User())) {
             return $this->response->withForbidden("Failed to save changes. You do not have permission to update the user profile.");
         }
-
-        if($request->get('name')) {
-            $user->name = $request->get('name');
-        }
-
-        if ($request->get('description')) {
-            $user->description = $request->get('description');
-        }
-
-        $user->save();
 
         return $this->response->json(['status' =>'Update successfully', 'user' => $user]);
     }
@@ -220,6 +220,13 @@ class UsersApiController extends ApiController
      *             type="String",
      *         )
      *     ),
+     *     @OA\Parameter(
+     *         name="gender",
+     *         in="query",
+     *         description="Пол",
+     *         required=false,
+     *         schema={"type": "string", "enum": {"male", "female", "other"}}
+     *     ),
      *
      *     @OA\Response(
      *          response="200",
@@ -234,17 +241,8 @@ class UsersApiController extends ApiController
      */
     public function editAuthProfile(EditUsersRequest $request)
     {
-        $user = app(User::class)->findById(Auth::user()->id);
-
-        if($request->get('name')) {
-            $user->name = $request->get('name');
-        }
-
-        if ($request->get('description')) {
-            $user->description = $request->get('description');
-        }
-
-        $user->save();
+        $user = app(User::class)
+            ->update(Auth::user()->id, $request->all(),  ['name', 'description', 'gender']);
 
         return $this->response->json(['status' =>'Update successfully', 'user' => $user]);
     }
