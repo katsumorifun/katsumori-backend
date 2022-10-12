@@ -95,7 +95,7 @@ class Repository
         }
 
         $data = array_intersect_key($data, $allow);
-        $item->update($data);
+        $item->update(array_diff($data, array('', ' ')));
 
         return $item;
 
