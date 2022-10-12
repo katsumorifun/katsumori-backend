@@ -186,6 +186,72 @@ class UsersApiController extends ApiController
     /**
      *
      * @OA\Post  (
+     *     path="/users",
+     *     tags = {"Users"},
+     *     summary="Редактирование профиля авторизованного полльзователя",
+     *     security={
+     *       {"Authorization": {}},
+     *     },
+     *
+     *     @OA\Parameter(
+     *         name="user_id",
+     *         in="path",
+     *         description="Id пользователя",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="query",
+     *         description="Имя пользователя",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="String",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="description",
+     *         in="query",
+     *         description="Описание пользователя (обо мне)",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="String",
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *          response="200",
+     *          description="Информация о пользователе успешно обновлена, вывод статуса и новых данных пользователя"
+     *      ),
+     *      @OA\Response(
+     *          response="422",
+     *          description="Ошибка валидации"
+     *      )
+     *
+     * )
+     */
+    public function editAuthProfile(EditUsersRequest $request)
+    {
+        $user = app(User::class)->findById(Auth::user()->id);
+
+        if($request->get('name')) {
+            $user->name = $request->get('name');
+        }
+
+        if ($request->get('description')) {
+            $user->description = $request->get('description');
+        }
+
+        $user->save();
+
+        return $this->response->json(['status' =>'Update successfully', 'user' => $user]);
+    }
+
+    /**
+     *
+     * @OA\Post  (
      *     path="/users/{user_id}/upload_avatar",
      *     tags = {"Users"},
      *     summary="Обновление аватара пользователя",
