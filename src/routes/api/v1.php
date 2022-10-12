@@ -32,7 +32,7 @@ Route::prefix('devices')->group(function (){
     Route::get('/logout/{login_id}', [\App\Http\Controllers\Api\V1\DevicesApiController::class, 'logoutFromLoginId']);
 });
 
-Route::prefix('users')->group(function (){
+Route::prefix('user')->group(function (){
     Route::get('/', [\App\Http\Controllers\Api\V1\UsersApiController::class, 'getList']);
     Route::post('/', [\App\Http\Controllers\Api\V1\UsersApiController::class, 'editAuthProfile'])->middleware('auth:api');
     Route::get('/{user_id}', [\App\Http\Controllers\Api\V1\UsersApiController::class, 'getById']);

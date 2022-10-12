@@ -16,7 +16,7 @@ class UsersApiController extends ApiController
     /**
      *
      * @OA\Get  (
-     *     path="/users",
+     *     path="/user",
      *     tags = {"Users"},
      *     summary="Отображение списка пользователей",
      *     description="Отображение списка пользователей",
@@ -64,7 +64,7 @@ class UsersApiController extends ApiController
     /**
      *
      * @OA\Get  (
-     *     path="/users/{user_id}",
+     *     path="/user/{user_id}",
      *     tags = {"Users"},
      *     summary="Вывод информации о пользователе по его id",
      *     description="Вывод информации о пользователе по его id",
@@ -104,7 +104,7 @@ class UsersApiController extends ApiController
     /**
      *
      * @OA\Post  (
-     *     path="/users/{user_id}",
+     *     path="/user/{user_id}",
      *     tags = {"Users"},
      *     summary="Редактирование информации о пользователе",
      *     description="Редактирование информации о пользователе",
@@ -186,7 +186,7 @@ class UsersApiController extends ApiController
     /**
      *
      * @OA\Post  (
-     *     path="/users",
+     *     path="/user",
      *     tags = {"Users"},
      *     summary="Редактирование профиля авторизованного полльзователя",
      *     security={
@@ -252,7 +252,7 @@ class UsersApiController extends ApiController
     /**
      *
      * @OA\Post  (
-     *     path="/users/{user_id}/upload_avatar",
+     *     path="/user/{user_id}/upload_avatar",
      *     tags = {"Users"},
      *     summary="Обновление аватара пользователя",
      *     description="Обновление аватара пользователя",

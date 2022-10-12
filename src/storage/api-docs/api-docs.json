@@ -762,14 +762,14 @@
                 ]
             }
         },
-        "/users": {
+        "/user": {
             "get": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Отображение списка пользователей",
                 "description": "Отображение списка пользователей",
-                "operationId": "861a805c789e8b659f4abb99d02dfc0e",
+                "operationId": "72d5a204ce5696d48566a60c00152b6e",
                 "parameters": [
                     {
                         "name": "page",
@@ -804,7 +804,7 @@
                     "Users"
                 ],
                 "summary": "Редактирование профиля авторизованного полльзователя",
-                "operationId": "e0cb7ddf30d8a751e1a60c77e3f14f3d",
+                "operationId": "0a74595f370fc57b86e319f82639c334",
                 "parameters": [
                     {
                         "name": "user_id",
@@ -849,14 +849,14 @@
                 ]
             }
         },
-        "/users/{user_id}": {
+        "/user/{user_id}": {
             "get": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Вывод информации о пользователе по его id",
                 "description": "Вывод информации о пользователе по его id",
-                "operationId": "16e787ca3e3c38a53758b8dfca2b81ec",
+                "operationId": "95a7d679ffa038c0c5986ac36336434d",
                 "parameters": [
                     {
                         "name": "user_id",
@@ -883,7 +883,7 @@
                 ],
                 "summary": "Редактирование информации о пользователе",
                 "description": "Редактирование информации о пользователе",
-                "operationId": "3609eff3fee48860e6217c99aed69565",
+                "operationId": "8c9ef32df416039554a85d3e422c7360",
                 "parameters": [
                     {
                         "name": "user_id",
@@ -931,14 +931,14 @@
                 ]
             }
         },
-        "/users/{user_id}/upload_avatar": {
+        "/user/{user_id}/upload_avatar": {
             "post": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Обновление аватара пользователя",
                 "description": "Обновление аватара пользователя",
-                "operationId": "8f174067faa637922d65f937caeb8647",
+                "operationId": "1c8a7407c9eec4ec61399f3690d6f0d7",
                 "parameters": [
                     {
                         "name": "avatar",
