@@ -57,7 +57,7 @@ services:
       - "9200:9200"
       - "9300:9300"
     environment:
-      ES_JAVA_OPTS: -Xms512m -Xmx512m
+      ES_JAVA_OPTS: -Xms1512m -Xmx1512m
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-password} # Password for the 'elastic' user
       discovery.type: single-node
     networks:
