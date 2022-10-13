@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\SearchService;
+namespace App\Services\Search;
 
 interface Search
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\SearchService\Traits\Model;
+namespace App\Services\Search\Traits\Model;
 
 use App\Observers\ElasticObserver;
 

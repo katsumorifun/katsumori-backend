@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use App\Services\SearchService\ElasticSearch;
-use App\Services\SearchService\EquivalentSearch;
-use App\Services\SearchService\Search;
+use App\Services\Search\ElasticSearch;
+use App\Services\Search\EquivalentSearch;
+use App\Services\Search\Search;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\ClientBuilder;
 use Illuminate\Support\ServiceProvider;

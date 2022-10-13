@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Api\V1;
 use App\Base\Filter\FilterDTO;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\AnimeListRequest;
+use App\Http\Requests\EditAnimeRequest;
 use App\Http\Resources\AnimeResource;
+use App\Policies\AnimePolicy;
 use App\Repositories\Anime;
-use App\Services\SearchService\Search;
+use App\Services\Search\Search;
+use Illuminate\Support\Facades\Auth;
 use OpenApi\Annotations as OA;
 
 class AnimeApiController extends ApiController
@@ -213,8 +216,29 @@ class AnimeApiController extends ApiController
      *      )
      * )
      */
-    public function update()
+    public function update($id, EditAnimeRequest $request)
     {
+        if (!$request->user()->cannot('edit', new Anime())) {
+            //Не одмен, значит отправляем заявку на модерацию
+        }
 
+        if (empty($request->all())) {
+            return $this->response->noChanges();
+        }
+
+        $allow = [
+            'title_en',
+            'title_ru',
+            'title_jp',
+        ];
+
+        $item = app(Anime::class)
+            ->update($id, $request->all(), $allow);
+
+        if (!$item) {
+            return $this->response->withNotFound('Anime');
+        }
+
+        return $this->response->json($item);
     }
 }
