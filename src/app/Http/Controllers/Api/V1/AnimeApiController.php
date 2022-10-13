@@ -246,7 +246,7 @@ class AnimeApiController extends ApiController
 
     /**
      *
-     * @OA\Post (
+     * @OA\Get (
      *     path="/anime/{id}/changes",
      *     tags = {"Anime"},
      *     summary="Вывод истории редактирования информации о тайтле",
