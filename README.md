@@ -59,4 +59,6 @@ export MYSQL_ROOT_PASSWORD=password
 - php - 9000:9000
 - redis - 6379:6379
 
+Ссылка на документацию к API: http://127.0.0.1:8081/api/documentation
+
 ### [Code style и другие рекомендации](https://github.com/YukiDub/php-conventions)
