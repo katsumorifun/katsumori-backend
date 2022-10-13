@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Base\Filter\FilterDTO;
+use App\Contracts\History\History;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\AnimeListRequest;
 use App\Http\Requests\EditAnimeRequest;
 use App\Http\Resources\AnimeResource;
+use App\Http\Resources\HistoryResource;
 use App\Policies\AnimePolicy;
 use App\Repositories\Anime;
 use App\Services\Search\Search;
@@ -240,5 +242,30 @@ class AnimeApiController extends ApiController
         }
 
         return $this->response->json($item);
+    }
+
+    /**
+     *
+     * @OA\Post (
+     *     path="/anime/{id}/changes",
+     *     tags = {"Anime"},
+     *     summary="Вывод истории редактирования информации о тайтле",
+     *
+     *     @OA\Response(
+     *          response="200",
+     *          description="Список изменений",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(ref="#/components/schemas/HistoryChanges")
+     *          )
+     *      ),
+     * )
+     */
+    public function getHistoryChangesList($id)
+    {
+        $items = app(Anime::class)
+            ->getHistoryChangesList($id);
+
+        return HistoryResource::collection($items);
     }
 }

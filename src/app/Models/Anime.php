@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
+use App\Services\History\Traits\Model\HasHistory;
 use App\Services\Search\Traits\Model\Searchable;
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Contracts\Database\Query\Builder;
 
 class Anime extends Model
 {
     use Searchable;
     use HasFactory;
+    use HasHistory;
 
     protected $table = 'anime';
 

@@ -247,6 +247,30 @@
                 }
             }
         },
+        "/anime/{id}/changes": {
+            "post": {
+                "tags": [
+                    "Anime"
+                ],
+                "summary": "Вывод истории редактирования информации о тайтле",
+                "operationId": "7d9b8708bef27200f97bd3125f1e2248",
+                "responses": {
+                    "200": {
+                        "description": "Список изменений",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/HistoryChanges"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/auth/logout": {
             "post": {
                 "tags": [
@@ -1626,6 +1650,33 @@
                         "description": "$name_ru",
                         "type": "string",
                         "example": "Сигэки Кавай"
+                    }
+                },
+                "type": "object"
+            },
+            "HistoryChanges": {
+                "title": "HistoryChanges",
+                "description": "Модель истории изменений объектов",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "old_data": {
+                        "description": "старые данные",
+                        "type": "array",
+                        "items": {
+                            "type": "array",
+                            "items": {}
+                        }
+                    },
+                    "new_data": {
+                        "description": "Новые данные",
+                        "type": "array",
+                        "items": {
+                            "type": "array",
+                            "items": {}
+                        }
                     }
                 },
                 "type": "object"

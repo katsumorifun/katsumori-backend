@@ -59,4 +59,9 @@ class Anime extends Repository
             ->find($id);
     }
 
+    public function getHistoryChangesList($id)
+    {
+        return $this->getBuilder()->find($id, ['id'])->histories;
+    }
+
 }

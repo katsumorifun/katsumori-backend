@@ -181,7 +181,8 @@ return [
         \Intervention\Image\ImageServiceProvider::class,
         App\Providers\AvatarServiceProvider::class,
         App\Providers\GuardServiceProvider::class,
-        App\Providers\SearchProvider::class
+        App\Providers\SearchProvider::class,
+        App\Providers\HistoryServiceProvider::class,
     ],
 
     /*
