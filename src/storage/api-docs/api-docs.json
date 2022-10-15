@@ -247,16 +247,40 @@
                 }
             }
         },
-        "/anime/{id}/changes": {
-            "post": {
+        "/anime/{id}/history": {
+            "get": {
                 "tags": [
                     "Anime"
                 ],
                 "summary": "Вывод истории редактирования информации о тайтле",
-                "operationId": "7d9b8708bef27200f97bd3125f1e2248",
+                "operationId": "d029317c5ef802fdfb35a6f82f8d2d7a",
                 "responses": {
                     "200": {
                         "description": "Список изменений",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/HistoryChanges"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/anime/{id}/moderation": {
+            "get": {
+                "tags": [
+                    "Anime"
+                ],
+                "summary": "Вывод списка заявок на обновлление информации о тайтле",
+                "operationId": "993210e1c826c5c92f122cf9744b5f64",
+                "responses": {
+                    "200": {
+                        "description": "Список заявок",
                         "content": {
                             "application/json": {
                                 "schema": {

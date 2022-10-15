@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->json('old_data');
             $table->json('new_data');
+            $table->enum('type', ['history', 'moderation'])->default('history');
             $table->timestamps();
         });
     }

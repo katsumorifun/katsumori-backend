@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Base\Filter\FilterDTO;
 use App\Models\Anime as AnimeModel;
+use App\Models\History;
 use Illuminate\Contracts\Database\Query\Builder;
 
 class Anime extends Repository
@@ -59,9 +60,20 @@ class Anime extends Repository
             ->find($id);
     }
 
-    public function getHistoryChangesList($id)
+    public function getChangesHistoryList($id)
     {
-        return $this->getBuilder()->find($id, ['id'])->histories;
+        return $this->getBuilder()
+            ->find($id, ['id'])
+            ->histories
+            ->where('type', 'history');
+    }
+
+    public function getModerationList($id)
+    {
+        return $this->getBuilder()
+            ->find($id, ['id'])
+            ->histories
+            ->where('type', 'moderation');
     }
 
 }

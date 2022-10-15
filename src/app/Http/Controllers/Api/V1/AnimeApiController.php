@@ -9,10 +9,8 @@ use App\Http\Requests\AnimeListRequest;
 use App\Http\Requests\EditAnimeRequest;
 use App\Http\Resources\AnimeResource;
 use App\Http\Resources\HistoryResource;
-use App\Policies\AnimePolicy;
 use App\Repositories\Anime;
 use App\Services\Search\Search;
-use Illuminate\Support\Facades\Auth;
 use OpenApi\Annotations as OA;
 
 class AnimeApiController extends ApiController
@@ -220,22 +218,25 @@ class AnimeApiController extends ApiController
      */
     public function update($id, EditAnimeRequest $request)
     {
-        if (!$request->user()->cannot('edit', new Anime())) {
-            //Не одмен, значит отправляем заявку на модерацию
-        }
-
-        if (empty($request->all())) {
-            return $this->response->noChanges();
-        }
-
         $allow = [
             'title_en',
             'title_ru',
             'title_jp',
         ];
 
-        $item = app(Anime::class)
-            ->update($id, $request->all(), $allow);
+        if (empty($request->all())) {
+            return $this->response->noChanges();
+        }
+
+        if ($request->user()->cannot('edit', new Anime())) {
+            $item = app(Anime::class)->updateWithoutSaving($id, $request->all(), $allow);
+
+            app(History::class)->add($item, true);
+
+            return $this->response->moderatedStatus();
+        }
+
+        $item = app(Anime::class)->update($id, $request->all(), $allow);
 
         if (!$item) {
             return $this->response->withNotFound('Anime');
@@ -247,7 +248,7 @@ class AnimeApiController extends ApiController
     /**
      *
      * @OA\Get (
-     *     path="/anime/{id}/changes",
+     *     path="/anime/{id}/history",
      *     tags = {"Anime"},
      *     summary="Вывод истории редактирования информации о тайтле",
      *
@@ -263,8 +264,43 @@ class AnimeApiController extends ApiController
      */
     public function getHistoryChangesList($id)
     {
-        $items = app(Anime::class)
-            ->getHistoryChangesList($id);
+        $items = app(Anime::class)->getChangesHistoryList($id);
+
+        if (empty($items)) {
+            return $this->response->withNotFound('Changes list');
+        }
+
+        return HistoryResource::collection($items);
+    }
+
+    /**
+     *
+     * @OA\Get (
+     *     path="/anime/{id}/moderation",
+     *     tags = {"Anime"},
+     *     summary="Вывод списка заявок на обновлление информации о тайтле",
+     *
+     *     @OA\Response(
+     *          response="200",
+     *          description="Список заявок",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(ref="#/components/schemas/HistoryChanges")
+     *          )
+     *      ),
+     * )
+     */
+    public function getModerationList($id)
+    {
+        if (request()->user()->cannot('moderationAnime', \App\Models\History::class)) {
+            return $this->response->withError('Failed to save changes. You do not have permission to anime moderation list.');
+        }
+
+        $items = app(Anime::class)->getModerationList($id);
+
+        if (empty($items)) {
+            return $this->response->withNotFound('Moderation list');
+        }
 
         return HistoryResource::collection($items);
     }

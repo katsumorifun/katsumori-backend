@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 interface History
 {
-    public function add(Model $model);
+    public function add(Model $model, bool $moderate = false);
 }

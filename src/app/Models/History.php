@@ -14,6 +14,7 @@ class History extends Model
     protected $fillable = [
         'old_data',
         'new_data',
+        'type',
     ];
 
     protected $casts = [

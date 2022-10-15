@@ -45,5 +45,6 @@ Route::prefix('anime')->group(function (){
     Route::get('search/{value}', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'search']);
     Route::get('/{id}', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'getItem']);
     Route::post('/{id}', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'update'])->middleware('auth:api');
-    Route::get('/{id}/changes', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'getHistoryChangesList']);
+    Route::get('/{id}/history', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'getHistoryChangesList']);
+    Route::get('/{id}/moderation', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'getModerationList'])->middleware('auth:api');
 });

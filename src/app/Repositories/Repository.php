@@ -70,7 +70,7 @@ class Repository
     }
 
     /**
-     * Обновление информации о пользоователе по его id
+     * Обновление информации по id записи
      *
      * @param int $id
      * @param array $data
@@ -100,4 +100,36 @@ class Repository
         return $item;
 
     }
+
+    /**
+     * Обновление информации по id записи без сохранения в базу данных
+     *
+     * @param int $id
+     * @param array $data
+     * @param array $allowData
+     * @param array $columns
+     * @return false|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
+     */
+    public function updateWithoutSaving(int $id, array $data = [], array $allowData = [], array $columns = ['*']): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|\Illuminate\Database\Eloquent\Builder|array
+    {
+        $item = $this
+            ->query()
+            ->find($id, $columns);
+
+        if (empty($item)) {
+            return false;
+        }
+
+        $allow = [];
+
+        foreach ($allowData as $name) {
+            $allow[$name] = '';
+        }
+
+        $data = array_intersect_key($data, $allow);
+        $item->fill(array_diff($data, array('', ' ')));
+
+        return $item;
+    }
+
 }

@@ -176,7 +176,7 @@ class Response
         return $this->json(
             [
                 'message' => 'application is being processed',
-                'status' => 'accepted',
+                'status'  => 'accepted',
             ]
         );
     }

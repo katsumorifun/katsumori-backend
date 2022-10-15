@@ -8,14 +8,17 @@ use App\Models\History as HistoryModel;
 
 class History implements HistoryContract
 {
-    public function add(Model $model)
+    public function add(Model $model, bool $moderate = false)
     {
-        if ($model->wasChanged()) {
+        $diff = array_diff($model->getRawOriginal(), $model->getAttributes());
+
+        if (!empty($diff)) {
             $history = new HistoryModel();
 
             $history->fill([
                 'old_data' => $model->getOriginal(),
                 'new_data' => $model->attributesToArray(),
+                'type' => $moderate ? 'moderation' : 'history',
             ]);
 
             $history->save();
