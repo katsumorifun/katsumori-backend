@@ -35,10 +35,7 @@ class AnimeResource extends JsonResource
             'title_jp'  => $this->title_jp,
             'title_en'  => $this->title_en,
             'title_ru'  => $this->title_ru,
-            'title_synonyms' => [
-                'type'  => 'English',
-                'title' => 'name',
-            ],
+            'title_synonyms' => $this->title_synonyms,
             'type'      => $this->type,
             'source'    => $this->source,
             'episodes'  => $this->episodes,

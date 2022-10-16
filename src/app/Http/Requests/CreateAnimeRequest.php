@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class EditAnimeRequest extends FormRequest
+class CreateAnimeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,7 @@ class EditAnimeRequest extends FormRequest
         return [
             'mal_id' => 'integer',
             'mal_score' => 'integer',
-            'title_jp' => 'string',
+            'title_jp' => 'required|string',
             'title_en' => 'string',
             'title_ru' => 'string',
             'synopsis_en' => 'string',

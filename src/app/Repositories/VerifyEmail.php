@@ -11,7 +11,7 @@ class VerifyEmail extends Repository
         $this->model = VerifyEmailModel::class;
     }
 
-    public function create(int $user_id, string $hash)
+    public function createHash(int $user_id, string $hash)
     {
         $this
             ->getBuilder()

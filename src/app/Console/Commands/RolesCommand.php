@@ -39,6 +39,7 @@ class RolesCommand extends Command
         $user_admin_edit = Permission::create(['name' => 'users.admin.edit']);
         $anime_update = Permission::create(['name' => 'anime.update']);
         $anime_moderation = Permission::create(['name' => 'anime.moderation']);
+        $anime_create = Permission::create(['name' => 'anime.create']);
 
         $role_guest = Role::create(['id'=> $this->userModel::GUEST_GROUP_ID, 'en_name' => 'guest', 'russian_name' => 'гость']);
         $role_user = Role::create(['id'=> $this->userModel::USER_GROUP_ID, 'en_name' => 'user', 'russian_name' => 'пользователь']);
@@ -60,13 +61,17 @@ class RolesCommand extends Command
         $role_admin->permissions()->attach($user_admin_edit);
         $role_admin->permissions()->attach($anime_update);
         $role_admin->permissions()->attach($anime_moderation);
+        $role_admin->permissions()->attach($anime_create);
 
         $role_super_moder->permissions()->attach($user_admin_block_comments);
         $role_super_moder->permissions()->attach($user_admin_ban);
         $role_super_moder->permissions()->attach($anime_update);
         $role_super_moder->permissions()->attach($anime_moderation);
+        $role_super_moder->permissions()->attach($anime_create);
 
         $role_anime_moder->permissions()->attach($anime_update);
+        $role_anime_moder->permissions()->attach($anime_create);
+        $role_super_moder->permissions()->attach($anime_moderation);
 
         $role_user_moderator->permissions()->attach($user_admin_block_comments);
         $role_user_moderator->permissions()->attach($user_admin_ban);

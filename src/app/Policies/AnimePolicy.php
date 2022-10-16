@@ -27,4 +27,13 @@ class AnimePolicy extends PolicyBase
 
         return false;
     }
+
+    public function create(User $user)
+    {
+        if ($this->checkPermission($user, 'anime.create')) {
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -6,6 +6,7 @@ use App\Base\Filter\FilterDTO;
 use App\Contracts\History\History;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\AnimeListRequest;
+use App\Http\Requests\CreateAnimeRequest;
 use App\Http\Requests\EditAnimeRequest;
 use App\Http\Resources\AnimeResource;
 use App\Http\Resources\HistoryResource;
@@ -218,25 +219,19 @@ class AnimeApiController extends ApiController
      */
     public function update($id, EditAnimeRequest $request)
     {
-        $allow = [
-            'title_en',
-            'title_ru',
-            'title_jp',
-        ];
-
         if (empty($request->all())) {
             return $this->response->noChanges();
         }
 
         if ($request->user()->cannot('edit', new Anime())) {
-            $item = app(Anime::class)->updateWithoutSaving($id, $request->all(), $allow);
+            $item = app(Anime::class)->updateWithoutSaving($id, $request->validationData());
 
             app(History::class)->add($item, true);
 
             return $this->response->moderatedStatus();
         }
 
-        $item = app(Anime::class)->update($id, $request->all(), $allow);
+        $item = app(Anime::class)->update($id, $request->validationData());
 
         if (! $item) {
             return $this->response->withNotFound('Anime');
@@ -304,5 +299,35 @@ class AnimeApiController extends ApiController
         }
 
         return HistoryResource::collection($items);
+    }
+
+    /**
+     * @OA\Post (
+     *     path="/anime",
+     *     tags = {"Anime"},
+     *     summary="Добавление нового тайтла",
+     *     security={
+     *       {"Authorization": {}},
+     *     },
+     *
+     *     @OA\Response(
+     *          response="200",
+     *          description="Успех",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(ref="#/components/schemas/AnimeItem")
+     *          )
+     *      ),
+     * )
+     */
+    public function create(CreateAnimeRequest $request)
+    {
+        if (request()->user()->cannot('create', \App\Models\Anime::class)) {
+            return $this->response->withError('Failed to save changes. You do not have permission to create anime item.');
+        }
+
+        $item = app(Anime::class)->create($request->validationData());
+
+        return new AnimeResource($item);
     }
 }

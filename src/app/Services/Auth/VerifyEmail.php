@@ -35,7 +35,7 @@ class VerifyEmail implements VerifyEmailContract
     {
         $hash = $this->generateHash($user_name);
 
-        $this->email_verify_repository->create($user_id, $hash);
+        $this->email_verify_repository->createHash($user_id, $hash);
 
         $url = route('verification.verify', ['user_id' => $user_id, 'hash' => $hash]);
 

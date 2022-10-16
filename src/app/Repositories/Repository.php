@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use Illuminate\Database\QueryException;
+
 class Repository
 {
     /**
@@ -73,12 +75,11 @@ class Repository
      * Обновление информации по id записи.
      *
      * @param  int  $id
-     * @param  array  $data
-     * @param  array  $allowData данные которые разрешено редактировать
+     * @param  array  $data ['field' => 'value', ...]
      * @param  array  $columns
      * @return false|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
      */
-    public function update(int $id, array $data = [], array $allowData = [], array $columns = ['*'])
+    public function update(int $id, array $data = [], array $columns = ['*'])
     {
         $item = $this
             ->query()
@@ -88,13 +89,6 @@ class Repository
             return false;
         }
 
-        $allow = [];
-
-        foreach ($allowData as $name) {
-            $allow[$name] = '';
-        }
-
-        $data = array_intersect_key($data, $allow);
         $item->update(array_diff($data, ['', ' ']));
 
         return $item;
@@ -105,12 +99,11 @@ class Repository
      * Обновление информации по id записи без сохранения в базу данных.
      *
      * @param  int  $id
-     * @param  array  $data
-     * @param  array  $allowData
+     * @param  array  $data ['field' => 'value', ...]
      * @param  array  $columns
      * @return false|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      */
-    public function updateWithoutSaving(int $id, array $data = [], array $allowData = [], array $columns = ['*']): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|\Illuminate\Database\Eloquent\Builder|array
+    public function updateWithoutSaving(int $id, array $data = [], array $columns = ['*']): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|\Illuminate\Database\Eloquent\Builder|array
     {
         $item = $this
             ->query()
@@ -120,15 +113,20 @@ class Repository
             return false;
         }
 
-        $allow = [];
-
-        foreach ($allowData as $name) {
-            $allow[$name] = '';
-        }
-
-        $data = array_intersect_key($data, $allow);
         $item->fill(array_diff($data, ['', ' ']));
 
         return $item;
+    }
+
+    /**
+     * Создание новой записи.
+     *
+     * @param array $data ['field' => 'value', ...]
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder|null
+     * @throws \Exception
+     */
+    public function create(array $data = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder|null
+    {
+        return $this->query()->create(array_diff($data, ['', ' ']));
     }
 }
