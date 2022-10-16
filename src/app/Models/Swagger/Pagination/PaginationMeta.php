@@ -9,7 +9,6 @@ namespace App\Models\Swagger\Pagination;
  *     title="PaginationMeta",
  * )
  */
-
 class PaginationMeta
 {
     /**
@@ -17,7 +16,7 @@ class PaginationMeta
      *     example="1"
      * )
      *
-     * @var int $current_page
+     * @var int
      */
     public int $current_page;
 
@@ -26,7 +25,7 @@ class PaginationMeta
      *     example="1"
      * )
      *
-     * @var int $from
+     * @var int
      */
     public int $from;
 
@@ -35,14 +34,14 @@ class PaginationMeta
      *     example="1"
      * )
      *
-     * @var int $last_page
+     * @var int
      */
     public int $last_page;
 
     /**
      * @OA\Property(ref="#/components/schemas/PaginationMetaLinks")
      *
-     * @var array $links
+     * @var array
      */
     public array $links;
 
@@ -51,7 +50,7 @@ class PaginationMeta
      *     example="http://localhost:8081/api/v1/anime"
      * )
      *
-     * @var string $path
+     * @var string
      */
     public string $path;
 
@@ -60,7 +59,7 @@ class PaginationMeta
      *     example="1"
      * )
      *
-     * @var int $per_page
+     * @var int
      */
     public int $per_page;
 
@@ -69,7 +68,7 @@ class PaginationMeta
      *     example="1"
      * )
      *
-     * @var int $to
+     * @var int
      */
     public int $to;
 
@@ -78,7 +77,7 @@ class PaginationMeta
      *     example="1"
      * )
      *
-     * @var int $total
+     * @var int
      */
     public int $total;
 

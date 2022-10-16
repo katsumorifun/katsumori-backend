@@ -1,23 +1,24 @@
 <?php
 
 namespace App\Services\Guard;
+
 use App\Contracts\Guard\AuthThrottle as AuthThrottleContract;
 use Illuminate\Http\Request;
 
 class AuthThrottle implements AuthThrottleContract
 {
     /**
-     * Настройки тротлинга
+     * Настройки тротлинга.
      */
     protected array $throttle_settings;
 
     /**
-     * Кеш
+     * Кеш.
      */
     protected \Illuminate\Contracts\Cache\Repository $cache;
 
     /**
-     * Request
+     * Request.
      */
     protected \Illuminate\Http\Request $request;
 
@@ -57,6 +58,7 @@ class AuthThrottle implements AuthThrottleContract
             }
 
         }
+
         return true;
     }
 
@@ -91,6 +93,6 @@ class AuthThrottle implements AuthThrottleContract
      */
     protected function getKey(): string
     {
-        return 'AuthThrottle:' . $this->request->ip();
+        return 'AuthThrottle:'.$this->request->ip();
     }
 }

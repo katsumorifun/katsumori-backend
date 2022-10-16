@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Repositories\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -64,7 +63,7 @@ class MinimizeAvatar implements ShouldQueue
 
             $image = Image::make($path)->resize($size, $size)->encode($extension);
 
-            Storage::disk('avatars')->put('x' . $size . '/' . $fileName, $image->__toString());
+            Storage::disk('avatars')->put('x'.$size.'/'.$fileName, $image->__toString());
         }
     }
 }

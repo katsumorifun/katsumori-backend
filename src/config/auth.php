@@ -124,6 +124,6 @@ return [
     |*/
     'throttle' => [
         'attempt_count' => 10,
-        'time_out' => 60*25,
+        'time_out' => 60 * 25,
     ],
 ];

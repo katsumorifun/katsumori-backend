@@ -9,7 +9,6 @@ namespace App\Models\Swagger;
  *     title="Device",
  * )
  */
-
 class Device
 {
     /**

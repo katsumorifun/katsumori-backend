@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services\Auth;
+
 use App\Contracts\Auth\VerifyEmail as VerifyEmailContract;
 use App\Exceptions\OperationError;
 use App\Models\User;
@@ -22,12 +23,12 @@ class VerifyEmail implements VerifyEmailContract
     }
 
     /**
-     * @param string $user_name
+     * @param  string  $user_name
      * @return string
      */
     protected function generateHash(string $user_name): string
     {
-        return $this->hash = md5(rand(4, 47) . $user_name . date('D, d M Y H:i:s') . rand(8, 35));
+        return $this->hash = md5(rand(4, 47).$user_name.date('D, d M Y H:i:s').rand(8, 35));
     }
 
     public function send(int $user_id, string $user_name)
@@ -42,8 +43,9 @@ class VerifyEmail implements VerifyEmailContract
     }
 
     /**
-     * @param int $user_id
-     * @param string $hash
+     * @param  int  $user_id
+     * @param  string  $hash
+     *
      * @throws OperationError
      */
     public function verifyEmail(int $user_id, string $hash)

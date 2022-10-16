@@ -9,7 +9,6 @@ namespace App\Models\Swagger\Aired;
  *     title="Aired",
  * )
  */
-
 class Aired
 {
     /**
@@ -18,7 +17,7 @@ class Aired
      *     example="2022-07-06 12:53:13"
      * )
      *
-     * @var string $from
+     * @var string
      */
     public string $from;
 
@@ -28,14 +27,14 @@ class Aired
      *     example="2022-07-06 12:53:13"
      * )
      *
-     * @var string $to
+     * @var string
      */
     public string $to;
 
     /**
      *  @OA\Property(ref="#/components/schemas/AiredProp")
      *
-     * @var array $prop
+     * @var array
      */
     public array $prop;
 }

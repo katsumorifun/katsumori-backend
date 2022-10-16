@@ -5,12 +5,12 @@ namespace App\Contracts\Guard;
 interface AuthThrottle
 {
     /**
-     * Проверка, разрешена ли аутентификация
+     * Проверка, разрешена ли аутентификация.
      */
     public function check(): bool;
 
     /**
-     * Увеличение счетчика неудачных попыток аутентификации
+     * Увеличение счетчика неудачных попыток аутентификации.
      */
     public function addFailCount();
 

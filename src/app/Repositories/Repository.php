@@ -7,7 +7,7 @@ class Repository
     /**
      * Eloquent model.
      *
-     * @var string $model model class eloquent
+     * @var string model class eloquent
      */
     protected string $model;
 
@@ -22,10 +22,10 @@ class Repository
     }
 
     /**
-     * @param array $columns
-     * @param bool $paginate
-     * @param int $per_page
-     * @param int $page
+     * @param  array  $columns
+     * @param  bool  $paginate
+     * @param  int  $per_page
+     * @param  int  $page
      * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Contracts\Pagination\LengthAwarePaginator|array
      */
     public function getList(array $columns = ['*'], bool $paginate = false, int $page = 1, int $per_page = 6): \Illuminate\Database\Eloquent\Collection|\Illuminate\Contracts\Pagination\LengthAwarePaginator|array
@@ -43,10 +43,10 @@ class Repository
     }
 
     /**
-     * @param string|array $column
-     * @param null $operator
-     * @param null $value
-     * @param array $columns
+     * @param  string|array  $column
+     * @param  null  $operator
+     * @param  null  $value
+     * @param  array  $columns
      * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
     public function findBy(string|array $column, $operator = null, $value = null, array $columns = ['*'])
@@ -58,11 +58,11 @@ class Repository
     }
 
     /**
-     * @param int $id
-     * @param array $columns
+     * @param  int  $id
+     * @param  array  $columns
      * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function findById(int $id , array $columns = ['*'])
+    public function findById(int $id, array $columns = ['*'])
     {
         return $this
             ->query()
@@ -70,12 +70,12 @@ class Repository
     }
 
     /**
-     * Обновление информации по id записи
+     * Обновление информации по id записи.
      *
-     * @param int $id
-     * @param array $data
-     * @param array $allowData данные которые разрешено редактировать
-     * @param array $columns
+     * @param  int  $id
+     * @param  array  $data
+     * @param  array  $allowData данные которые разрешено редактировать
+     * @param  array  $columns
      * @return false|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
      */
     public function update(int $id, array $data = [], array $allowData = [], array $columns = ['*'])
@@ -95,19 +95,19 @@ class Repository
         }
 
         $data = array_intersect_key($data, $allow);
-        $item->update(array_diff($data, array('', ' ')));
+        $item->update(array_diff($data, ['', ' ']));
 
         return $item;
 
     }
 
     /**
-     * Обновление информации по id записи без сохранения в базу данных
+     * Обновление информации по id записи без сохранения в базу данных.
      *
-     * @param int $id
-     * @param array $data
-     * @param array $allowData
-     * @param array $columns
+     * @param  int  $id
+     * @param  array  $data
+     * @param  array  $allowData
+     * @param  array  $columns
      * @return false|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      */
     public function updateWithoutSaving(int $id, array $data = [], array $allowData = [], array $columns = ['*']): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|\Illuminate\Database\Eloquent\Builder|array
@@ -127,9 +127,8 @@ class Repository
         }
 
         $data = array_intersect_key($data, $allow);
-        $item->fill(array_diff($data, array('', ' ')));
+        $item->fill(array_diff($data, ['', ' ']));
 
         return $item;
     }
-
 }

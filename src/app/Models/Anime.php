@@ -119,5 +119,4 @@ class Anime extends Model
 
         return $query;
     }
-
 }

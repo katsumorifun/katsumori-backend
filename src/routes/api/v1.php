@@ -18,21 +18,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('auth')->group(function (){
+Route::prefix('auth')->group(function () {
     Route::post('registration', [\App\Http\Controllers\Api\V1\Auth\RegistrationController::class, 'callBack'])->name('auth.registration.callback');
     Route::post('login', [\App\Http\Controllers\Api\V1\Auth\LoginController::class, 'login'])->name('auth.login.callback');
     Route::post('access_token', [\App\Http\Controllers\Api\V1\Auth\LoginController::class, 'updateTokens']);
     Route::post('logout', [\App\Http\Controllers\Api\V1\Auth\LogOutController::class, 'logOut'])->name('auth.logout');
 });
 
-Route::prefix('devices')->group(function (){
+Route::prefix('devices')->group(function () {
     Route::get('/', [\App\Http\Controllers\Api\V1\DevicesApiController::class, 'listDevices']);
     Route::get('/current', [\App\Http\Controllers\Api\V1\DevicesApiController::class, 'currentDevice']);
     Route::get('/logout/all', [\App\Http\Controllers\Api\V1\DevicesApiController::class, 'logoutAll']);
     Route::get('/logout/{login_id}', [\App\Http\Controllers\Api\V1\DevicesApiController::class, 'logoutFromLoginId']);
 });
 
-Route::prefix('user')->group(function (){
+Route::prefix('user')->group(function () {
     Route::get('/', [\App\Http\Controllers\Api\V1\UsersApiController::class, 'getList']);
     Route::post('/', [\App\Http\Controllers\Api\V1\UsersApiController::class, 'editAuthProfile'])->middleware('auth:api');
     Route::get('/{user_id}', [\App\Http\Controllers\Api\V1\UsersApiController::class, 'getById']);
@@ -40,7 +40,7 @@ Route::prefix('user')->group(function (){
     Route::post('/{user_id}/upload_avatar', [\App\Http\Controllers\Api\V1\UsersApiController::class, 'uploadAvatar'])->middleware('auth:api');
 });
 
-Route::prefix('anime')->group(function (){
+Route::prefix('anime')->group(function () {
     Route::get('/', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'list']);
     Route::get('search/{value}', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'search']);
     Route::get('/{id}', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'getItem']);

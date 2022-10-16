@@ -9,7 +9,6 @@ namespace App\Models\Swagger;
  *     title="Licensor",
  * )
  */
-
 class Licensor
 {
     /**
@@ -17,7 +16,7 @@ class Licensor
      *     example="1"
      * )
      *
-     * @var int $id
+     * @var int
      */
     public int $id;
 
@@ -26,7 +25,7 @@ class Licensor
      *     example="name"
      * )
      *
-     * @var string $name
+     * @var string
      */
     public string $name;
 

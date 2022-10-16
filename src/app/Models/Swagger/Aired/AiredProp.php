@@ -8,14 +8,13 @@ namespace App\Models\Swagger\Aired;
  *     title="AiredProp",
  * )
  */
-
 class AiredProp
 {
     /**
      * @OA\Property(
      * )
      *
-     * @var string $from
+     * @var string
      */
     public string $from;
 
@@ -29,7 +28,7 @@ class AiredProp
      *     ),
      * )
      *
-     * @var string $to
+     * @var string
      */
     public string $to;
 }

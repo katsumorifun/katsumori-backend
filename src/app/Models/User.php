@@ -56,7 +56,7 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * Relation one-to-many
+     * Relation one-to-many.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

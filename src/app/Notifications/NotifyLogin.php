@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -22,8 +21,7 @@ class NotifyLogin extends Notification
      *
      * @return void
      */
-    public function __construct
-    (
+    public function __construct(
         string $app_name,
         $activity_url,
         $client_ip,

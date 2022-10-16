@@ -9,7 +9,6 @@ namespace App\Models\Swagger;
  *     title="Synopsis",
  * )
  */
-
 class Synopsis
 {
     /**
@@ -17,7 +16,7 @@ class Synopsis
      *     example="Кто же не мечтает хоть разок побывать в ином мире, наполненном магией и дивными существами?! Хотя обычный семнадцатилетний паре..."
      * )
      *
-     * @var string $ru
+     * @var string
      */
     public string $ru;
 
@@ -26,7 +25,7 @@ class Synopsis
      *     example="Lorem i...."
      * )
      *
-     * @var string $en
+     * @var string
      */
     public string $en;
 }

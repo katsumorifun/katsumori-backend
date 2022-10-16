@@ -18,6 +18,7 @@ class ElasticObserver
      *
      * @param $model
      * @return void
+     *
      * @throws \Elastic\Elasticsearch\Exception\ClientResponseException
      * @throws \Elastic\Elasticsearch\Exception\MissingParameterException
      * @throws \Elastic\Elasticsearch\Exception\ServerResponseException
@@ -37,6 +38,7 @@ class ElasticObserver
      *
      * @param $model
      * @return void
+     *
      * @throws \Elastic\Elasticsearch\Exception\ClientResponseException
      * @throws \Elastic\Elasticsearch\Exception\MissingParameterException
      * @throws \Elastic\Elasticsearch\Exception\ServerResponseException

@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Role;
-use \App\Models\User as UserModel;
+use App\Models\User as UserModel;
 use Carbon\Carbon;
 
 class User extends Repository
@@ -14,9 +14,9 @@ class User extends Repository
     }
 
     /**
-     * @param string $name
-     * @param string $email
-     * @param string $password
+     * @param  string  $name
+     * @param  string  $email
+     * @param  string  $password
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
      */
     public function createOrGetUser(string $name, string $email, string $password): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
@@ -29,7 +29,7 @@ class User extends Repository
                 'name'    => $name,
                 'email'   => $email,
                 'password'=> bcrypt($password),
-                ]);
+            ]);
 
         $user->roles()->attach($role);
 
@@ -37,7 +37,7 @@ class User extends Repository
     }
 
     /**
-     * @param string $name
+     * @param  string  $name
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null
      */
     public function getByName(string $name): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null
@@ -48,7 +48,7 @@ class User extends Repository
     }
 
     /**
-     * @param string $email
+     * @param  string  $email
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null
      */
     public function getByEmail(string $email): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null
@@ -69,9 +69,9 @@ class User extends Repository
     }
 
     /**
-     * Удаление старых пользователей без подтвержденной почты
+     * Удаление старых пользователей без подтвержденной почты.
      *
-     * @param int $days По умолчанию 1 день
+     * @param  int  $days По умолчанию 1 день
      */
     public function removeUsersUnconfirmedEmail(int $days = 1)
     {
@@ -97,9 +97,9 @@ class User extends Repository
             ->getBuilder()
             ->find($user_id);
 
-        $user->avatar_x32 = '/x32/' . $user->id . '_' . $user->name . '.' . $extension;
-        $user->avatar_x64 = '/x64/' . $user->id . '_' . $user->name . '.' . $extension;
-        $user->avatar_x128 = '/x128/' . $user->id . '_' . $user->name . '.' . $extension;
+        $user->avatar_x32 = '/x32/'.$user->id.'_'.$user->name.'.'.$extension;
+        $user->avatar_x64 = '/x64/'.$user->id.'_'.$user->name.'.'.$extension;
+        $user->avatar_x128 = '/x128/'.$user->id.'_'.$user->name.'.'.$extension;
 
         $user->update();
     }
@@ -110,9 +110,9 @@ class User extends Repository
     }
 
     /**
-     * Смена группы guest у пользователей с датой гергистрации выше days на группу user
+     * Смена группы guest у пользователей с датой гергистрации выше days на группу user.
      *
-     * @param int $dayAgo
+     * @param  int  $dayAgo
      * @return void
      */
     public function changeUserGroupToUsers(int $days = 2)

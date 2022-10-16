@@ -2,14 +2,13 @@
 
 namespace App\Base\Schedule\User;
 
+use App\Repositories\User as UserRepository;
 use App\Repositories\VerifyEmail;
-use \App\Repositories\User as UserRepository;
 
 class User
 {
     /**
-     * Удаление старых пользователей без подтвержденной почты
-     *
+     * Удаление старых пользователей без подтвержденной почты.
      */
     public function cleanOldEmailVerify()
     {
@@ -18,9 +17,9 @@ class User
     }
 
     /**
-     * Смена группы guest у пользователей с датой гергистрации выше days на группу user
+     * Смена группы guest у пользователей с датой гергистрации выше days на группу user.
      *
-     * @param int $days
+     * @param  int  $days
      * @return void
      */
     public function changeUserGroupToUsers(int $days = 2)

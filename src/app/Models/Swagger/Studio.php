@@ -9,7 +9,6 @@ namespace App\Models\Swagger;
  *     title="Studio",
  * )
  */
-
 class Studio
 {
     /**
@@ -17,7 +16,7 @@ class Studio
      *     example="1"
      * )
      *
-     * @var int $id
+     * @var int
      */
     public int $id;
 
@@ -26,7 +25,7 @@ class Studio
      *     example="AtelierPontdarc"
      * )
      *
-     * @var string $name
+     * @var string
      */
     public string $name;
 

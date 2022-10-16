@@ -167,6 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Jubeki\LaravelCodeStyle\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -200,7 +201,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'geoIp' => \Torann\GeoIP\Facades\GeoIP::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'avatar' => \App\Services\Images\Facade\Avatar::class
+        'avatar' => \App\Services\Images\Facade\Avatar::class,
     ])->toArray(),
 
 ];

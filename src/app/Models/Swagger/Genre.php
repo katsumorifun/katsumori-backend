@@ -9,7 +9,6 @@ namespace App\Models\Swagger;
  *     title="Genre",
  * )
  */
-
 class Genre
 {
     /**
@@ -17,7 +16,7 @@ class Genre
      *     example="1"
      * )
      *
-     * @var int $id
+     * @var int
      */
     public int $id;
 
@@ -26,7 +25,7 @@ class Genre
      *     example="1"
      * )
      *
-     * @var int $mal_id
+     * @var int
      */
     public int $mal_id;
 
@@ -35,7 +34,7 @@ class Genre
      *     example="河合 滋樹"
      * )
      *
-     * @var string $name_jp
+     * @var string
      */
     public string $name_jp;
 
@@ -44,7 +43,7 @@ class Genre
      *     example="En"
      * )
      *
-     * @var string $name_en
+     * @var string
      */
     public string $name_en;
 
@@ -53,7 +52,7 @@ class Genre
      *     example="Сигэки Кавай"
      * )
      *
-     * @var string $name_ru
+     * @var string
      */
     public string $name_ru;
 }

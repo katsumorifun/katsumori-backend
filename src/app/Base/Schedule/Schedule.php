@@ -25,7 +25,7 @@ class Schedule
     }
 
     /**
-     * Системные команды (например очистка токенов Laravel passport)
+     * Системные команды (например очистка токенов Laravel passport).
      */
     protected function system(SystemSchedule $schedule)
     {
@@ -35,7 +35,7 @@ class Schedule
     }
 
     /**
-     * Рассылка почты
+     * Рассылка почты.
      */
     protected function email(SystemSchedule $schedule)
     {
@@ -66,6 +66,6 @@ class Schedule
      */
     protected function scheduleTaskError(string $task_name, Throwable $throwable)
     {
-        error_log($task_name . ' > ' . $throwable->getMessage(), 0, 'schedule task error');
+        error_log($task_name.' > '.$throwable->getMessage(), 0, 'schedule task error');
     }
 }

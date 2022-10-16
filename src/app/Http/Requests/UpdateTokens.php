@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 
 class UpdateTokens extends FormRequest
 {
@@ -25,7 +24,7 @@ class UpdateTokens extends FormRequest
     public function rules()
     {
         return [
-            'refresh_token'   => 'required'
+            'refresh_token'   => 'required',
         ];
     }
 }

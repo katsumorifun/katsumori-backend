@@ -9,7 +9,6 @@ namespace App\Models\Swagger;
  *     title="Staff",
  * )
  */
-
 class Staff
 {
     /**
@@ -17,7 +16,7 @@ class Staff
      *     example="1"
      * )
      *
-     * @var int $id
+     * @var int
      */
     public int $id;
 
@@ -26,7 +25,7 @@ class Staff
      *     example="1"
      * )
      *
-     * @var int $mal_id
+     * @var int
      */
     public int $mal_id;
 
@@ -35,7 +34,7 @@ class Staff
      *     example="河合 滋樹"
      * )
      *
-     * @var string $name_jp
+     * @var string
      */
     public string $name_jp;
 
@@ -44,7 +43,7 @@ class Staff
      *     example="En"
      * )
      *
-     * @var string $name_en
+     * @var string
      */
     public string $name_en;
 
@@ -53,7 +52,7 @@ class Staff
      *     example="Сигэки Кавай"
      * )
      *
-     * @var string $name_ru
+     * @var string
      */
     public string $name_ru;
 
@@ -62,7 +61,7 @@ class Staff
      *     example="/images/staff/x32/default.png"
      * )
      *
-     * @var string $image_x32
+     * @var string
      */
     public string $image_x32;
 
@@ -71,7 +70,7 @@ class Staff
      *     example="/images/staff/x64/default.png"
      * )
      *
-     * @var string $image_x64
+     * @var string
      */
     public string $image_x64;
 
@@ -80,7 +79,7 @@ class Staff
      *     example="/original/staff/x64/default.png"
      * )
      *
-     * @var string $image_original
+     * @var string
      */
     public string $image_original;
 }

@@ -16,6 +16,6 @@ class ClientInfo extends Model
     protected $attributes = [
         'client_id',
         'description',
-        'logo_url'
+        'logo_url',
     ];
 }

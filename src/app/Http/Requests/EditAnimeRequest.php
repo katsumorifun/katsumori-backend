@@ -2,10 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Enums\User\GenderEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rules\Enum;
 
 class EditAnimeRequest extends FormRequest
 {

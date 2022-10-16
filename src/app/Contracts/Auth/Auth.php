@@ -7,7 +7,7 @@ use App\Exceptions\OperationError;
 interface Auth
 {
     /**
-     * Попытка авторизаваться
+     * Попытка авторизаваться.
      *
      * @throws OperationError
      */
@@ -23,5 +23,4 @@ interface Auth
     public function updateAccessToken(string $refreshToken);
 
     public function revokeTokens(string $token_id);
-
 }

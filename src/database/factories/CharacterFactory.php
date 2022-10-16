@@ -24,9 +24,9 @@ class CharacterFactory extends Factory
             'name_jp'         => $this->faker->lastName,
             'name_en'         => $this->faker->lastName,
             'name_ru'         => $this->faker->lastName,
-            'image_x32'       => '/x32/' . $this->faker->name. '.png',
-            'image_x64'       => '/x64/' . $this->faker->name. '.png',
-            'image_original'  => '/original/' . $this->faker->lastName . '.png',
+            'image_x32'       => '/x32/'.$this->faker->name.'.png',
+            'image_x64'       => '/x64/'.$this->faker->name.'.png',
+            'image_original'  => '/original/'.$this->faker->lastName.'.png',
         ];
     }
 }

@@ -15,7 +15,6 @@ class DevicesApiController extends ApiController
     }
 
     /**
-     *
      * @OA\Post (
      *     path="/devices",
      *     tags = {"Devices"},
@@ -55,7 +54,6 @@ class DevicesApiController extends ApiController
     }
 
     /**
-     *
      * @OA\Post (
      *     path="/devices/current",
      *     tags = {"Devices"},
@@ -93,7 +91,6 @@ class DevicesApiController extends ApiController
     }
 
     /**
-     *
      * @OA\Post (
      *     path="/devices/logout/{id}",
      *     tags = {"Devices"},
@@ -166,19 +163,18 @@ class DevicesApiController extends ApiController
     {
         $status = Auth::user()->logout($login_id);
 
-        if (!$status)
+        if (! $status)
         {
             return $this->response->withNotFound('Login id');
         }
 
         return $this->response->json([
             'status' => 'Ok',
-            'message' => 'Logged out'
+            'message' => 'Logged out',
         ]);
     }
 
     /**
-     *
      * @OA\Post (
      *     path="/devices/logout/all",
      *     tags = {"Devices"},
@@ -226,7 +222,7 @@ class DevicesApiController extends ApiController
 
         return $this->response->json([
             'status' => 'Ok',
-            'message' => 'Logged out'
+            'message' => 'Logged out',
         ]);
     }
 }

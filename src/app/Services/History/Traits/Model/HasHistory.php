@@ -7,7 +7,7 @@ use App\Observers\HistoryObserver;
 
 trait HasHistory
 {
-    static function bootHasHistory()
+    public static function bootHasHistory()
     {
         static::observe(HistoryObserver::class);
     }

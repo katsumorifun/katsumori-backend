@@ -2,14 +2,14 @@
 
 namespace App\Services\Auth;
 
+use App\Contracts\Auth\Auth as AuthContract;
 use App\Contracts\Guard\AuthThrottle;
 use App\Exceptions\OperationError;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Laravel\Passport\RefreshTokenRepository;
 use Laravel\Passport\TokenRepository;
-use Illuminate\Contracts\Foundation\Application;
-use App\Contracts\Auth\Auth as AuthContract;
 
 class Auth implements AuthContract
 {
@@ -33,7 +33,7 @@ class Auth implements AuthContract
      */
     public function attempt(string $email, string $password)
     {
-        if(!$this->auth_throttle->check()) {
+        if(! $this->auth_throttle->check()) {
             throw new OperationError(__('auth.throttle', ['seconds' => $this->getThrottleTimeOut()]));
         }
 

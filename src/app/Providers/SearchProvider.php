@@ -19,7 +19,7 @@ class SearchProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(Search::class, function () {
-            if (!config('services.search.enabled')) {
+            if (! config('services.search.enabled')) {
                 return new EquivalentSearch();
             }
 

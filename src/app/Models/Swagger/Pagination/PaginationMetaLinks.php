@@ -9,7 +9,6 @@ namespace App\Models\Swagger\Pagination;
  *     title="PaginationMetaLinks",
  * )
  */
-
 class PaginationMetaLinks
 {
     /**
@@ -17,7 +16,7 @@ class PaginationMetaLinks
      *     example="null"
      * )
      *
-     * @var string $current_page
+     * @var string
      */
     public string $url;
 
@@ -26,7 +25,7 @@ class PaginationMetaLinks
      *     example="&laquo; Previous"
      * )
      *
-     * @var string $label
+     * @var string
      */
     public string $label;
 
@@ -35,7 +34,7 @@ class PaginationMetaLinks
      *     example="false"
      * )
      *
-     * @var bool $active
+     * @var bool
      */
     public bool $active;
 

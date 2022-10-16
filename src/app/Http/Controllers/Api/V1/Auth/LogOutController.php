@@ -61,7 +61,6 @@ class LogOutController extends ApiController
     {
         $token = \Auth::user()->token();
 
-
         /**
          * @var \App\Contracts\Auth\Auth $auth
          */
@@ -70,7 +69,7 @@ class LogOutController extends ApiController
 
         return $this->response->json([
             'status' => 'Ok',
-            'message' => 'Logged out'
+            'message' => 'Logged out',
         ]);
     }
 }

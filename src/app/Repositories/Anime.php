@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Base\Filter\FilterDTO;
 use App\Models\Anime as AnimeModel;
-use App\Models\History;
 use Illuminate\Contracts\Database\Query\Builder;
 
 class Anime extends Repository
@@ -15,10 +14,11 @@ class Anime extends Repository
     }
 
     /**
-     * Метод возвращает список тайтлов + студии, наличие лицензий, жанры, темы и продюсеров (таблица staff)
-     * @param FilterDTO $search
-     * @param int $perPage
-     * @param int $page
+     * Метод возвращает список тайтлов + студии, наличие лицензий, жанры, темы и продюсеров (таблица staff).
+     *
+     * @param  FilterDTO  $search
+     * @param  int  $perPage
+     * @param  int  $page
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function getListAndGeneralInfoPaginate(FilterDTO $search, int $perPage = 12, int $page = 1)
@@ -41,7 +41,7 @@ class Anime extends Repository
            $builder = $builder->where($name, $param);
         }
 
-        if (!empty($search->order)) {
+        if (! empty($search->order)) {
             $builder = $builder->orderBy($search->order);
         }
 
@@ -75,5 +75,4 @@ class Anime extends Repository
             ->histories
             ->where('type', 'moderation');
     }
-
 }

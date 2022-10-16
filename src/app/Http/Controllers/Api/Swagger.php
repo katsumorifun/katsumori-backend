@@ -42,8 +42,6 @@ namespace App\Http\Controllers\Api;
  *     securityScheme="Authorization"
  * )
  */
-
 trait Swagger
 {
-
 }

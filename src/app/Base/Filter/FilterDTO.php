@@ -31,14 +31,14 @@ class FilterDTO
             if (lcfirst($name) == 'order') {
                 $searchDTO->order = $params;
 
-            } else if(array_key_exists(lcfirst($name), $relations)) {
+            } elseif(array_key_exists(lcfirst($name), $relations)) {
 
                 $ids = str_replace(' ', '', $params);
                 $ids = explode(',', $ids);
 
-                $name = 'of' . ucfirst($name);
+                $name = 'of'.ucfirst($name);
                 $searchDTO->relations[lcfirst($name)] = $ids;
-            } else if (array_key_exists(lcfirst($name), $fields)) {
+            } elseif (array_key_exists(lcfirst($name), $fields)) {
                 $searchDTO->fields[lcfirst($name)] = $params;
             }
         }

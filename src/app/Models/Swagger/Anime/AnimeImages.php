@@ -9,7 +9,6 @@ namespace App\Models\Swagger\Anime;
  *     title="AnimeImages",
  * )
  */
-
 class AnimeImages
 {
     /**
@@ -18,7 +17,7 @@ class AnimeImages
      *     example="/images/anime/original/default.png"
      * )
      *
-     * @var string $original
+     * @var string
      */
     public string $original;
 
@@ -28,7 +27,7 @@ class AnimeImages
      *     example="/images/anime/x32/default.png"
      * )
      *
-     * @var string $x32
+     * @var string
      */
     public string $x32;
 
@@ -38,7 +37,7 @@ class AnimeImages
      *     example="/images/anime/x64/default.png"
      * )
      *
-     * @var string $x64
+     * @var string
      */
     public string $x64;
 
@@ -48,7 +47,7 @@ class AnimeImages
      *     example="/images/anime/x128/default.png"
      * )
      *
-     * @var string $x128
+     * @var string
      */
     public string $x128;
 }

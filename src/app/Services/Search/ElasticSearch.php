@@ -18,6 +18,7 @@ class ElasticSearch extends Repository implements Search
     public function anime($query)
     {
         $items = $this->searchOnElasticsearch($query);
+
         return $this->buildCollection($items);
     }
 
@@ -38,6 +39,7 @@ class ElasticSearch extends Repository implements Search
             ],
         ]);
     }
+
     private function buildCollection($items)
     {
         return \Arr::pluck($items['hits']['hits'], '_source');

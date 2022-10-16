@@ -128,7 +128,7 @@ return [
         */
 
         'custom_providers' => [
-            'geo_ip_provider' => GeoIpProvider::class
+            'geo_ip_provider' => GeoIpProvider::class,
         ],
 
         /*

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\V1\Auth;
 
-use App\Base\Auth\VerifyEmail;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\RegistrationRequest;
 use App\Http\Resources\UserResource;
@@ -11,7 +10,6 @@ use Illuminate\Support\Facades\Request;
 
 class RegistrationController extends ApiController
 {
-
     public function __construct()
     {
         $this->resource = UserResource::class;
@@ -119,9 +117,9 @@ class RegistrationController extends ApiController
     {
        $user = app(User::class)->createOrGetUser($request->get('name'), $request->get('email'), $request->get('password'));
 
-        /**
-         * @var \App\Contracts\Auth\VerifyEmail $email
-         */
+       /**
+        * @var \App\Contracts\Auth\VerifyEmail $email
+        */
        $email = app('app.auth.email');
        $email->send($user->id, $user->name);
 

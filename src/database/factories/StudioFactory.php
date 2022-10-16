@@ -20,7 +20,7 @@ class StudioFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->lastName
+            'name' => $this->faker->lastName,
         ];
     }
 }

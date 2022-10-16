@@ -6,7 +6,6 @@ use App\Contracts\History\History;
 
 class HistoryObserver
 {
-
     /**
      * Handle the User "deleted" event.
      *
@@ -15,7 +14,7 @@ class HistoryObserver
      */
     public function saved($model): void
     {
-        if(!auth()->user()->cannot('edit', $model::class)) {
+        if(! auth()->user()->cannot('edit', $model::class)) {
             app(History::class)->add($model);
         }
     }

@@ -9,7 +9,6 @@ namespace App\Models\Swagger\Anime;
  *     title="AnimeTitleSynonyms",
  * )
  */
-
 class AnimeTitleSynonyms
 {
     /**
@@ -19,7 +18,7 @@ class AnimeTitleSynonyms
      *     example="English"
      * )
      *
-     * @var string $type
+     * @var string
      */
     public string $type;
 
@@ -30,7 +29,7 @@ class AnimeTitleSynonyms
      *     example="Ojisan in Another World"
      * )
      *
-     * @var string $title
+     * @var string
      */
     public string $title;
 }

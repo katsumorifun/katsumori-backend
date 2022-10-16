@@ -24,5 +24,4 @@ class Character extends Model
     {
         return $this->belongsToMany(Staff::class, 'characters_voice_actors');
     }
-
 }

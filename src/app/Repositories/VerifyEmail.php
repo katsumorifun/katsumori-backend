@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Repositories;
+
 use App\Models\VerifyEmail as VerifyEmailModel;
 
 class VerifyEmail extends Repository
@@ -18,9 +19,8 @@ class VerifyEmail extends Repository
     }
 
     /**
-     *
-     * @param int $user_id
-     * @param string $hash
+     * @param  int  $user_id
+     * @param  string  $hash
      * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder|null
      */
     public function getHash(int $user_id, string $hash): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder|null
@@ -31,9 +31,9 @@ class VerifyEmail extends Repository
     }
 
     /**
-     * Удаление старых пользователей
+     * Удаление старых пользователей.
      *
-     * @param int $days
+     * @param  int  $days
      */
     public function removeOldHash(int $days = 1)
     {

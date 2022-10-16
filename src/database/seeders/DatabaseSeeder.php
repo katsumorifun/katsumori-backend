@@ -8,7 +8,6 @@ use App\Models\Licensor;
 use App\Models\Staff;
 use App\Models\Studio;
 use App\Models\Theme;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

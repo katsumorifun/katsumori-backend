@@ -60,7 +60,7 @@ class ReindexCommand extends Command
                 'id' => $item->getKey(),
                 'body' => $item->toSearchArray(),
             ]);
-            $this->output->write('indexed title: ' . $item->title_jp);
+            $this->output->write('indexed title: '.$item->title_jp);
             $this->info('');
         }
     }

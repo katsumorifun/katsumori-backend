@@ -3,8 +3,8 @@
 namespace App\Services\History;
 
 use App\Contracts\History\History as HistoryContract;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\History as HistoryModel;
+use Illuminate\Database\Eloquent\Model;
 
 class History implements HistoryContract
 {
@@ -12,7 +12,7 @@ class History implements HistoryContract
     {
         $diff = array_diff($model->getRawOriginal(), $model->getAttributes());
 
-        if (!empty($diff)) {
+        if (! empty($diff)) {
             $history = new HistoryModel();
 
             $history->fill([

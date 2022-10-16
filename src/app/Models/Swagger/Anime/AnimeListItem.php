@@ -9,7 +9,6 @@ namespace App\Models\Swagger\Anime;
  *     title="AnimeListItem",
  * )
  */
-
 class AnimeListItem
 {
     /**
@@ -18,7 +17,7 @@ class AnimeListItem
      *     example="1"
      * )
      *
-     * @var integer
+     * @var int
      */
     public int $id;
 
@@ -28,7 +27,7 @@ class AnimeListItem
      *     example="1"
      * )
      *
-     * @var integer
+     * @var int
      */
     public int $mal_id;
 
@@ -45,7 +44,7 @@ class AnimeListItem
      *     example="true"
      * )
      *
-     * @var boolean $approved
+     * @var bool
      */
     public bool $approved;
 
@@ -55,7 +54,7 @@ class AnimeListItem
      *     example="異世界おじさん"
      * )
      *
-     * @var string $title_jp
+     * @var string
      */
     public string $title_jp;
 
@@ -65,7 +64,7 @@ class AnimeListItem
      *     example="Isekai Ojisan"
      * )
      *
-     * @var string $title_en
+     * @var string
      */
     public string $title_en;
 
@@ -75,14 +74,14 @@ class AnimeListItem
      *     example="Перерождение Дяди"
      * )
      *
-     * @var string $title_ru
+     * @var string
      */
     public string $title_ru;
 
     /**
      * @OA\Property(ref="#/components/schemas/AnimeTitleSynonyms")
      *
-     * @var string $title_synonyms
+     * @var string
      */
     public string $title_synonyms;
 
@@ -91,7 +90,7 @@ class AnimeListItem
      *     example="tv"
      * )
      *
-     * @var string $type
+     * @var string
      */
     public string $type;
 
@@ -100,7 +99,7 @@ class AnimeListItem
      *     example="manga"
      * )
      *
-     * @var string $source
+     * @var string
      */
     public string $source;
 
@@ -109,7 +108,7 @@ class AnimeListItem
      *     example="10"
      * )
      *
-     * @var int $episodes
+     * @var int
      */
     public int $episodes;
 
@@ -118,7 +117,7 @@ class AnimeListItem
      *     example="ongoing"
      * )
      *
-     * @var string $status
+     * @var string
      */
     public string $status;
 
@@ -127,14 +126,14 @@ class AnimeListItem
      *     example="false"
      * )
      *
-     * @var bool $airing
+     * @var bool
      */
     public bool $airing;
 
     /**
      * @OA\Property(ref="#/components/schemas/Aired")
      *
-     * @var array $aired
+     * @var array
      */
     public array $aired;
 
@@ -143,7 +142,7 @@ class AnimeListItem
      *     example="24 min per ep"
      * )
      *
-     * @var string $duration
+     * @var string
      */
     public string $duration;
 
@@ -152,7 +151,7 @@ class AnimeListItem
      *     example="pg-13"
      * )
      *
-     * @var string $age_rating
+     * @var string
      */
     public string $age_rating;
 
@@ -161,79 +160,78 @@ class AnimeListItem
      *     example="7.93"
      * )
      *
-     * @var float $mal_score
+     * @var float
      */
     public float $mal_score;
 
     /**
      * @OA\Property()
      *
-     * @var float $score
+     * @var float
      */
     public float $score;
 
     /**
      * @OA\Property()
      *
-     * @var float $statistics
+     * @var float
      */
     public float $statistics;
 
     /**
      * @OA\Property(ref="#/components/schemas/Synopsis")
      *
-     * @var array $synopsis
+     * @var array
      */
     public array $synopsis;
 
     /**
      * @OA\Property()
      *
-     * @var string $season
+     * @var string
      */
     public string $season;
 
     /**
      * @OA\Property()
      *
-     * @var string $year
+     * @var string
      */
     public string $year;
 
     /**
      * @OA\Property(ref="#/components/schemas/Staff", property="producers")
      *
-     * @var array $producers
+     * @var array
      */
     public array $producers;
 
     /**
      * @OA\Property(ref="#/components/schemas/Licensor")
      *
-     * @var array $licensors
+     * @var array
      */
     public array $licensors;
 
     /**
      * @OA\Property(ref="#/components/schemas/Studio")
      *
-     * @var array $studio
+     * @var array
      */
     public array $studio;
 
     /**
      * @OA\Property(ref="#/components/schemas/Genre")
      *
-     * @var array $genres
+     * @var array
      */
     public array $genres;
 
     /**
      * @OA\Property(ref="#/components/schemas/Theme")
      *
-     * @var array $theme
+     * @var array
      */
     public array $theme;
-
 
 }

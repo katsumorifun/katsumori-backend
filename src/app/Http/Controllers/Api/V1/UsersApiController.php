@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Base\RequestDTO;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\EditUsersRequest;
 use App\Http\Requests\GetUsersListRequest;
@@ -15,7 +14,6 @@ use Illuminate\Validation\Rule;
 class UsersApiController extends ApiController
 {
     /**
-     *
      * @OA\Get  (
      *     path="/user",
      *     tags = {"Users"},
@@ -55,15 +53,13 @@ class UsersApiController extends ApiController
      */
     public function getList(GetUsersListRequest $request)
     {
-        $per_page = $request->get('per_page') ? $request->get('per_page'): 6;
-        $page = $request->get('page') ? $request->get('page'): 1;
+        $per_page = $request->get('per_page') ? $request->get('per_page') : 6;
+        $page = $request->get('page') ? $request->get('page') : 1;
 
         return app(User::class)->getList(['*'], true, $page, $per_page);
     }
 
-
     /**
-     *
      * @OA\Get  (
      *     path="/user/{user_id}",
      *     tags = {"Users"},
@@ -103,7 +99,6 @@ class UsersApiController extends ApiController
     }
 
     /**
-     *
      * @OA\Post  (
      *     path="/user/{user_id}",
      *     tags = {"Users"},
@@ -170,21 +165,20 @@ class UsersApiController extends ApiController
         }
 
         $user = app(User::class)
-            ->update($user_id, $request->all(),  ['name', 'description', 'gender']);
+            ->update($user_id, $request->all(), ['name', 'description', 'gender']);
 
-        if (!$user) {
+        if (! $user) {
             return $this->response->withNotFound('user');
         }
 
         if ($request->user()->cannot('edit', new User())) {
-            return $this->response->withForbidden("Failed to save changes. You do not have permission to update the user profile.");
+            return $this->response->withForbidden('Failed to save changes. You do not have permission to update the user profile.');
         }
 
         return $this->response->json(['status' =>'Update successfully', 'user' => $user]);
     }
 
     /**
-     *
      * @OA\Post  (
      *     path="/user",
      *     tags = {"Users"},
@@ -242,13 +236,12 @@ class UsersApiController extends ApiController
     public function editAuthProfile(EditUsersRequest $request)
     {
         $user = app(User::class)
-            ->update(Auth::user()->id, $request->all(),  ['name', 'description', 'gender']);
+            ->update(Auth::user()->id, $request->all(), ['name', 'description', 'gender']);
 
         return $this->response->json(['status' =>'Update successfully', 'user' => $user]);
     }
 
     /**
-     *
      * @OA\Post  (
      *     path="/user/{user_id}/upload_avatar",
      *     tags = {"Users"},
@@ -298,8 +291,8 @@ class UsersApiController extends ApiController
                 'required',
                 'image',
                 'max:10240',
-                Rule::dimensions()->maxHeight(640)->maxWidth(640)
-            ]
+                Rule::dimensions()->maxHeight(640)->maxWidth(640),
+            ],
         ]);
 
         $user = app(User::class)->findById($user_id);
@@ -309,7 +302,7 @@ class UsersApiController extends ApiController
         }
 
         if ($user->id !== Auth()->user()->id){
-            return $this->response->withForbidden("Failed to save changes. You do not have permission to update the user avatar.");
+            return $this->response->withForbidden('Failed to save changes. You do not have permission to update the user avatar.');
         }
 
         Avatar::update($user, $request->file('avatar'));

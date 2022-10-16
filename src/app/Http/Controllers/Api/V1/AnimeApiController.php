@@ -16,7 +16,6 @@ use OpenApi\Annotations as OA;
 class AnimeApiController extends ApiController
 {
     /**
-     *
      * @OA\Get (
      *     path="/anime",
      *     tags = {"Anime"},
@@ -91,8 +90,8 @@ class AnimeApiController extends ApiController
      */
     public function list(AnimeListRequest $request)
     {
-        $per_page = $request->get('limit') ? $request->get('limit'): 12;
-        $page = $request->get('page') ? $request->get('page'): 1;
+        $per_page = $request->get('limit') ? $request->get('limit') : 12;
+        $page = $request->get('page') ? $request->get('page') : 1;
 
         $data = app(Anime::class)
             ->getListAndGeneralInfoPaginate((new FilterDTO())->transform(\App\Models\Anime::class, $request), $per_page, $page);
@@ -103,7 +102,6 @@ class AnimeApiController extends ApiController
     }
 
     /**
-     *
      * @OA\Get (
      *     path="/anime/search/{value}",
      *     tags = {"Anime"},
@@ -126,7 +124,6 @@ class AnimeApiController extends ApiController
     }
 
     /**
-     *
      * @OA\Get (
      *     path="/anime/{id}",
      *     tags = {"Anime"},
@@ -175,7 +172,6 @@ class AnimeApiController extends ApiController
     }
 
     /**
-     *
      * @OA\Post (
      *     path="/anime/{id}",
      *     tags = {"Anime"},
@@ -238,7 +234,7 @@ class AnimeApiController extends ApiController
 
         $item = app(Anime::class)->update($id, $request->all(), $allow);
 
-        if (!$item) {
+        if (! $item) {
             return $this->response->withNotFound('Anime');
         }
 
@@ -246,7 +242,6 @@ class AnimeApiController extends ApiController
     }
 
     /**
-     *
      * @OA\Get (
      *     path="/anime/{id}/history",
      *     tags = {"Anime"},
@@ -274,7 +269,6 @@ class AnimeApiController extends ApiController
     }
 
     /**
-     *
      * @OA\Get (
      *     path="/anime/{id}/moderation",
      *     tags = {"Anime"},

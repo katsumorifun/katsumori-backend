@@ -6,7 +6,7 @@ use App\Exceptions\OperationError;
 
 class VerifyEmail
 {
-    public function check(int $user_id, string $hash){
+    public function check(int $user_id, string $hash) {
 
         if (empty($user_id) || empty($hash)) {
             return view('auth.email.success', ['status' => false]);

@@ -9,7 +9,6 @@ namespace App\Models\Swagger;
  *     title="HistoryChanges",
  * )
  */
-
 class HistoryChanges
 {
     /**

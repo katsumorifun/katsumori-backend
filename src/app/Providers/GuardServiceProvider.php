@@ -14,7 +14,7 @@ class GuardServiceProvider extends ServiceProvider implements DeferrableProvider
      */
     public function register()
     {
-        $this->app->singleton(\App\Contracts\Guard\AuthThrottle::class,  \App\Services\Guard\AuthThrottle::class);
+        $this->app->singleton(\App\Contracts\Guard\AuthThrottle::class, \App\Services\Guard\AuthThrottle::class);
         $this->app->alias(\App\Contracts\Guard\AuthThrottle::class, 'app.auth_throttle');
     }
 

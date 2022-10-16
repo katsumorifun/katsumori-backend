@@ -24,11 +24,11 @@ class StaffFactory extends Factory
             'name_jp'         => $this->faker->name,
             'name_en'         => $this->faker->name,
             'name_ru'         => $this->faker->name,
-            'image_x32'       => '/x32/' . $this->faker->name. '.png',
-            'image_x64'       => '/x64/' . $this->faker->name. '.png',
-            'image_original'  => '/original/' . $this->faker->lastName . '.png',
+            'image_x32'       => '/x32/'.$this->faker->name.'.png',
+            'image_x64'       => '/x64/'.$this->faker->name.'.png',
+            'image_original'  => '/original/'.$this->faker->lastName.'.png',
             'is_voice_actor'  => $this->faker->boolean,
-            'voice_language'  => $this->faker->randomElement(["english", "russian", "french", "japanese"]),
+            'voice_language'  => $this->faker->randomElement(['english', 'russian', 'french', 'japanese']),
         ];
     }
 }

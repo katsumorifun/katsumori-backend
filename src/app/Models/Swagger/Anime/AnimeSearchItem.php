@@ -9,7 +9,6 @@ namespace App\Models\Swagger\Anime;
  *     title="AnimeSearchItem",
  * )
  */
-
 class AnimeSearchItem
 {
     /**
@@ -18,7 +17,7 @@ class AnimeSearchItem
      *     example="1"
      * )
      *
-     * @var integer
+     * @var int
      */
     public int $id;
 
@@ -28,35 +27,35 @@ class AnimeSearchItem
      *     example="1"
      * )
      *
-     * @var integer
+     * @var int
      */
     public int $mal_id;
 
     /**
      * @OA\Property()
      *
-     * @var string $image_x32
+     * @var string
      */
     public string $image_x32;
 
     /**
      * @OA\Property()
      *
-     * @var string $image_x64
+     * @var string
      */
     public string $image_x64;
 
     /**
      * @OA\Property()
      *
-     * @var string $image_x128
+     * @var string
      */
     public string $image_x128;
 
     /**
      * @OA\Property()
      *
-     * @var string $image_original
+     * @var string
      */
     public string $image_original;
 
@@ -66,7 +65,7 @@ class AnimeSearchItem
      *     example="true"
      * )
      *
-     * @var boolean $approved
+     * @var bool
      */
     public bool $approved;
 
@@ -76,7 +75,7 @@ class AnimeSearchItem
      *     example="異世界おじさん"
      * )
      *
-     * @var string $title_jp
+     * @var string
      */
     public string $title_jp;
 
@@ -86,7 +85,7 @@ class AnimeSearchItem
      *     example="Isekai Ojisan"
      * )
      *
-     * @var string $title_en
+     * @var string
      */
     public string $title_en;
 
@@ -96,14 +95,14 @@ class AnimeSearchItem
      *     example="Перерождение Дяди"
      * )
      *
-     * @var string $title_ru
+     * @var string
      */
     public string $title_ru;
 
     /**
      * @OA\Property(ref="#/components/schemas/AnimeTitleSynonyms")
      *
-     * @var string $title_synonyms
+     * @var string
      */
     public string $title_synonyms;
 
@@ -112,7 +111,7 @@ class AnimeSearchItem
      *     example="tv"
      * )
      *
-     * @var string $type
+     * @var string
      */
     public string $type;
 
@@ -121,7 +120,7 @@ class AnimeSearchItem
      *     example="manga"
      * )
      *
-     * @var string $source
+     * @var string
      */
     public string $source;
 
@@ -130,7 +129,7 @@ class AnimeSearchItem
      *     example="10"
      * )
      *
-     * @var int $episodes
+     * @var int
      */
     public int $episodes;
 
@@ -139,7 +138,7 @@ class AnimeSearchItem
      *     example="ongoing"
      * )
      *
-     * @var string $status
+     * @var string
      */
     public string $status;
 
@@ -148,28 +147,28 @@ class AnimeSearchItem
      *     example="false"
      * )
      *
-     * @var bool $airing
+     * @var bool
      */
     public bool $airing;
 
     /**
      * @OA\Property()
      *
-     * @var string $episodes_aired
+     * @var string
      */
     public string $episodes_aired;
 
     /**
      * @OA\Property()
      *
-     * @var string $episodes_from
+     * @var string
      */
     public string $episodes_from;
 
     /**
      * @OA\Property()
      *
-     * @var string $episodes_to
+     * @var string
      */
     public string $episodes_to;
 
@@ -178,7 +177,7 @@ class AnimeSearchItem
      *     example="24 min per ep"
      * )
      *
-     * @var string $duration
+     * @var string
      */
     public string $duration;
 
@@ -187,7 +186,7 @@ class AnimeSearchItem
      *     example="pg-13"
      * )
      *
-     * @var string $age_rating
+     * @var string
      */
     public string $age_rating;
 
@@ -196,49 +195,49 @@ class AnimeSearchItem
      *     example="7.93"
      * )
      *
-     * @var float $mal_score
+     * @var float
      */
     public float $mal_score;
 
     /**
      * @OA\Property()
      *
-     * @var float $score
+     * @var float
      */
     public float $score;
 
     /**
      * @OA\Property()
      *
-     * @var float $statistics
+     * @var float
      */
     public float $statistics;
 
     /**
      * @OA\Property()
      *
-     * @var string $synopsis_en
+     * @var string
      */
     public string $synopsis_en;
 
     /**
      * @OA\Property()
      *
-     * @var string $synopsis_ru
+     * @var string
      */
     public string $synopsis_ru;
 
     /**
      * @OA\Property()
      *
-     * @var string $season
+     * @var string
      */
     public string $season;
 
     /**
      * @OA\Property()
      *
-     * @var string $year
+     * @var string
      */
     public string $year;
 }

@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Carbon\Carbon;
 use Illuminate\Http\Resources\MissingValue;
 
 class AnimeResource extends JsonResource
@@ -21,6 +21,7 @@ class AnimeResource extends JsonResource
     {
         $aired_from = $this->episodes_from ? Carbon::make($this->episodes_from) : null;
         $aired_to = $this->episodes_to ? Carbon::make($this->episodes_to) : null;
+
         return [
             'id'        => $this->id,
             'mal_id'    => $this->mal_id,
@@ -30,7 +31,7 @@ class AnimeResource extends JsonResource
                 'x64'      => $this->image_x64,
                 'x128'     => $this->image_x128,
             ],
-            'approved'  => $this->approved ? boolval($this->approved): null,
+            'approved'  => $this->approved ? boolval($this->approved) : null,
             'title_jp'  => $this->title_jp,
             'title_en'  => $this->title_en,
             'title_ru'  => $this->title_ru,
@@ -42,7 +43,7 @@ class AnimeResource extends JsonResource
             'source'    => $this->source,
             'episodes'  => $this->episodes,
             'status'    => $this->status,
-            'airing'    => $this->airing ? boolval($this->airing): null,
+            'airing'    => $this->airing ? boolval($this->airing) : null,
             'aired'     => [
                 'from' => $this->episodes_from ? $aired_from->format('Y-m-d H:i:s') : null,
                 'to'   => $this->episodes_to ? $aired_to->format('Y-m-d H:i:s') : null,
@@ -57,13 +58,13 @@ class AnimeResource extends JsonResource
                         'month' => $this->episodes_to ? $aired_to->month : null,
                         'year'  => $this->episodes_to ? $aired_to->year : null,
                     ],
-                ]
+                ],
             ],
-            'duration'   => $this->duration . ' min per ep',
+            'duration'   => $this->duration.' min per ep',
             'age_rating'     => $this->age_rating,
             'mal_score'  => round($this->mal_score, 2),
             'score'      => [
-                    //В будущем будет добавлено, пока рейтинга на сайте нет
+                //В будущем будет добавлено, пока рейтинга на сайте нет
             ],
             'statistics' => [
                 //В будущем будет добавлено, пока статы на сайте нет
@@ -72,16 +73,16 @@ class AnimeResource extends JsonResource
             'favorite'   => false, //Если тайтл в избранном упользователя, то true, в будущем будет добавлено
             'synopsis'   => [
                 'ru' => $this->synopsis_ru,
-                'en' => $this->synopsis_en
+                'en' => $this->synopsis_en,
             ],
             'season'     => $this->episodes_from ? $this->getSeason($aired_from->monthName) : null,
             'year'       => $this->episodes_from ? $aired_from->year : null,
             'producers'  => $this->when($this->producers, $this->staff),
-            'staff'      => $this->when(!$this->producers, $this->staff),
+            'staff'      => $this->when(! $this->producers, $this->staff),
             'licensors'  => $this->licensors,
             'studios'    => $this->studios,
             'genres'     => $this->genres,
-            'themes'     => $this->themes
+            'themes'     => $this->themes,
         ];
     }
 
@@ -114,7 +115,7 @@ class AnimeResource extends JsonResource
     }
 
     /**
-     * @param bool $producers
+     * @param  bool  $producers
      */
     public function setProducers(bool $producers): void
     {

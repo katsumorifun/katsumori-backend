@@ -9,7 +9,6 @@ namespace App\Models\Swagger\Auth;
  *     title="Tokens",
  * )
  */
-
 class Tokens
 {
     /**

@@ -9,7 +9,6 @@ namespace App\Models\Swagger\Pagination;
  *     title="PaginationLinks",
  * )
  */
-
 class PaginationLinks
 {
     /**
@@ -17,7 +16,7 @@ class PaginationLinks
      *     example="http://localhost:8081/api/v1/anime?page=1"
      * )
      *
-     * @var string $first
+     * @var string
      */
     public string $first;
 
@@ -26,7 +25,7 @@ class PaginationLinks
      *     example="http://localhost:8081/api/v1/anime?page=1"
      * )
      *
-     * @var string $last
+     * @var string
      */
     public string $last;
 
@@ -35,7 +34,7 @@ class PaginationLinks
      *     example="null"
      * )
      *
-     * @var string $prev
+     * @var string
      */
     public string $prev;
 
@@ -44,7 +43,7 @@ class PaginationLinks
      *     example="null"
      * )
      *
-     * @var string $next
+     * @var string
      */
     public string $next;
 

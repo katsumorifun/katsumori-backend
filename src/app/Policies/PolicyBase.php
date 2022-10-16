@@ -6,8 +6,7 @@ abstract class PolicyBase
 {
     /**
      * @param $user
-     * @param string $permissionName
-     *
+     * @param  string  $permissionName
      * @return bool
      */
     public function checkPermission($user, string $permissionName): bool

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Api\v1\Auth;
 
-use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 

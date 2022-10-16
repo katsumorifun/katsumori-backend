@@ -13,7 +13,7 @@ class VerifyEmail extends Model
 
     protected $appends = [
         'hash',
-        'user_id'
+        'user_id',
     ];
 
     protected $fillable = [
@@ -22,7 +22,7 @@ class VerifyEmail extends Model
     ];
 
     /**
-     * Relation one-to-many
+     * Relation one-to-many.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

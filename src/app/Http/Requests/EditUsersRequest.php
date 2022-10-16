@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Enums\User\GenderEnum;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Enum;
 
 class EditUsersRequest extends FormRequest
 {

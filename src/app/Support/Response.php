@@ -30,7 +30,7 @@ class Response
     /**
      * Create a new class instance.
      *
-     * @param ResponseFactory $response
+     * @param  ResponseFactory  $response
      * @param $collection
      */
     public function __construct(ResponseFactory $response, $collection)
@@ -40,10 +40,10 @@ class Response
     }
 
     /**
-     * Return json
+     * Return json.
      *
      * @param $data
-     * @param array $headers
+     * @param  array  $headers
      * @return \Illuminate\Http\JsonResponse
      */
     public function json($data = [], array $headers = []): \Illuminate\Http\JsonResponse
@@ -60,8 +60,7 @@ class Response
     }
 
     /**
-     * @param null $resource
-     *
+     * @param  null  $resource
      * @return \Illuminate\Http\JsonResponse
      */
     public function withCreated($resource = null): \Illuminate\Http\JsonResponse
@@ -90,8 +89,7 @@ class Response
     /**
      * Make a 400 'Bad Request' response.
      *
-     * @param string $message
-     *
+     * @param  string  $message
      * @return \Illuminate\Http\JsonResponse
      */
     public function withBadRequest(string $message = 'Bad Request'): \Illuminate\Http\JsonResponse
@@ -104,8 +102,7 @@ class Response
     /**
      * Make a 403 'Forbidden' response.
      *
-     * @param string $message
-     *
+     * @param  string  $message
      * @return \Illuminate\Http\JsonResponse
      */
     public function withForbidden(string $message = 'Forbidden')
@@ -118,7 +115,7 @@ class Response
     /**
      * Make a 404 'Not Found' response.
      *
-     * @param string|null $item
+     * @param  string|null  $item
      * @return \Illuminate\Http\JsonResponse
      */
     public function withNotFound(string $item = null): \Illuminate\Http\JsonResponse
@@ -131,14 +128,13 @@ class Response
 
         return $this
             ->setStatusCode(HttpResponse::HTTP_NOT_FOUND)
-            ->json(['message' => $item . ' not found', 'errors' => [$item => $item . ' not found']]);
+            ->json(['message' => $item.' not found', 'errors' => [$item => $item.' not found']]);
     }
 
     /**
      * Make a JSON response with the transformed items.
      *
      * @param $data
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function withItem($data): \Illuminate\Http\JsonResponse
@@ -150,7 +146,7 @@ class Response
      * Make an error response.
      *
      * @param $message
-     * @param array $errors
+     * @param  array  $errors
      * @return \Illuminate\Http\JsonResponse
      */
     public function withError($message, array $errors = []): \Illuminate\Http\JsonResponse
@@ -159,7 +155,7 @@ class Response
             'message' => $message,
         ];
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             $json['errors'] = $errors;
         }
 
@@ -225,8 +221,7 @@ class Response
     /**
      * Set status code.
      *
-     * @param int $statusCode
-     *
+     * @param  int  $statusCode
      * @return Response
      */
     public function setStatusCode(int $statusCode): Response
@@ -239,7 +234,7 @@ class Response
     /**
      * Set collection class.
      *
-     * @param mixed $resource
+     * @param  mixed  $resource
      */
     public function setResource($resource): Response
     {

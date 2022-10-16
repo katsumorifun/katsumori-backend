@@ -19,7 +19,7 @@ class ApiController extends Controller
 
     protected function recordExists($record)
     {
-        if (!$record) {
+        if (! $record) {
             abort(404);
         }
     }
