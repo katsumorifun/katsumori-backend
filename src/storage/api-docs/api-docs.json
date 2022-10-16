@@ -108,6 +108,33 @@
                         "description": "Ошибка валидации"
                     }
                 }
+            },
+            "post": {
+                "tags": [
+                    "Anime"
+                ],
+                "summary": "Добавление нового тайтла",
+                "operationId": "785e377dd4f5a8e0a387b454339a933a",
+                "responses": {
+                    "200": {
+                        "description": "Успех",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/HistoryChanges"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
             }
         },
         "/anime/search/{value}": {
@@ -244,7 +271,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
             }
         },
         "/anime/{id}/history": {
@@ -1080,11 +1112,9 @@
                 "title": "AiredProp",
                 "properties": {
                     "from": {
-                        "description": "$from",
                         "type": "string"
                     },
                     "to": {
-                        "description": "$to",
                         "type": "array",
                         "items": {
                             "type": "array",
@@ -1157,27 +1187,22 @@
                         "$ref": "#/components/schemas/AnimeTitleSynonyms"
                     },
                     "type": {
-                        "description": "$type",
                         "type": "string",
                         "example": "tv"
                     },
                     "source": {
-                        "description": "$source",
                         "type": "string",
                         "example": "manga"
                     },
                     "episodes": {
-                        "description": "$episodes",
                         "type": "integer",
                         "example": "10"
                     },
                     "status": {
-                        "description": "$status",
                         "type": "string",
                         "example": "ongoing"
                     },
                     "airing": {
-                        "description": "$airing",
                         "type": "boolean",
                         "example": "false"
                     },
@@ -1185,28 +1210,23 @@
                         "$ref": "#/components/schemas/Aired"
                     },
                     "duration": {
-                        "description": "$duration",
                         "type": "string",
                         "example": "24 min per ep"
                     },
                     "age_rating": {
-                        "description": "$age_rating",
                         "type": "string",
                         "example": "pg-13"
                     },
                     "mal_score": {
-                        "description": "$mal_score",
                         "type": "number",
                         "format": "float",
                         "example": "7.93"
                     },
                     "score": {
-                        "description": "$score",
                         "type": "number",
                         "format": "float"
                     },
                     "statistics": {
-                        "description": "$statistics",
                         "type": "number",
                         "format": "float"
                     },
@@ -1214,11 +1234,9 @@
                         "$ref": "#/components/schemas/Synopsis"
                     },
                     "season": {
-                        "description": "$season",
                         "type": "string"
                     },
                     "year": {
-                        "description": "$year",
                         "type": "string"
                     },
                     "staff": {
@@ -1275,27 +1293,22 @@
                         "$ref": "#/components/schemas/AnimeTitleSynonyms"
                     },
                     "type": {
-                        "description": "$type",
                         "type": "string",
                         "example": "tv"
                     },
                     "source": {
-                        "description": "$source",
                         "type": "string",
                         "example": "manga"
                     },
                     "episodes": {
-                        "description": "$episodes",
                         "type": "integer",
                         "example": "10"
                     },
                     "status": {
-                        "description": "$status",
                         "type": "string",
                         "example": "ongoing"
                     },
                     "airing": {
-                        "description": "$airing",
                         "type": "boolean",
                         "example": "false"
                     },
@@ -1303,28 +1316,23 @@
                         "$ref": "#/components/schemas/Aired"
                     },
                     "duration": {
-                        "description": "$duration",
                         "type": "string",
                         "example": "24 min per ep"
                     },
                     "age_rating": {
-                        "description": "$age_rating",
                         "type": "string",
                         "example": "pg-13"
                     },
                     "mal_score": {
-                        "description": "$mal_score",
                         "type": "number",
                         "format": "float",
                         "example": "7.93"
                     },
                     "score": {
-                        "description": "$score",
                         "type": "number",
                         "format": "float"
                     },
                     "statistics": {
-                        "description": "$statistics",
                         "type": "number",
                         "format": "float"
                     },
@@ -1332,11 +1340,9 @@
                         "$ref": "#/components/schemas/Synopsis"
                     },
                     "season": {
-                        "description": "$season",
                         "type": "string"
                     },
                     "year": {
-                        "description": "$year",
                         "type": "string"
                     },
                     "producers": {
@@ -1372,19 +1378,15 @@
                         "example": "1"
                     },
                     "image_x32": {
-                        "description": "$image_x32",
                         "type": "string"
                     },
                     "image_x64": {
-                        "description": "$image_x64",
                         "type": "string"
                     },
                     "image_x128": {
-                        "description": "$image_x128",
                         "type": "string"
                     },
                     "image_original": {
-                        "description": "$image_original",
                         "type": "string"
                     },
                     "title_jp": {
@@ -1406,82 +1408,65 @@
                         "$ref": "#/components/schemas/AnimeTitleSynonyms"
                     },
                     "type": {
-                        "description": "$type",
                         "type": "string",
                         "example": "tv"
                     },
                     "source": {
-                        "description": "$source",
                         "type": "string",
                         "example": "manga"
                     },
                     "episodes": {
-                        "description": "$episodes",
                         "type": "integer",
                         "example": "10"
                     },
                     "status": {
-                        "description": "$status",
                         "type": "string",
                         "example": "ongoing"
                     },
                     "airing": {
-                        "description": "$airing",
                         "type": "boolean",
                         "example": "false"
                     },
                     "episodes_aired": {
-                        "description": "$episodes_aired",
                         "type": "string"
                     },
                     "episodes_from": {
-                        "description": "$episodes_from",
                         "type": "string"
                     },
                     "episodes_to": {
-                        "description": "$episodes_to",
                         "type": "string"
                     },
                     "duration": {
-                        "description": "$duration",
                         "type": "string",
                         "example": "24 min per ep"
                     },
                     "age_rating": {
-                        "description": "$age_rating",
                         "type": "string",
                         "example": "pg-13"
                     },
                     "mal_score": {
-                        "description": "$mal_score",
                         "type": "number",
                         "format": "float",
                         "example": "7.93"
                     },
                     "score": {
-                        "description": "$score",
                         "type": "number",
                         "format": "float"
                     },
                     "statistics": {
-                        "description": "$statistics",
                         "type": "number",
                         "format": "float"
                     },
                     "synopsis_en": {
-                        "description": "$synopsis_en",
                         "type": "string"
                     },
                     "synopsis_ru": {
-                        "description": "$synopsis_ru",
                         "type": "string"
                     },
                     "season": {
-                        "description": "$season",
                         "type": "string"
                     },
                     "year": {
-                        "description": "$year",
                         "type": "string"
                     }
                 },
@@ -1651,27 +1636,22 @@
                 "description": "Информация о выходе",
                 "properties": {
                     "id": {
-                        "description": "$id",
                         "type": "integer",
                         "example": "1"
                     },
                     "mal_id": {
-                        "description": "$mal_id",
                         "type": "integer",
                         "example": "1"
                     },
                     "name_jp": {
-                        "description": "$name_jp",
                         "type": "string",
                         "example": "河合 滋樹"
                     },
                     "name_en": {
-                        "description": "$name_en",
                         "type": "string",
                         "example": "En"
                     },
                     "name_ru": {
-                        "description": "$name_ru",
                         "type": "string",
                         "example": "Сигэки Кавай"
                     }
@@ -1710,12 +1690,10 @@
                 "description": "Информация о выходе",
                 "properties": {
                     "id": {
-                        "description": "$id",
                         "type": "integer",
                         "example": "1"
                     },
                     "name": {
-                        "description": "$name",
                         "type": "string",
                         "example": "name"
                     }
@@ -1727,22 +1705,18 @@
                 "description": "Мета информация для пангинации",
                 "properties": {
                     "first": {
-                        "description": "$first",
                         "type": "string",
                         "example": "http://localhost:8081/api/v1/anime?page=1"
                     },
                     "last": {
-                        "description": "$last",
                         "type": "string",
                         "example": "http://localhost:8081/api/v1/anime?page=1"
                     },
                     "prev": {
-                        "description": "$prev",
                         "type": "string",
                         "example": "null"
                     },
                     "next": {
-                        "description": "$next",
                         "type": "string",
                         "example": "null"
                     }
@@ -1754,17 +1728,14 @@
                 "description": "Мета информация для пангинации",
                 "properties": {
                     "current_page": {
-                        "description": "$current_page",
                         "type": "integer",
                         "example": "1"
                     },
                     "from": {
-                        "description": "$from",
                         "type": "integer",
                         "example": "1"
                     },
                     "last_page": {
-                        "description": "$last_page",
                         "type": "integer",
                         "example": "1"
                     },
@@ -1772,22 +1743,18 @@
                         "$ref": "#/components/schemas/PaginationMetaLinks"
                     },
                     "path": {
-                        "description": "$path",
                         "type": "string",
                         "example": "http://localhost:8081/api/v1/anime"
                     },
                     "per_page": {
-                        "description": "$per_page",
                         "type": "integer",
                         "example": "1"
                     },
                     "to": {
-                        "description": "$to",
                         "type": "integer",
                         "example": "1"
                     },
                     "total": {
-                        "description": "$total",
                         "type": "integer",
                         "example": "1"
                     }
@@ -1799,17 +1766,14 @@
                 "description": "Мета информация для пангинации",
                 "properties": {
                     "url": {
-                        "description": "$current_page",
                         "type": "string",
                         "example": "null"
                     },
                     "label": {
-                        "description": "$label",
                         "type": "string",
                         "example": "&laquo; Previous"
                     },
                     "active": {
-                        "description": "$active",
                         "type": "boolean",
                         "example": "false"
                     }
@@ -1821,42 +1785,34 @@
                 "description": "Информация о выходе",
                 "properties": {
                     "id": {
-                        "description": "$id",
                         "type": "integer",
                         "example": "1"
                     },
                     "mal_id": {
-                        "description": "$mal_id",
                         "type": "integer",
                         "example": "1"
                     },
                     "name_jp": {
-                        "description": "$name_jp",
                         "type": "string",
                         "example": "河合 滋樹"
                     },
                     "name_en": {
-                        "description": "$name_en",
                         "type": "string",
                         "example": "En"
                     },
                     "name_ru": {
-                        "description": "$name_ru",
                         "type": "string",
                         "example": "Сигэки Кавай"
                     },
                     "image_x32": {
-                        "description": "$image_x32",
                         "type": "string",
                         "example": "/images/staff/x32/default.png"
                     },
                     "image_x64": {
-                        "description": "$image_x64",
                         "type": "string",
                         "example": "/images/staff/x64/default.png"
                     },
                     "image_original": {
-                        "description": "$image_original",
                         "type": "string",
                         "example": "/original/staff/x64/default.png"
                     }
@@ -1868,12 +1824,10 @@
                 "description": "Информация о выходе",
                 "properties": {
                     "id": {
-                        "description": "$id",
                         "type": "integer",
                         "example": "1"
                     },
                     "name": {
-                        "description": "$name",
                         "type": "string",
                         "example": "AtelierPontdarc"
                     }
@@ -1885,12 +1839,10 @@
                 "description": "Модаль устройства, с которого был выполнен вход",
                 "properties": {
                     "ru": {
-                        "description": "$ru",
                         "type": "string",
                         "example": "Кто же не мечтает хоть разок побывать в ином мире, наполненном магией и дивными существами?! Хотя обычный семнадцатилетний паре..."
                     },
                     "en": {
-                        "description": "$en",
                         "type": "string",
                         "example": "Lorem i...."
                     }
@@ -1902,27 +1854,22 @@
                 "description": "Информация о выходе",
                 "properties": {
                     "id": {
-                        "description": "$id",
                         "type": "integer",
                         "example": "1"
                     },
                     "mal_id": {
-                        "description": "$mal_id",
                         "type": "integer",
                         "example": "1"
                     },
                     "name_jp": {
-                        "description": "$name_jp",
                         "type": "string",
                         "example": "河合 滋樹"
                     },
                     "name_en": {
-                        "description": "$name_en",
                         "type": "string",
                         "example": "En"
                     },
                     "name_ru": {
-                        "description": "$name_ru",
                         "type": "string",
                         "example": "Сигэки Кавай"
                     }

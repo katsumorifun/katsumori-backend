@@ -177,6 +177,10 @@ class AnimeApiController extends ApiController
      *     tags = {"Anime"},
      *     summary="Обновление информации о тайтле",
      *     description="Для выполнения данного запроса требуется право доступа anime.update",
+     *     security={
+     *       {"Authorization": {}},
+     *     },
+     *
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -273,6 +277,9 @@ class AnimeApiController extends ApiController
      *     path="/anime/{id}/moderation",
      *     tags = {"Anime"},
      *     summary="Вывод списка заявок на обновлление информации о тайтле",
+     *     security={
+     *       {"Authorization": {}},
+     *     },
      *
      *     @OA\Response(
      *          response="200",
