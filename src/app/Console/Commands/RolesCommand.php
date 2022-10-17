@@ -32,48 +32,140 @@ class RolesCommand extends Command
      */
     public function handle()
     {
-        $user_edit = Permission::create(['name' => 'users.edit']);
-        $user_comment = Permission::create(['name' => 'users.comments']);
-        $user_admin_block_comments = Permission::create(['name' => 'users.admin.block.comments']);
-        $user_admin_ban = Permission::create(['name' => 'users.admin.ban']);
-        $user_admin_edit = Permission::create(['name' => 'users.admin.edit']);
-        $anime_update = Permission::create(['name' => 'anime.update']);
-        $anime_moderation = Permission::create(['name' => 'anime.moderation']);
-        $anime_create = Permission::create(['name' => 'anime.create']);
+        $this->create();
+    }
 
-        $role_guest = Role::create(['id'=> $this->userModel::GUEST_GROUP_ID, 'en_name' => 'guest', 'russian_name' => 'гость']);
-        $role_user = Role::create(['id'=> $this->userModel::USER_GROUP_ID, 'en_name' => 'user', 'russian_name' => 'пользователь']);
-        $role_admin = Role::create(['id'=> $this->userModel::ADMIN_GROUP_ID, 'en_name' => 'administrator', 'russian_name' => 'администратор']);
-        $role_anime_moder = Role::create(['id'=> $this->userModel::ANIME_MODER_GROUP_ID, 'en_name' => 'anime moderator', 'russian_name' => 'модератор аниме']);
-        $role_manga_moder = Role::create(['id'=> $this->userModel::MANGA_MODER_GROUP_ID, 'en_name' => 'manga moderator', 'russian_name' => 'модератор манги']);
-        $role_ranobe_moder = Role::create(['id'=> $this->userModel::RANOBE_MODER_GROUP_ID, 'en_name' => 'ranobe moderator', 'russian_name' => 'модератор ранобэ']);
-        $role_super_moder = Role::create(['id'=> $this->userModel::SUPER_MODER_GROUP_ID, 'en_name' => 'super moderator', 'russian_name' => 'супер модератор']);
-        $role_user_moderator = Role::create(['id'=> $this->userModel::USER_MODER_GROUP_ID, 'en_name' => 'user moderator', 'russian_name' => 'модератор пользователей']);
-        $role_youtuber = Role::create(['id'=> $this->userModel::STEAMER_GROUP_ID, 'en_name' => 'Youtuber', 'russian_name' => 'ютубер']);
+    public function create()
+    {
+        $roles = [
+            [
+                'id' => $this->userModel::GUEST_GROUP_ID,
+                'en_name' => 'guest',
+                'russian_name' => 'гость',
+                'permissions' => [
+                    'users.edit',
+                ]
+            ],
+            [
+                'id' => $this->userModel::USER_GROUP_ID,
+                'en_name' => 'user',
+                'russian_name' => 'поьзователь',
+                'permissions' => [
+                    'users.edit',
+                    'users.comments',
 
-        $role_guest->permissions()->attach($user_edit);
+                ]
+            ],
+            [
+                'id' => $this->userModel::ADMIN_GROUP_ID,
+                'en_name' => 'administrator',
+                'russian_name' => 'администратор',
+                'permissions' => [
+                    'users.edit',
+                    'users.comments',
+                    'users.admin.block.comments',
+                    'users.admin.ban',
+                    'users.admin.edit',
+                    'anime.update',
+                    'anime.moderation',
+                    'anime.create',
 
-        $role_user->permissions()->sync($user_edit);
-        $role_user->permissions()->attach($user_comment);
+                ]
+            ],
+            [
+                'id' => $this->userModel::ANIME_MODER_GROUP_ID,
+                'en_name' => 'anime moderator',
+                'russian_name' => 'модератор аниме раздела',
+                'permissions' => [
+                    'users.edit',
+                    'users.comments',
+                    'anime.update',
+                    'anime.moderation',
+                    'anime.create',
 
-        $role_admin->permissions()->attach($user_admin_block_comments);
-        $role_admin->permissions()->attach($user_admin_ban);
-        $role_admin->permissions()->attach($user_admin_edit);
-        $role_admin->permissions()->attach($anime_update);
-        $role_admin->permissions()->attach($anime_moderation);
-        $role_admin->permissions()->attach($anime_create);
+                ]
+            ],
+            [
+                'id' => $this->userModel::MANGA_MODER_GROUP_ID,
+                'en_name' => 'manga moderator',
+                'russian_name' => 'модератор раздела манги',
+                'permissions' => [
+                    'users.edit',
+                    'users.comments',
 
-        $role_super_moder->permissions()->attach($user_admin_block_comments);
-        $role_super_moder->permissions()->attach($user_admin_ban);
-        $role_super_moder->permissions()->attach($anime_update);
-        $role_super_moder->permissions()->attach($anime_moderation);
-        $role_super_moder->permissions()->attach($anime_create);
+                ]
+            ],
+            [
+                'id' => $this->userModel::RANOBE_MODER_GROUP_ID,
+                'en_name' => 'light novel moderator',
+                'russian_name' => 'модератор раздела ранобэ',
+                'permissions' => [
+                    'users.edit',
+                    'users.comments',
 
-        $role_anime_moder->permissions()->attach($anime_update);
-        $role_anime_moder->permissions()->attach($anime_create);
-        $role_super_moder->permissions()->attach($anime_moderation);
+                ]
+            ],
+            [
+                'id' => $this->userModel::SUPER_MODER_GROUP_ID,
+                'en_name' => 'super moder',
+                'russian_name' => 'супер модератор',
+                'permissions' => [
+                    'users.edit',
+                    'users.comments',
+                    'users.admin.block.comments',
+                    'users.admin.ban',
+                    'users.admin.edit',
+                    'anime.update',
+                    'anime.moderation',
+                    'anime.create',
 
-        $role_user_moderator->permissions()->attach($user_admin_block_comments);
-        $role_user_moderator->permissions()->attach($user_admin_ban);
+                ]
+            ],
+            [
+                'id' => $this->userModel::USER_MODER_GROUP_ID,
+                'en_name' => 'users moder',
+                'russian_name' => 'модератор пользователей',
+                'permissions' => [
+                    'users.edit',
+                    'users.comments',
+                    'users.admin.block.comments',
+                    'users.admin.ban',
+                    'users.admin.edit',
+
+                ]
+            ],
+            [
+                'id' => $this->userModel::STEAMER_GROUP_ID,
+                'en_name' => 'blogger',
+                'russian_name' => 'блоггер',
+                'permissions' => [
+                    'users.edit',
+                    'users.comments',
+
+                ]
+            ],
+        ];
+
+
+        foreach ($roles as $role_item) {
+
+            $role = Role::create([
+                'id'           => $role_item['id'],
+                'en_name'      => $role_item['en_name'],
+                'russian_name' => $role_item['russian_name']
+            ]);
+
+            foreach ($role_item['permissions'] as $permission_item) {
+
+                $permission = Permission::where('name', $permission_item)->get();
+
+                if($permission->count() == 0){
+                    $permission = Permission::create(['name' => $permission_item]);
+                }
+
+                $role->permissions()->attach($permission);
+
+            }
+        }
     }
 }
