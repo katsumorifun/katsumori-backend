@@ -14,7 +14,7 @@ class HistoryObserver
      */
     public function saved($model): void
     {
-        if(! auth()->user()->cannot('edit', $model::class)) {
+        if(auth()->check() && ! auth()->user()->cannot('edit', $model::class)) {
             app(History::class)->add($model);
         }
     }
