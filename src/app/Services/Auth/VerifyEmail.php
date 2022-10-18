@@ -3,21 +3,21 @@
 namespace App\Services\Auth;
 
 use App\Contracts\Auth\VerifyEmail as VerifyEmailContract;
+use App\Contracts\Repository\UserRepository;
+use App\Contracts\Repository\VerifyEmailRepository;
 use App\Exceptions\OperationError;
 use App\Models\User;
-use App\Repositories\User as UserRepository;
-use App\Repositories\VerifyEmail as VerifyRepository;
 
 class VerifyEmail implements VerifyEmailContract
 {
     protected string $hash;
-    protected VerifyRepository $email_verify_repository;
+    protected VerifyEmailRepository $email_verify_repository;
     protected UserRepository $user_repository;
     protected User $user_model;
 
     public function __construct()
     {
-        $this->email_verify_repository = app()->make(VerifyRepository::class);
+        $this->email_verify_repository = app()->make(VerifyEmailRepository::class);
         $this->user_repository = app()->make(UserRepository::class);
         $this->user_model = app()->make(User::class);
     }

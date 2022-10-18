@@ -2,9 +2,7 @@
 
 namespace App\Repositories;
 
-use Illuminate\Database\QueryException;
-
-class Repository
+class RepositoryEquivalent
 {
     /**
      * Eloquent model.

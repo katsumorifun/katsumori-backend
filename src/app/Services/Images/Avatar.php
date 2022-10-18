@@ -3,8 +3,8 @@
 namespace App\Services\Images;
 
 use App\Contracts\Images\Avatar as AvatarsContract;
+use App\Contracts\Repository\UserRepository;
 use App\Jobs\MinimizeAvatar;
-use App\Repositories\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 
@@ -16,7 +16,7 @@ class Avatar implements AvatarsContract
 
         $avatar_path = $image->storeAs('original', $name, ['disk' => 'avatars']);
 
-        app(User::class)->updateAvatar($user->id, '/'.$avatar_path);
+        app(UserRepository::class)->updateAvatar($user->id, '/'.$avatar_path);
 
         MinimizeAvatar::dispatch($avatar_path, [32, 64, 128], $user->id, $image->extension())->delay(now()->addSeconds(15));
     }

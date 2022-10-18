@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api\V1\Auth;
 
+use App\Contracts\Repository\UserRepository;
 use App\Exceptions\OperationError;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UpdateTokens;
 use App\Notifications\NotifyLogin;
-use App\Repositories\User as UserRepository;
 
 class LoginController extends ApiController
 {

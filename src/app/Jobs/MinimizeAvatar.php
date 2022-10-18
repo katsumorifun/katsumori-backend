@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Repositories\User;
+use App\Contracts\Repository\UserRepository;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -47,7 +47,7 @@ class MinimizeAvatar implements ShouldQueue
     {
         $this->minimizeImage();
 
-        app(User::class)->updateMinimizedAvatars($this->user_id, $this->extension);
+        app(UserRepository::class)->updateMinimizedAvatars($this->user_id, $this->extension);
     }
 
     protected function minimizeImage()

@@ -2,8 +2,8 @@
 
 namespace App\Base\Schedule\User;
 
-use App\Repositories\User as UserRepository;
-use App\Repositories\VerifyEmail;
+use App\Contracts\Repository\UserRepository;
+use App\Contracts\Repository\VerifyEmailRepository;
 
 class User
 {
@@ -12,7 +12,7 @@ class User
      */
     public function cleanOldEmailVerify()
     {
-        app(VerifyEmail::class)->removeOldHash();
+        app(VerifyEmailRepository::class)->removeOldHash();
         app(UserRepository::class)->removeUsersUnconfirmedEmail();
     }
 

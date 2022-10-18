@@ -2,11 +2,12 @@
 
 namespace App\Repositories;
 
+use App\Contracts\Repository\UserRepository;
 use App\Models\Role;
 use App\Models\User as UserModel;
 use Carbon\Carbon;
 
-class User extends Repository
+class UserEquivalentRepository extends RepositoryEquivalent implements UserRepository
 {
     public function __construct()
     {

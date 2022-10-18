@@ -2,9 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Contracts\Repository\VerifyEmailRepository;
 use App\Models\VerifyEmail as VerifyEmailModel;
 
-class VerifyEmail extends Repository
+class VerifyEmailEquivalentRepository extends RepositoryEquivalent implements VerifyEmailRepository
 {
     public function __construct()
     {

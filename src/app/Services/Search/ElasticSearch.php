@@ -3,10 +3,10 @@
 namespace App\Services\Search;
 
 use App\Models\Anime;
-use App\Repositories\Repository;
+use App\Repositories\RepositoryEquivalent;
 use Elastic\Elasticsearch\Client;
 
-class ElasticSearch extends Repository implements Search
+class ElasticSearch extends RepositoryEquivalent implements Search
 {
     private Client $elasticsearch;
 

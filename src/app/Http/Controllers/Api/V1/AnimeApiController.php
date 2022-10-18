@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Base\Filter\FilterDTO;
 use App\Contracts\History\History;
+use App\Contracts\Repository\AnimeRepository;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\AnimeListRequest;
 use App\Http\Requests\CreateAnimeRequest;
 use App\Http\Requests\EditAnimeRequest;
 use App\Http\Resources\AnimeResource;
 use App\Http\Resources\HistoryResource;
-use App\Repositories\Anime;
 use App\Services\Search\Search;
 use OpenApi\Annotations as OA;
 
@@ -94,7 +94,7 @@ class AnimeApiController extends ApiController
         $per_page = $request->get('limit') ? $request->get('limit') : 12;
         $page = $request->get('page') ? $request->get('page') : 1;
 
-        $data = app(Anime::class)
+        $data = app(AnimeRepository::class)
             ->getListAndGeneralInfoPaginate((new FilterDTO())->transform(\App\Models\Anime::class, $request), $per_page, $page);
 
         return AnimeResource::collection($data, function (AnimeResource $resource) {
@@ -163,7 +163,7 @@ class AnimeApiController extends ApiController
      */
     public function getItem($id)
     {
-        $data = app(Anime::class)->getItemWithRelations($id);
+        $data = app(AnimeRepository::class)->getItemWithRelations($id);
 
         if (empty($data)) {
             return $this->response->withNotFound('Anime');
@@ -223,15 +223,15 @@ class AnimeApiController extends ApiController
             return $this->response->noChanges();
         }
 
-        if ($request->user()->cannot('edit', new Anime())) {
-            $item = app(Anime::class)->updateWithoutSaving($id, $request->validationData());
+        if ($request->user()->cannot('edit', \App\Models\Anime::class)) {
+            $item = app(AnimeRepository::class)->updateWithoutSaving($id, $request->validationData());
 
             app(History::class)->add($item, true);
 
             return $this->response->moderatedStatus();
         }
 
-        $item = app(Anime::class)->update($id, $request->validationData());
+        $item = app(AnimeRepository::class)->update($id, $request->validationData());
 
         if (! $item) {
             return $this->response->withNotFound('Anime');
@@ -258,7 +258,7 @@ class AnimeApiController extends ApiController
      */
     public function getHistoryChangesList($id)
     {
-        $items = app(Anime::class)->getChangesHistoryList($id);
+        $items = app(AnimeRepository::class)->getChangesHistoryList($id);
 
         if (empty($items)) {
             return $this->response->withNotFound('Changes list');
@@ -292,7 +292,7 @@ class AnimeApiController extends ApiController
             return $this->response->withError('Failed to save changes. You do not have permission to anime moderation list.');
         }
 
-        $items = app(Anime::class)->getModerationList($id);
+        $items = app(AnimeRepository::class)->getModerationList($id);
 
         if (empty($items)) {
             return $this->response->withNotFound('Moderation list');
@@ -326,7 +326,7 @@ class AnimeApiController extends ApiController
             return $this->response->withError('Failed to save changes. You do not have permission to create anime item.');
         }
 
-        $item = app(Anime::class)->create($request->validationData());
+        $item = app(AnimeRepository::class)->create($request->validationData());
 
         return new AnimeResource($item);
     }

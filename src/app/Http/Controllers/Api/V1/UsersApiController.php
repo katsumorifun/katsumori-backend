@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Contracts\Repository\UserRepository;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\EditUsersRequest;
 use App\Http\Requests\GetUsersListRequest;
-use App\Repositories\User;
+use App\Models\User;
 use App\Services\Images\Facade\Avatar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,7 +57,7 @@ class UsersApiController extends ApiController
         $per_page = $request->get('per_page') ? $request->get('per_page') : 6;
         $page = $request->get('page') ? $request->get('page') : 1;
 
-        return app(User::class)->getList(['*'], true, $page, $per_page);
+        return app(UserRepository::class)->getList(['*'], true, $page, $per_page);
     }
 
     /**
@@ -89,7 +90,7 @@ class UsersApiController extends ApiController
      */
     public function getById($user_id)
     {
-        $user = app(User::class)->getUserProfile($user_id);
+        $user = app(UserRepository::class)->getUserProfile($user_id);
 
         if (empty($user)) {
             return $this->response->withNotFound('user');
@@ -164,14 +165,14 @@ class UsersApiController extends ApiController
             return $this->response->noChanges();
         }
 
-        $user = app(User::class)
+        $user = app(UserRepository::class)
             ->update($user_id, $request->all(), ['name', 'description', 'gender']);
 
         if (! $user) {
             return $this->response->withNotFound('user');
         }
 
-        if ($request->user()->cannot('edit', new User())) {
+        if ($request->user()->cannot('edit', User::class)) {
             return $this->response->withForbidden('Failed to save changes. You do not have permission to update the user profile.');
         }
 
@@ -235,8 +236,8 @@ class UsersApiController extends ApiController
      */
     public function editAuthProfile(EditUsersRequest $request)
     {
-        $user = app(User::class)
-            ->update(Auth::user()->id, $request->all(), ['name', 'description', 'gender']);
+        $user = app(UserRepository::class)
+            ->update(Auth::user()->id, $request->validationData());
 
         return $this->response->json(['status' =>'Update successfully', 'user' => $user]);
     }
@@ -295,7 +296,7 @@ class UsersApiController extends ApiController
             ],
         ]);
 
-        $user = app(User::class)->findById($user_id);
+        $user = app(UserRepository::class)->findById($user_id);
 
         if (empty($user)) {
             return $this->response->withNotFound('user');

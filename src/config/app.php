@@ -184,6 +184,7 @@ return [
         App\Providers\GuardServiceProvider::class,
         App\Providers\SearchProvider::class,
         App\Providers\HistoryServiceProvider::class,
+        App\Providers\RepositoryServiceProvider::class,
     ],
 
     /*

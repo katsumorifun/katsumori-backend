@@ -5,8 +5,9 @@ namespace App\Repositories;
 use App\Base\Filter\FilterDTO;
 use App\Models\Anime as AnimeModel;
 use Illuminate\Contracts\Database\Query\Builder;
+use App\Contracts\Repository\AnimeRepository;
 
-class Anime extends Repository
+class AnimeEquivalentRepository extends RepositoryEquivalent implements AnimeRepository
 {
     public function __construct()
     {

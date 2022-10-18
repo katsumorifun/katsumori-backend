@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1\Auth;
 
+use App\Contracts\Repository\UserRepository;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\RegistrationRequest;
 use App\Http\Resources\UserResource;
-use App\Repositories\User;
 use Illuminate\Support\Facades\Request;
 
 class RegistrationController extends ApiController
@@ -115,7 +115,7 @@ class RegistrationController extends ApiController
      */
     public function callBack(RegistrationRequest $request): \Illuminate\Http\JsonResponse
     {
-       $user = app(User::class)->createOrGetUser($request->get('name'), $request->get('email'), $request->get('password'));
+       $user = app(UserRepository::class)->createOrGetUser($request->get('name'), $request->get('email'), $request->get('password'));
 
        /**
         * @var \App\Contracts\Auth\VerifyEmail $email
