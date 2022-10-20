@@ -168,6 +168,7 @@ return [
          * Package Service Providers...
          */
         Jubeki\LaravelCodeStyle\ServiceProvider::class,
+        Clockwork\Support\Laravel\ClockworkServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -204,6 +205,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'avatar' => \App\Services\Images\Facade\Avatar::class,
         'access' => \App\Support\Facades\Access::class,
+        'Clockwork' => Clockwork\Support\Laravel\Facade::class,
     ])->toArray(),
 
 ];
