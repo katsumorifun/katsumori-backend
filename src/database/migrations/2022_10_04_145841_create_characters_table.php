@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('characters', function (Blueprint $table) {
             $table->id();
-            $table->integer('mal_id');
+            $table->integer('mal_id')->nullable();
             $table->string('name_jp');
-            $table->string('name_en');
-            $table->string('name_ru');
-            $table->string('image_x32');
-            $table->string('image_x64');
-            $table->string('image_original');
+            $table->string('name_en')->nullable();
+            $table->string('name_ru')->nullable();
+            $table->string('image_x32')->default('x32/default.png');
+            $table->string('image_x64')->default('x64/default.png');
+            $table->string('image_original')->default('x32/original.png');
             $table->timestamps();
         });
     }
@@ -33,6 +33,8 @@ return new class extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('characters');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 };
