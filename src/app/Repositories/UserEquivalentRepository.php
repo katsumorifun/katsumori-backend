@@ -3,8 +3,8 @@
 namespace App\Repositories;
 
 use App\Contracts\Repository\UserRepository;
-use App\Models\Role;
 use App\Models\User as UserModel;
+use App\Support\Enums\Group;
 use Carbon\Carbon;
 
 class UserEquivalentRepository extends RepositoryEquivalent implements UserRepository
@@ -22,8 +22,6 @@ class UserEquivalentRepository extends RepositoryEquivalent implements UserRepos
      */
     public function createOrGetUser(string $name, string $email, string $password): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
     {
-        $role = Role::where(['en_name' => 'guest'])->first();
-
         $user = $this
             ->getBuilder()
             ->create([
@@ -32,7 +30,7 @@ class UserEquivalentRepository extends RepositoryEquivalent implements UserRepos
                 'password'=> bcrypt($password),
             ]);
 
-        $user->roles()->attach($role);
+        $user->setGroup(Group::GUEST_GROUP_ID);
 
         return $user;
     }
@@ -118,20 +116,17 @@ class UserEquivalentRepository extends RepositoryEquivalent implements UserRepos
      */
     public function changeUserGroupToUsers(int $days = 2)
     {
-        $role = Role::where(['en_name' => 'user'])->first();
-
         $guests = $this->getBuilder()
-            ->whereHas('roles', function ($query) {
-                $query->where(['en_name' => 'guest']);
-            })
+            ->where('group_id', Group::GUEST_GROUP_ID)
             ->get();
 
-        $guests->each(function ($user) use ($role, $days) {
+        $guests->each(function ($user) use ($days) {
             if ($user->hasVerifiedEmail()) {
                 $dayToCheck = Carbon::parse($user->created_at)->addDays($days);
 
                 if ($user->email_verified_at > $dayToCheck) {
-                    $user->roles()->attach($role);
+                    $user->setGroup(Group::USER_GROUP_ID);
+                    $user->update();
                 }
             }
 

@@ -6,8 +6,8 @@ use App\Contracts\Repository\UserRepository;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\EditUsersRequest;
 use App\Http\Requests\GetUsersListRequest;
-use App\Models\User;
 use App\Services\Images\Facade\Avatar;
+use App\Support\Facades\Access;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -172,7 +172,7 @@ class UsersApiController extends ApiController
             return $this->response->withNotFound('user');
         }
 
-        if ($request->user()->cannot('edit', User::class)) {
+        if (!Access::checkPermission($request->user()->getGroupId(), 'users.admin.edit')) {
             return $this->response->withForbidden('Failed to save changes. You do not have permission to update the user profile.');
         }
 

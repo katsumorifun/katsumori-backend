@@ -12,6 +12,7 @@ use App\Http\Requests\EditAnimeRequest;
 use App\Http\Resources\AnimeResource;
 use App\Http\Resources\HistoryResource;
 use App\Services\Search\Search;
+use App\Support\Facades\Access;
 use OpenApi\Annotations as OA;
 
 class AnimeApiController extends ApiController
@@ -223,7 +224,7 @@ class AnimeApiController extends ApiController
             return $this->response->noChanges();
         }
 
-        if ($request->user()->cannot('edit', \App\Models\Anime::class)) {
+        if (!Access::checkPermission($request->user()->getGroupId(), 'anime.update')) {
             $item = app(AnimeRepository::class)->updateWithoutSaving($id, $request->validationData());
 
             app(History::class)->add($item, true);
@@ -288,7 +289,7 @@ class AnimeApiController extends ApiController
      */
     public function getModerationList($id)
     {
-        if (request()->user()->cannot('moderationAnime', \App\Models\History::class)) {
+        if (!Access::checkPermission(request()->user()->getGroupId(), 'anime.moderation')) {
             return $this->response->withError('Failed to save changes. You do not have permission to anime moderation list.');
         }
 
@@ -322,7 +323,7 @@ class AnimeApiController extends ApiController
      */
     public function create(CreateAnimeRequest $request)
     {
-        if (request()->user()->cannot('create', \App\Models\Anime::class)) {
+        if (!Access::checkPermission(request()->user()->getGroupId(), 'anime.create')) {
             return $this->response->withError('Failed to save changes. You do not have permission to create anime item.');
         }
 

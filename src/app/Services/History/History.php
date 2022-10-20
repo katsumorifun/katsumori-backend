@@ -24,6 +24,7 @@ class History implements HistoryContract
             $history->save();
 
             $model->histories()->attach($history);
+
         }
     }
 }

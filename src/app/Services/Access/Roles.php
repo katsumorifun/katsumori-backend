@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Services\Access;
+
+use App\Services\Access\Models\Permission;
+use App\Services\Access\Models\Role;
+use \App\Contracts\Access\Roles as RolesContract;
+use App\Support\Enums\Group;
+
+class Roles implements RolesContract
+{
+    private array $roles;
+
+    public function __construct(array $data)
+    {
+        $this->roles = $data;
+    }
+
+    public function checkPermission(Group $role_id, string $permission): bool
+    {
+        $permission = Permission::instance($permission);
+
+        return in_array($permission, $this->roles[$role_id->value]->getPermissions());
+    }
+
+    public function getRole(Group $role_id): Role
+    {
+        return $this->roles[$role_id->value];
+    }
+}

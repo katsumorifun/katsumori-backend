@@ -13,9 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('permissions', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->nullable(false)->unique();
+        Schema::table('users', function (Blueprint $table) {
+            $table->integer('group_id')->default(\App\Support\Enums\Group::GUEST_GROUP_ID->value);
         });
     }
 
@@ -26,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('permissions');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('group_id');
+        });
     }
 };

@@ -172,7 +172,7 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
+        App\Providers\AccessServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
@@ -185,6 +185,7 @@ return [
         App\Providers\SearchProvider::class,
         App\Providers\HistoryServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
+        App\Providers\AccessServiceProvider::class,
     ],
 
     /*
@@ -199,10 +200,10 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'ExampleClass' => App\Example\ExampleClass::class,
         'geoIp' => \Torann\GeoIP\Facades\GeoIP::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'avatar' => \App\Services\Images\Facade\Avatar::class,
+        'access' => \App\Support\Facades\Access::class,
     ])->toArray(),
 
 ];

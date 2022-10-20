@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Contracts\History\History;
+use App\Support\Facades\Access;
 
 class HistoryObserver
 {
@@ -14,8 +15,12 @@ class HistoryObserver
      */
     public function saved($model): void
     {
-        if(auth()->check() && ! auth()->user()->cannot('edit', $model::class)) {
-            app(History::class)->add($model);
+        if(auth()->check()) {
+            $access = Access::checkPermission(request()->user()->getGroupId(), (new $model)->getTable().'.update');
+
+            if ($access) {
+                app(History::class)->add($model);
+            }
         }
     }
 }

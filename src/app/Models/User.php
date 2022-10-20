@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use ALajusticia\AuthTracker\Traits\AuthTracking;
+use App\Support\Enums\Group;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -24,6 +25,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'gender',
         'description',
+        'group_id',
     ];
 
     /**
@@ -65,8 +67,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(VerifyEmail::class);
     }
 
-    public function roles(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function getGroupId(): Group
     {
-        return $this->belongsToMany(Role::class, 'users_roles', 'user_id', 'role_id');
+        return Group::from($this->group_id);
+    }
+
+    public function setGroup(Group $group)
+    {
+        return $this->group_id = $group->value;
     }
 }
