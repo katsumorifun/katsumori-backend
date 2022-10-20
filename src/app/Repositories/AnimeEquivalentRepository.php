@@ -46,7 +46,7 @@ class AnimeEquivalentRepository extends RepositoryEquivalent implements AnimeRep
             $builder = $builder->orderBy($search->order);
         }
 
-        return $builder->paginate($perPage, ['*'], 'page', $page);
+        return $builder->simplePaginate($perPage, ['*'], 'page', $page);
     }
 
     public function getItemWithRelations($id)
