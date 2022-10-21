@@ -20,5 +20,4 @@ interface AnimeRepository
     public function getChangesHistoryList($id);
 
     public function getModerationList($id);
-
 }

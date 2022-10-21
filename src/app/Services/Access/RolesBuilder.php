@@ -33,6 +33,7 @@ class RolesBuilder
     public function setRoles(array $roles): RolesBuilder
     {
         $this->roles = $roles;
+
         return $this;
     }
 }

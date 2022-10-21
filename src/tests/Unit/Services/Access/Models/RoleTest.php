@@ -35,7 +35,7 @@ class RoleTest extends TestCase
             'id' => $this->role['id'],
             'name_en' => $this->role['name_en'],
             'name_ru' => $this->role['name_ru'],
-            'permissions' => $this->role['permissions']
+            'permissions' => $this->role['permissions'],
         ]);
     }
 
@@ -48,8 +48,8 @@ class RoleTest extends TestCase
             'name_en' => 'en',
             'name_ru' => 'ru',
             'permissions' => [
-                'test.permission'
-            ]
+                'test.permission',
+            ],
         ];
     }
 }

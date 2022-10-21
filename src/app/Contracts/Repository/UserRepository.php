@@ -21,5 +21,4 @@ interface UserRepository
     public function getUserProfile(int $id);
 
     public function changeUserGroupToUsers(int $days = 2);
-
 }

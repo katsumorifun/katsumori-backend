@@ -54,22 +54,22 @@ class RolesBuilderTest extends TestCase
         parent::setUp();
 
         $this->roles = [
-            User::GUEST_GROUP_ID => array(
+            User::GUEST_GROUP_ID => [
                 'name_en' => 'guest',
                 'name_ru' => 'гость',
-                'permissions' => array(
+                'permissions' => [
                     'users.edit',
-                )
-            ),
-            User::USER_GROUP_ID => array(
+                ],
+            ],
+            User::USER_GROUP_ID => [
                 'name_en' => 'user',
                 'name_ru' => 'поьзователь',
-                'permissions' => array(
+                'permissions' => [
                     'users.edit',
                     'users.comments',
 
-                )
-            ),
+                ],
+            ],
         ];
     }
 }

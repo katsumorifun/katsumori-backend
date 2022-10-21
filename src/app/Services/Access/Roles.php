@@ -2,9 +2,9 @@
 
 namespace App\Services\Access;
 
+use App\Contracts\Access\Roles as RolesContract;
 use App\Services\Access\Models\Permission;
 use App\Services\Access\Models\Role;
-use App\Contracts\Access\Roles as RolesContract;
 use App\Support\Enums\Group;
 
 class Roles implements RolesContract

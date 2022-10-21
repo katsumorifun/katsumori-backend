@@ -43,7 +43,6 @@ class Role
         return $this->name_en;
     }
 
-
     public function getNameRu(): string
     {
         return $this->name_ru;
@@ -54,7 +53,7 @@ class Role
         return $this->permissions;
     }
 
-    #[ArrayShape(['id' => "int", 'name_en' => "string", 'name_ru' => "string", 'permissions' => "array"])]
+    #[ArrayShape(['id' => 'int', 'name_en' => 'string', 'name_ru' => 'string', 'permissions' => 'array'])]
     public function getToArray(): array
     {
         $permissions = [];
@@ -70,5 +69,4 @@ class Role
             'permissions' => $permissions,
         ];
     }
-
 }

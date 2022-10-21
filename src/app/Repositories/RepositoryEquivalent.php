@@ -119,8 +119,9 @@ class RepositoryEquivalent
     /**
      * Создание новой записи.
      *
-     * @param array $data ['field' => 'value', ...]
+     * @param  array  $data ['field' => 'value', ...]
      * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder|null
+     *
      * @throws \Exception
      */
     public function create(array $data = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder|null

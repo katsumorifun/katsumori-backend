@@ -3,9 +3,9 @@
 namespace App\Repositories;
 
 use App\Base\Filter\FilterDTO;
+use App\Contracts\Repository\AnimeRepository;
 use App\Models\Anime as AnimeModel;
 use Illuminate\Contracts\Database\Query\Builder;
-use App\Contracts\Repository\AnimeRepository;
 
 class AnimeEquivalentRepository extends RepositoryEquivalent implements AnimeRepository
 {

@@ -224,7 +224,7 @@ class AnimeApiController extends ApiController
             return $this->response->noChanges();
         }
 
-        if (!Access::checkPermission($request->user()->getGroupId(), 'anime.update')) {
+        if (! Access::checkPermission($request->user()->getGroupId(), 'anime.update')) {
             $item = app(AnimeRepository::class)->updateWithoutSaving($id, $request->validationData());
 
             app(History::class)->add($item, true);
@@ -289,7 +289,7 @@ class AnimeApiController extends ApiController
      */
     public function getModerationList($id)
     {
-        if (!Access::checkPermission(request()->user()->getGroupId(), 'anime.moderation')) {
+        if (! Access::checkPermission(request()->user()->getGroupId(), 'anime.moderation')) {
             return $this->response->withError('Failed to save changes. You do not have permission to anime moderation list.');
         }
 
@@ -323,7 +323,7 @@ class AnimeApiController extends ApiController
      */
     public function create(CreateAnimeRequest $request)
     {
-        if (!Access::checkPermission(request()->user()->getGroupId(), 'anime.create')) {
+        if (! Access::checkPermission(request()->user()->getGroupId(), 'anime.create')) {
             return $this->response->withError('Failed to save changes. You do not have permission to create anime item.');
         }
 
