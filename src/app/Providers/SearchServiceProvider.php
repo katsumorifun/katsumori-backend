@@ -9,7 +9,7 @@ use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\ClientBuilder;
 use Illuminate\Support\ServiceProvider;
 
-class SearchProvider extends ServiceProvider
+class SearchServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
