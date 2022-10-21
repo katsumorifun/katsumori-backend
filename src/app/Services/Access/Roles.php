@@ -4,11 +4,14 @@ namespace App\Services\Access;
 
 use App\Services\Access\Models\Permission;
 use App\Services\Access\Models\Role;
-use \App\Contracts\Access\Roles as RolesContract;
+use App\Contracts\Access\Roles as RolesContract;
 use App\Support\Enums\Group;
 
 class Roles implements RolesContract
 {
+    /**
+     * @var array [App\Services\Access\Models\Permission, ...]
+     */
     private array $roles;
 
     public function __construct(array $data)
@@ -16,6 +19,9 @@ class Roles implements RolesContract
         $this->roles = $data;
     }
 
+    /**
+     * @throws AccessException
+     */
     public function checkPermission(Group $role_id, string $permission): bool
     {
         $permission = Permission::instance($permission);

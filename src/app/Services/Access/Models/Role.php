@@ -2,6 +2,8 @@
 
 namespace App\Services\Access\Models;
 
+use App\Services\Access\AccessException;
+
 class Role
 {
     private int $id;
@@ -9,8 +11,15 @@ class Role
     private string $name_ru;
     private array $permissions;
 
-    public function instance(array $data): Role
+    /**
+     * @throws AccessException
+     */
+    public static function instance(array $data): Role
     {
+        if (empty($data)) {
+            throw new AccessException('Variable "$data" must be not empty');
+        }
+
         $role = new self();
         $role->id = $data['id'];
         $role->name_en = $data['name_en'];
@@ -23,33 +32,22 @@ class Role
         return $role;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getNameEn(): string
     {
         return $this->name_en;
     }
 
-    /**
-     * @return string
-     */
+
     public function getNameRu(): string
     {
         return $this->name_ru;
     }
 
-    /**
-     * @return array
-     */
     public function getPermissions(): array
     {
         return $this->permissions;

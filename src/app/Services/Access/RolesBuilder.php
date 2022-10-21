@@ -6,13 +6,16 @@ use App\Services\Access\Models\Role;
 
 class RolesBuilder
 {
-    private array $roles;
+    private array $roles = [];
 
     public static function create()
     {
         return new static();
     }
 
+    /**
+     * @throws AccessException
+     */
     public function build(): Roles
     {
         $roles = [];
@@ -21,15 +24,12 @@ class RolesBuilder
             $role = $this->roles[$id];
             $role['id'] = $id;
 
-            $roles[$id] = (new Role())->instance($role);
+            $roles[$id] = Role::instance($role);
         }
 
         return new Roles($roles);
     }
 
-    /**
-     * @param array[] $roles
-     */
     public function setRoles(array $roles): RolesBuilder
     {
         $this->roles = $roles;
