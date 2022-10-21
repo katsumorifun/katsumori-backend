@@ -105,7 +105,7 @@ class UserEquivalentRepository extends RepositoryEquivalent implements UserRepos
 
     public function getUserProfile(int $id): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder|array|null
     {
-        return $this->getBuilder()->with('roles')->find($id);
+        return $this->getBuilder()->find($id);
     }
 
     /**

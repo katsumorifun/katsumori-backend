@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\EditUsersRequest;
 use App\Http\Requests\GetUsersListRequest;
 use App\Services\Images\Facade\Avatar;
+use App\Support\Enums\Group;
 use App\Support\Facades\Access;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -96,7 +97,23 @@ class UsersApiController extends ApiController
             return $this->response->withNotFound('user');
         }
 
-        return $user;
+        $role = Access::getRole($user->getGroupId());
+
+        return $this->response->json([
+             'id' => $user->id,
+             'name' => $user->name,
+             'email' => $user->email,
+             'email_verified_at' => $user->email_verified_at,
+             'created_at' => $user->created_at,
+             'updated_at' => $user->updated_at,
+             'description' => $user->description,
+             'gender' => $user->gender,
+             'avatar' => $user->avatar,
+             'avatar_x32' => $user->avatar_x32,
+             'avatar_x64' => $user->avatar_x64,
+             'avatar_x128' => $user->avatar_x128,
+             'group' => $role->getToArray(),
+        ]);
     }
 
     /**
