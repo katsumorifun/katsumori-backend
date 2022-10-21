@@ -8,21 +8,14 @@ use Tests\TestCase;
 
 class RoleTest extends TestCase
 {
+    public array $role = [];
+
     /**
      * @throws \App\Services\Access\AccessException
      */
     public function test_instance()
     {
-        $role_data = [
-            'id' => 1,
-            'name_en' => 'en',
-            'name_ru' => 'ru',
-            'permissions' => [
-
-            ]
-        ];
-
-        $role = Role::instance($role_data);
+        $role = Role::instance($this->role);
 
         $this->assertIsObject($role);
     }
@@ -32,5 +25,31 @@ class RoleTest extends TestCase
         $this->expectException(AccessException::class);
 
         Role::instance([]);
+    }
+
+    public function test_to_array()
+    {
+        $role = Role::instance($this->role);
+
+        $this->assertEquals($role->getToArray(), [
+            'id' => $this->role['id'],
+            'name_en' => $this->role['name_en'],
+            'name_ru' => $this->role['name_ru'],
+            'permissions' => $this->role['permissions']
+        ]);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->role = [
+            'id' => 1,
+            'name_en' => 'en',
+            'name_ru' => 'ru',
+            'permissions' => [
+                'test.permission'
+            ]
+        ];
     }
 }
