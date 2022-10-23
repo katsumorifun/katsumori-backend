@@ -225,13 +225,16 @@ class AnimeApiController extends ApiController
             return $this->response->noChanges();
         }
 
-        $images = ImageUpload::save('anime', $request->file('poster'), $id, ['x96', 'x48', 'preview']);
-
         $data = $request->validationData();
-        $data['image_original'] = $images['original'];
-        $data['image_x96'] = $images['x96'];
-        $data['image_x48'] = $images['x48'];
-        $data['image_preview'] = $images['preview'];
+
+        if (!empty($request->file('poster'))){
+            $images = ImageUpload::save('anime', $request->file('poster'), $id, ['x96', 'x48', 'preview']);
+
+            $data['image_original'] = $images['original'];
+            $data['image_x96'] = $images['x96'];
+            $data['image_x48'] = $images['x48'];
+            $data['image_preview'] = $images['preview'];
+        }
 
         if (! Access::checkPermission($request->user()->getGroupId(), 'anime.update')) {
             $item = app(AnimeRepository::class)->updateWithoutSaving($id, $data);
