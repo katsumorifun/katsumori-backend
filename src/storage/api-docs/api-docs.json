@@ -239,37 +239,17 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Device"
+                                        "$ref": "#/components/schemas/AnimeItem"
                                     }
                                 }
                             }
                         }
                     },
                     "404": {
-                        "description": "тайтл не найден",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Device"
-                                    }
-                                }
-                            }
-                        }
+                        "description": "тайтл не найден"
                     },
                     "403": {
-                        "description": "недостаточно прав доступа",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Device"
-                                    }
-                                }
-                            }
-                        }
+                        "description": "недостаточно прав доступа"
                     }
                 },
                 "security": [

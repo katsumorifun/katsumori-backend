@@ -6,10 +6,9 @@ use App\Services\History\Traits\Model\HasHistory;
 use App\Services\Search\Traits\Model\Searchable;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Anime extends Model
+class Anime extends BaseModel
 {
     use Searchable;
     use HasFactory;

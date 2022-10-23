@@ -54,6 +54,7 @@ class EditAnimeRequest extends FormRequest
             'duration'       => 'integer',
             'age_rating'     => 'in:g,pg,pg-13,r-17,r+',
             'season'         => 'in:summer,autumn,winter,spring',
+            'genres'         => 'string',
         ];
     }
 }

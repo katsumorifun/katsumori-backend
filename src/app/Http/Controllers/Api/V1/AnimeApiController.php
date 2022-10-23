@@ -198,24 +198,16 @@ class AnimeApiController extends ApiController
      *          description="Информация о тайтле",
      *          @OA\JsonContent(
      *              type="array",
-     *              @OA\Items(ref="#/components/schemas/Device")
+     *              @OA\Items(ref="#/components/schemas/AnimeItem")
      *          )
      *      ),
      *     @OA\Response(
      *          response="404",
-     *          description="тайтл не найден",
-     *          @OA\JsonContent(
-     *              type="array",
-     *              @OA\Items(ref="#/components/schemas/Device")
-     *          )
+     *          description="тайтл не найден"
      *      ),
      *     @OA\Response(
      *          response="403",
-     *          description="недостаточно прав доступа",
-     *          @OA\JsonContent(
-     *              type="array",
-     *              @OA\Items(ref="#/components/schemas/Device")
-     *          )
+     *          description="недостаточно прав доступа"
      *      )
      * )
      */
@@ -227,7 +219,7 @@ class AnimeApiController extends ApiController
 
         $data = $request->validationData();
 
-        if (!empty($request->file('poster'))){
+        if (! empty($request->file('poster'))){
             $images = ImageUpload::save('anime', $request->file('poster'), $id, ['x96', 'x48', 'preview']);
 
             $data['image_original'] = $images['original'];
@@ -250,7 +242,7 @@ class AnimeApiController extends ApiController
             return $this->response->withNotFound('Anime');
         }
 
-        return $this->response->json($item);
+        return $this->response->json(['status'=> 'Successfully updated', 'data' => $item]);
     }
 
     /**
