@@ -6,7 +6,7 @@ use App\Contracts\Repository\UserRepository;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\EditUsersRequest;
 use App\Http\Requests\GetUsersListRequest;
-use App\Services\Images\Facade\Avatar;
+use App\Services\Images\Facade\ImageUpload;
 use App\Support\Facades\Access;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -322,7 +322,9 @@ class UsersApiController extends ApiController
             return $this->response->withForbidden('Failed to save changes. You do not have permission to update the user avatar.');
         }
 
-        Avatar::update($user, $request->file('avatar'));
+        $avatars = ImageUpload::save('avatars', $request->file('avatar'), $user_id);
+
+        app(UserRepository::class)->updateAvatar($user_id, $avatars['original']);
 
         return $this->response->json(['status' =>'Avatar upload successfully']);
     }

@@ -11,6 +11,7 @@ use App\Http\Requests\CreateAnimeRequest;
 use App\Http\Requests\EditAnimeRequest;
 use App\Http\Resources\AnimeResource;
 use App\Http\Resources\HistoryResource;
+use App\Services\Images\Facade\ImageUpload;
 use App\Services\Search\Search;
 use App\Support\Facades\Access;
 use OpenApi\Annotations as OA;
@@ -224,15 +225,23 @@ class AnimeApiController extends ApiController
             return $this->response->noChanges();
         }
 
+        $images = ImageUpload::save('anime', $request->file('poster'), $id, ['x96', 'x48', 'preview']);
+
+        $data = $request->validationData();
+        $data['image_original'] = $images['original'];
+        $data['image_x96'] = $images['x96'];
+        $data['image_x48'] = $images['x48'];
+        $data['image_preview'] = $images['preview'];
+
         if (! Access::checkPermission($request->user()->getGroupId(), 'anime.update')) {
-            $item = app(AnimeRepository::class)->updateWithoutSaving($id, $request->validationData());
+            $item = app(AnimeRepository::class)->updateWithoutSaving($id, $data);
 
             app(History::class)->add($item, true);
 
             return $this->response->moderatedStatus();
         }
 
-        $item = app(AnimeRepository::class)->update($id, $request->validationData());
+        $item = app(AnimeRepository::class)->update($id, $data);
 
         if (! $item) {
             return $this->response->withNotFound('Anime');

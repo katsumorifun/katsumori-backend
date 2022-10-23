@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\File;
 
 class EditAnimeRequest extends FormRequest
 {
@@ -25,29 +27,33 @@ class EditAnimeRequest extends FormRequest
     public function rules()
     {
         return [
-            'mal_id' => 'integer',
-            'mal_score' => 'integer',
-            'title_jp' => 'string',
-            'title_en' => 'string',
-            'title_ru' => 'string',
-            'synopsis_en' => 'string',
-            'synopsis_ru' => 'string',
-            'type' => 'in:serial,film,ova,ona,clip,special,tv',
-            'approved' => 'boolean',
-            'status' => 'in:announced,ongoing,finished',
-            //            'image_x32' => 'required|string',
-            //            'image_x64' => 'required|string',
-            //            'image_x128' => 'required|string',
-            //            'image_original' => 'required|string',
+            'mal_id'         => 'integer',
+            'mal_score'      => 'integer',
+            'title_jp'       => 'string',
+            'title_en'       => 'string',
+            'title_ru'       => 'string',
+            'synopsis_en'    => 'string',
+            'synopsis_ru'    => 'string',
+            'type'           => 'in:serial,film,ova,ona,clip,special,tv',
+            'approved'       => 'boolean',
+            'status'         => 'in:announced,ongoing,finished',
+            'poster'         => [
+                File::image()
+                ->dimensions(
+                    Rule::dimensions()
+                        ->maxWidth(225)
+                        ->maxHeight(318)
+                ),
+            ],
             'title_synonyms' => 'json',
-            'source' => 'in:manga,light novel,original',
-            'episodes' => 'integer',
+            'source'         => 'in:manga,light novel,original',
+            'episodes'       => 'integer',
             'episodes_aired' => 'integer',
-            'episodes_to' => 'datetime',
-            'episodes_from' => 'date',
-            'duration' => 'integer',
-            'age_rating' => 'in:g,pg,pg-13,r-17,r+',
-            'season' => 'in:summer,autumn,winter,spring',
+            'episodes_to'    => 'datetime',
+            'episodes_from'  => 'date',
+            'duration'       => 'integer',
+            'age_rating'     => 'in:g,pg,pg-13,r-17,r+',
+            'season'         => 'in:summer,autumn,winter,spring',
         ];
     }
 }

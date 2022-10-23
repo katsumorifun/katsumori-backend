@@ -203,7 +203,6 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         'geoIp' => \Torann\GeoIP\Facades\GeoIP::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'avatar' => \App\Services\Images\Facade\Avatar::class,
         'access' => \App\Support\Facades\Access::class,
         'Clockwork' => Clockwork\Support\Laravel\Facade::class,
     ])->toArray(),

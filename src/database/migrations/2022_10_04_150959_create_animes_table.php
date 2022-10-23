@@ -26,9 +26,9 @@ return new class extends Migration
             $table->enum('type', ['serial',  'film', 'ova', 'ona', 'clip', 'special', 'tv'])->nullable();
             $table->boolean('approved')->nullable(false)->default(false);
             $table->enum('status', ['announced', 'ongoing', 'finished'])->nullable();
-            $table->string('image_x32')->default('/x32/default.png');
-            $table->string('image_x64')->default('/x64/default.png');
-            $table->string('image_x128')->default('/x128/default.png');
+            $table->string('image_x96')->default('/x96/default.png');
+            $table->string('image_x48')->default('/x48/default.png');
+            $table->string('image_preview')->default('/preview/default.png');
             $table->string('image_original')->default('/original/default.png');
             $table->json('title_synonyms')->nullable(); // {"type": "Japanese", "title": "title"}
             $table->enum('source', ['manga', 'light novel', 'original'])->nullable();

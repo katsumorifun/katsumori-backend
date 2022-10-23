@@ -13,7 +13,7 @@ class AvatarServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('avatar', '\App\Services\Images\Avatar');
+        $this->app->bind('avatar', '\App\Services\Images\ImageUpload');
     }
 
     /**
