@@ -11,9 +11,9 @@ use App\Http\Requests\CreateAnimeRequest;
 use App\Http\Requests\EditAnimeRequest;
 use App\Http\Resources\AnimeResource;
 use App\Http\Resources\HistoryResource;
-use App\Services\Images\Facade\ImageUpload;
 use App\Services\Search\Search;
 use App\Support\Facades\Access;
+use App\Support\Facades\ImageUpload;
 use OpenApi\Annotations as OA;
 
 class AnimeApiController extends ApiController

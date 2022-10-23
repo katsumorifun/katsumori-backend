@@ -20773,7 +20773,7 @@ namespace  {
             class View extends \Illuminate\Support\Facades\View {}
             class geoIp extends \Torann\GeoIP\Facades\GeoIP {}
             class Image extends \Intervention\Image\Facades\Image {}
-            class imageUpload extends \App\Services\Images\Facade\ImageUpload {}
+            class imageUpload extends \App\Support\Facades\ImageUpload {}
             class L5Swagger extends \L5Swagger\L5SwaggerFacade {}
             class Flare extends \Spatie\LaravelIgnition\Facades\Flare {}
             class GeoIP extends \Torann\GeoIP\Facades\GeoIP {}
