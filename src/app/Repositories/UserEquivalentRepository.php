@@ -81,13 +81,22 @@ class UserEquivalentRepository extends RepositoryEquivalent implements UserRepos
             ->delete();
     }
 
-    public function updateAvatar(int $user_id, string $avatar_path)
+    public function updateStatusAvatar(int $user_id, bool $status = true)
     {
         $user = $this
             ->getBuilder()
             ->find($user_id);
 
-        $user->update(['avatar' => $avatar_path]);
+        $user->update(['custom_avatar' => $status]);
+    }
+
+    public function getCustomAvatarStatus($user_id): bool
+    {
+        $user = $this
+            ->getBuilder()
+            ->find($user_id, ['id', 'custom_avatar']);
+
+        return $user->custom_avatar;
     }
 
     public function updateMinimizedAvatars(int $user_id, string $extension)

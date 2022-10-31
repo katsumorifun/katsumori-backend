@@ -13,7 +13,7 @@ use App\Http\Resources\AnimeResource;
 use App\Http\Resources\HistoryResource;
 use App\Services\Search\Search;
 use App\Support\Facades\Access;
-use App\Support\Facades\ImageUpload;
+use App\Support\Facades\Image;
 use OpenApi\Annotations as OA;
 
 class AnimeApiController extends ApiController
@@ -220,9 +220,9 @@ class AnimeApiController extends ApiController
         $data = $request->validationData();
 
         if (! empty($request->file('poster'))){
-            $images = ImageUpload::save('anime', $request->file('poster'), $id, ['x96', 'x48', 'preview']);
+            $images = Image::poster()->upload($id, $request->file('poster'));
 
-            $data['image_original'] = $images['original'];
+            $data['image_original'] = $images['poster_original'];
             $data['image_x96'] = $images['x96'];
             $data['image_x48'] = $images['x48'];
             $data['image_preview'] = $images['preview'];

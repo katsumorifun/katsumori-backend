@@ -181,12 +181,12 @@ return [
 
         \Torann\GeoIP\GeoIPServiceProvider::class,
         \Intervention\Image\ImageServiceProvider::class,
-        App\Providers\AvatarServiceProvider::class,
         App\Providers\GuardServiceProvider::class,
         App\Providers\SearchServiceProvider::class,
         App\Providers\HistoryServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
         App\Providers\AccessServiceProvider::class,
+        App\Providers\ResourcesServiceProvider::class,
     ],
 
     /*

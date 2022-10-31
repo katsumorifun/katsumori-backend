@@ -14,7 +14,9 @@ interface UserRepository
 
     public function removeUsersUnconfirmedEmail(int $days = 1);
 
-    public function updateAvatar(int $user_id, string $avatar_path);
+    public function updateStatusAvatar(int $user_id, bool $status = true);
+
+    public function getCustomAvatarStatus($user_id): bool;
 
     public function updateMinimizedAvatars(int $user_id, string $extension);
 

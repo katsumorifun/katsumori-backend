@@ -7,10 +7,9 @@ use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\EditUsersRequest;
 use App\Http\Requests\GetUsersListRequest;
 use App\Support\Facades\Access;
-use App\Support\Facades\ImageUpload;
+use App\Support\Facades\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 
 class UsersApiController extends ApiController
 {
@@ -107,10 +106,7 @@ class UsersApiController extends ApiController
             'updated_at' => $user->updated_at,
             'description' => $user->description,
             'gender' => $user->gender,
-            'avatar' => $user->avatar,
-            'avatar_x32' => $user->avatar_x32,
-            'avatar_x64' => $user->avatar_x64,
-            'avatar_x128' => $user->avatar_x128,
+            'avatar' => Image::avatar()->get($user_id),
             'group' => $role->getToArray(),
         ]);
     }
@@ -303,15 +299,6 @@ class UsersApiController extends ApiController
      */
     public function uploadAvatar($user_id, Request $request)
     {
-        $request->validate([
-            'avatar' => [
-                'required',
-                'image',
-                'max:10240',
-                Rule::dimensions()->maxHeight(640)->maxWidth(640),
-            ],
-        ]);
-
         $user = app(UserRepository::class)->findById($user_id);
 
         if (empty($user)) {
@@ -322,10 +309,10 @@ class UsersApiController extends ApiController
             return $this->response->withForbidden('Failed to save changes. You do not have permission to update the user avatar.');
         }
 
-        $avatars = ImageUpload::save('avatars', $request->file('avatar'), $user_id);
+        $urls = Image::avatar()->upload($user_id, $request->file('avatar'));
 
-        app(UserRepository::class)->updateAvatar($user_id, $avatars['original']);
+        app(UserRepository::class)->updateStatusAvatar($user_id);
 
-        return $this->response->json(['status' =>'Avatar upload successfully']);
+        return $this->response->json(['status' =>'Avatar upload successfully', 'urls' => $urls]);
     }
 }
