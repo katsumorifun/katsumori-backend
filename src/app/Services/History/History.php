@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class History implements HistoryContract
 {
-    public function add(Model $model, bool $moderate = false)
+    public function add(Model $model, int $user_id, bool $moderate = false)
     {
         $diff = array_diff($model->getRawOriginal(), $model->getAttributes());
 
@@ -19,6 +19,7 @@ class History implements HistoryContract
                 'old_data' => $model->getOriginal(),
                 'new_data' => $model->attributesToArray(),
                 'type' => $moderate ? 'moderation' : 'history',
+                'user_id' => $user_id,
             ]);
 
             $history->save();

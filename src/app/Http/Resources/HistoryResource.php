@@ -18,6 +18,10 @@ class HistoryResource extends JsonResource
             'id'       => $this->id,
             'old_data' => $this->old_data,
             'new_data' => $this->new_data,
+            'user'     => [
+                'id' => $this->user->id,
+                'name' => $this->user->name,
+            ],
         ];
     }
 }

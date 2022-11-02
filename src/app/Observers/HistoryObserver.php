@@ -19,7 +19,7 @@ class HistoryObserver
             $access = Access::checkPermission(request()->user()->getGroupId(), (new $model)->getTable().'.update');
 
             if ($access) {
-                app(History::class)->add($model);
+                app(History::class)->add($model, request()->user()->id);
             }
         }
     }

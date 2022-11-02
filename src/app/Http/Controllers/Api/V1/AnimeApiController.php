@@ -231,7 +231,7 @@ class AnimeApiController extends ApiController
         if (! Access::checkPermission($request->user()->getGroupId(), 'anime.update')) {
             $item = app(AnimeRepository::class)->updateWithoutSaving($id, $data);
 
-            app(History::class)->add($item, true);
+            app(History::class)->add($item, request()->user()->id, true);
 
             return $this->response->moderatedStatus();
         }
