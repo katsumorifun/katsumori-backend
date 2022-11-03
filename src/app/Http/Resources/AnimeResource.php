@@ -27,9 +27,9 @@ class AnimeResource extends JsonResource
             'mal_id'    => $this->mal_id,
             'images'    => [
                 'original' => $this->image_original,
-                'x32'      => $this->image_x32,
-                'x64'      => $this->image_x64,
-                'x128'     => $this->image_x128,
+                'x96'      => $this->image_x96,
+                'x48'      => $this->image_x48,
+                'preview'     => $this->image_preview,
             ],
             'approved'  => $this->approved ? boolval($this->approved) : null,
             'title_jp'  => $this->title_jp,
@@ -80,6 +80,7 @@ class AnimeResource extends JsonResource
             'studios'    => $this->studios,
             'genres'     => $this->genres,
             'themes'     => $this->themes,
+            'characters' => $this->characters,
         ];
     }
 
