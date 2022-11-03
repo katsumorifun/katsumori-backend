@@ -372,6 +372,7 @@ class AnimeApiController extends ApiController
      *          description="Ошибка доступа"
      *      ),
      * )
+     *
      * @throws \Doctrine\DBAL\Query\QueryException
      */
     public function approveModerate($id)

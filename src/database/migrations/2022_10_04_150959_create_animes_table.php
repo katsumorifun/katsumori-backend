@@ -22,7 +22,11 @@ return new class extends Migration
             $table->string('title_en')->nullable();
             $table->string('title_ru')->nullable();
             $table->string('synopsis_en')->nullable();
+            $table->string('synopsis_en_author')->nullable();
+            $table->string('synopsis_en_author_url')->nullable();
             $table->text('synopsis_ru')->nullable();
+            $table->text('synopsis_ru_author')->nullable();
+            $table->text('synopsis_ru_author_url')->nullable();
             $table->enum('type', ['serial',  'film', 'ova', 'ona', 'clip', 'special', 'tv'])->nullable();
             $table->boolean('approved')->nullable(false)->default(false);
             $table->enum('status', ['announced', 'ongoing', 'finished'])->nullable();

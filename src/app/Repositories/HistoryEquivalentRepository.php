@@ -30,7 +30,6 @@ class HistoryEquivalentRepository extends RepositoryEquivalent implements Histor
         $item = $this->getBuilder()
             ->find($id);
 
-
         if (! $item) {
             return false;
         }

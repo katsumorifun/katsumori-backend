@@ -310,16 +310,47 @@
                         "Authorization": []
                     }
                 ]
+            }
+        },
+        "/anime/moderation/{id}": {
+            "put": {
+                "tags": [
+                    "Anime"
+                ],
+                "summary": "Принять заявку на обновление онформации о тайтле по её id",
+                "operationId": "516f0b130fe5cd50bd202315941803ea",
+                "responses": {
+                    "200": {
+                        "description": "Успех"
+                    },
+                    "400": {
+                        "description": "Ошибка, вероятнее всего такой заявки не существует"
+                    },
+                    "403": {
+                        "description": "Ошибка доступа"
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
                     "Anime"
                 ],
-                "summary": "Отклонить заявку на модерации по её id",
-                "operationId": "02f31abae8607014ed5f7f3ce43dabcb",
+                "summary": "Отклонить заявку на обновление онформации о тайтле по её id",
+                "operationId": "336898dd8f814a1bc93f01a29802a246",
                 "responses": {
                     "200": {
                         "description": "Успех"
+                    },
+                    "400": {
+                        "description": "Ошибка, вероятнее всего такой заявки не существует"
+                    },
+                    "403": {
+                        "description": "Ошибка доступа"
                     }
                 },
                 "security": [

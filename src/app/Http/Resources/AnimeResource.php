@@ -69,8 +69,16 @@ class AnimeResource extends JsonResource
             'favorites'  => 8392, // В будущем будет добавлено
             'favorite'   => false, //Если тайтл в избранном упользователя, то true, в будущем будет добавлено
             'synopsis'   => [
-                'ru' => $this->synopsis_ru,
-                'en' => $this->synopsis_en,
+                'ru' => [
+                    'text'   => $this->synopsis_ru,
+                    'author' => $this->synopsis_ru_author,
+                    'author_url' => $this->synopsis_ru_author_url,
+                ],
+                'en' => [
+                    'text'   => $this->synopsis_en,
+                    'author' => $this->synopsis_en_author,
+                    'author_url' => $this->synopsis_en_author_url,
+                ],
             ],
             'season'     => $this->episodes_from ? $this->getSeason($aired_from->monthName) : null,
             'year'       => $this->episodes_from ? $aired_from->year : null,
