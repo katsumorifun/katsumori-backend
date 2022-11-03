@@ -49,4 +49,5 @@ Route::prefix('anime')->group(function () {
     Route::get('/{id}/history', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'getHistoryChangesList']);
     Route::get('/{id}/moderation', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'getModerationList'])->middleware('auth:api');
     Route::delete('/moderation/{id}', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'rejectModerate'])->middleware('auth:api');
+    Route::put('/moderation/{id}', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'approveModerate'])->middleware('auth:api');
 });

@@ -24,4 +24,22 @@ class HistoryEquivalentRepository extends RepositoryEquivalent implements Histor
         return $item->fill(['moderator_id' => $moderator_id, 'rejected' => true])
             ->update();
     }
+
+    public function setStatusApproveAndGet(int $id, int $moderator_id)
+    {
+        $item = $this->getBuilder()
+            ->find($id);
+
+
+        if (! $item) {
+            return false;
+        }
+
+        $data = $item;
+
+        $item->fill(['moderator_id' => $moderator_id, 'rejected' => false, 'type' => 'history'])
+            ->update();
+
+        return $data;
+    }
 }

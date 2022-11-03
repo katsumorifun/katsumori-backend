@@ -351,6 +351,50 @@ class AnimeApiController extends ApiController
     }
 
     /**
+     * @OA\Put (
+     *     path="/anime/moderation/{id}",
+     *     tags = {"Anime"},
+     *     summary="Принять заявку на обновление онформации о тайтле по её id",
+     *     security={
+     *       {"Authorization": {}},
+     *     },
+     *
+     *     @OA\Response(
+     *          response="200",
+     *          description="Успех"
+     *      ),
+     *     @OA\Response(
+     *          response="400",
+     *          description="Ошибка, вероятнее всего такой заявки не существует"
+     *      ),
+     *     @OA\Response(
+     *          response="403",
+     *          description="Ошибка доступа"
+     *      ),
+     * )
+     * @throws \Doctrine\DBAL\Query\QueryException
+     */
+    public function approveModerate($id)
+    {
+        if (! Access::checkPermission(request()->user()->getGroupId(), 'anime.moderation')) {
+            return $this->response->withForbidden('Failed to save changes. You do not have permission to anime moderation list.');
+        }
+
+        $data = app(HistoryRepository::class)->setStatusApproveAndGet($id, request()->user()->id);
+
+        if (! $data)
+        {
+            return $this->response->withError('Failed to save changes.');
+        }
+
+        app(AnimeRepository::class)->update($data->new_data['id'], $data->new_data);
+
+        return $this->response->json([
+            'status'  => 'ok',
+        ]);
+    }
+
+    /**
      * @OA\Post (
      *     path="/anime",
      *     tags = {"Anime"},

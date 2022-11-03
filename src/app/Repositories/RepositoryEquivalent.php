@@ -92,7 +92,7 @@ class RepositoryEquivalent
             return false;
         }
 
-        $relations = array_diff($data, $item->getRelations());
+        $relations = array_diff_assoc($data, $item->getRelations());
 
         foreach ($relations as $relation => $ids) {
 
@@ -110,7 +110,7 @@ class RepositoryEquivalent
             }
         }
 
-        $item->update(array_diff($data, ['', ' ']));
+        $item->update(array_diff_assoc($data, ['', ' ']));
 
         return $item;
 
