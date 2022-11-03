@@ -310,6 +310,23 @@
                         "Authorization": []
                     }
                 ]
+            },
+            "delete": {
+                "tags": [
+                    "Anime"
+                ],
+                "summary": "Отклонить заявку на модерации по её id",
+                "operationId": "02f31abae8607014ed5f7f3ce43dabcb",
+                "responses": {
+                    "200": {
+                        "description": "Успех"
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
             }
         },
         "/auth/logout": {

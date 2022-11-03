@@ -38,6 +38,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
+        'email',
     ];
 
     const GUEST_GROUP_ID = 1;

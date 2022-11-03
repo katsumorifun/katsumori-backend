@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Base\Filter\FilterDTO;
 use App\Contracts\History\History;
 use App\Contracts\Repository\AnimeRepository;
+use App\Contracts\Repository\HistoryRepository;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\AnimeListRequest;
 use App\Http\Requests\CreateAnimeRequest;
@@ -294,16 +295,59 @@ class AnimeApiController extends ApiController
     public function getModerationList($id)
     {
         if (! Access::checkPermission(request()->user()->getGroupId(), 'anime.moderation')) {
-            return $this->response->withError('Failed to save changes. You do not have permission to anime moderation list.');
-        }
+            $items = app(AnimeRepository::class)->getModerationList($id, request()->user()->id);
+        } else {
 
-        $items = app(AnimeRepository::class)->getModerationList($id);
+            $items = app(AnimeRepository::class)->getModerationList($id);
+        }
 
         if (empty($items)) {
             return $this->response->withNotFound('Moderation list');
         }
 
         return HistoryResource::collection($items);
+    }
+
+    /**
+     * @OA\Delete (
+     *     path="/anime/moderation/{id}",
+     *     tags = {"Anime"},
+     *     summary="Отклонить заявку на обновление онформации о тайтле по её id",
+     *     security={
+     *       {"Authorization": {}},
+     *     },
+     *
+     *     @OA\Response(
+     *          response="200",
+     *          description="Успех"
+     *      ),
+     *     @OA\Response(
+     *          response="400",
+     *          description="Ошибка, вероятнее всего такой заявки не существует"
+     *      ),
+     *     @OA\Response(
+     *          response="403",
+     *          description="Ошибка доступа"
+     *      ),
+     * )
+     */
+    public function rejectModerate($id)
+    {
+        if (! Access::checkPermission(request()->user()->getGroupId(), 'anime.moderation')) {
+            return $this->response->withForbidden('Failed to save changes. You do not have permission to anime moderation list.');
+        }
+
+        $status = app(HistoryRepository::class)->reject($id, request()->user()->id);
+
+        if (! $status)
+        {
+            return $this->response->withError('Failed to save changes.');
+        }
+
+        return $this->response->json([
+            'message' => 'This application was successfully rejected',
+            'status'  => 'ok',
+        ]);
     }
 
     /**

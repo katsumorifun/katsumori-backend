@@ -69,11 +69,18 @@ class AnimeEquivalentRepository extends RepositoryEquivalent implements AnimeRep
             ->where('type', 'history');
     }
 
-    public function getModerationList($id)
+    public function getModerationList(int $id, ?int $user_id = null)
     {
-        return $this->getBuilder()
+        $items = $this->getBuilder()
             ->find($id, ['id'])
-            ->histories
+            ->histories()
+            ->orderBy('updated_at', 'desc')
             ->where('type', 'moderation');
+
+        if (is_null($user_id)) {
+            return $items->get();
+        }
+
+        return $items->where('user_id', $user_id)->get();
     }
 }

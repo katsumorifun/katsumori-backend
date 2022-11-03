@@ -20,6 +20,9 @@ return new class extends Migration
             $table->enum('type', ['history', 'moderation'])->default('history');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->on('users')->references('id')->onDelete('CASCADE');
+            $table->boolean('rejected')->default(false);
+            $table->unsignedBigInteger('moderator_id')->nullable(true)->default(null);
+            $table->foreign('moderator_id')->on('users')->references('id')->onDelete('CASCADE');
             $table->timestamps();
         });
     }

@@ -19,5 +19,5 @@ interface AnimeRepository
 
     public function getChangesHistoryList($id);
 
-    public function getModerationList($id);
+    public function getModerationList(int $id, ?int $user_id = null);
 }
