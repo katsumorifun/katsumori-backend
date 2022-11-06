@@ -38,15 +38,15 @@ class AnimeEquivalentRepository extends RepositoryEquivalent implements AnimeRep
             $builder = $builder->$name($ids);
         }
 
-        foreach ($search->fields as $name => $param) {
-           $builder = $builder->where($name, $param);
+        foreach ($search->fields as $name => $params) {
+           $builder = $builder->where($name, $params);
         }
 
         if (! empty($search->order)) {
             $builder = $builder->orderBy($search->order);
         }
 
-        return $builder->Paginate($perPage, ['*'], 'page', $page);
+        return $builder->paginate($perPage, ['*'], 'page', $page);
     }
 
     public function getItemWithRelations($id)

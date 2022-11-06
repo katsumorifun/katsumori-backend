@@ -39,7 +39,9 @@ class FilterDTO
                 $name = 'of'.ucfirst($name);
                 $searchDTO->relations[lcfirst($name)] = $ids;
             } elseif (array_key_exists(lcfirst($name), $fields)) {
-                $searchDTO->fields[lcfirst($name)] = $params;
+                $params = str_replace(' ', '', $params);
+                $params = explode(',', $params);
+                $searchDTO->fields[lcfirst($name)] = str_replace(' ', '', $params);
             }
         }
 
