@@ -39,6 +39,7 @@ class AnimeResource extends JsonResource
             'type'      => $this->type,
             'source'    => $this->source,
             'episodes'  => $this->episodes,
+            'episodes_aired' => $this->episodes_aired,
             'status'    => $this->status,
             'airing'    => $this->airing ? boolval($this->airing) : null,
             'aired'     => [
@@ -72,7 +73,7 @@ class AnimeResource extends JsonResource
                 'ru' => [
                     'text'   => $this->synopsis_ru,
                     'author' => $this->synopsis_ru_author,
-                    'author_url' => $this->synopsis_ru_author_url,
+                    'url' => $this->synopsis_ru_author_url,
                 ],
                 'en' => [
                     'text'   => $this->synopsis_en,
