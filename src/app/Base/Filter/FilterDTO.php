@@ -41,7 +41,23 @@ class FilterDTO
             } elseif (array_key_exists(lcfirst($name), $fields)) {
                 $params = str_replace(' ', '', $params);
                 $params = explode(',', $params);
-                $searchDTO->fields[lcfirst($name)] = str_replace(' ', '', $params);
+
+                $params = str_replace(' ', '', $params);
+
+                $savedParams = [];
+
+                foreach ($params as $param) {
+                    $savedParams[] = [
+                        'name' => ltrim($param, '!, ='),
+                        'operator' => strripos($param, '!') === 0 ? '!=' : '=',
+                    ];
+                }
+
+                if (empty(end($savedParams)['name'])) {
+                    array_pop($savedParams);
+                }
+
+                $searchDTO->fields[lcfirst($name)] = $savedParams;
             }
         }
 

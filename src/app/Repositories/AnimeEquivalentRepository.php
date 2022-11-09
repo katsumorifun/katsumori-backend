@@ -17,17 +17,17 @@ class AnimeEquivalentRepository extends RepositoryEquivalent implements AnimeRep
     /**
      * Метод возвращает список тайтлов + студии, наличие лицензий, жанры, темы и продюсеров (таблица staff).
      *
-     * @param  FilterDTO  $search
+     * @param  FilterDTO|null $search
      * @param  int  $perPage
      * @param  int  $page
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getListAndGeneralInfoPaginate(FilterDTO $search, int $perPage = 12, int $page = 1)
+    public function getListAndGeneralInfoPaginate(FilterDTO|null $search, int $perPage = 12, int $page = 1)
     {
 
         $builder = $this->getBuilder()
             ->with(['studios', 'licensors', 'genres', 'themes'])
-            ->where('approved', true)
+            ->orWhere('approved', true)
             ->with('staff', function (Builder $query) {
                 $query
                     ->select(['id', 'mal_id', 'name_jp', 'name_en', 'name_ru', 'image_x32', 'image_x64', 'image_original'])
@@ -39,7 +39,15 @@ class AnimeEquivalentRepository extends RepositoryEquivalent implements AnimeRep
         }
 
         foreach ($search->fields as $name => $params) {
-           $builder = $builder->where($name, $params);
+            foreach ($params as $key => $param) {
+
+                if ($key === 0) {
+                    $builder = $builder->where($name, $param['operator'], $param['name']);
+                    continue;
+                }
+
+                $builder = $builder->orWhere($name, $param['operator'], $param['name']);
+            }
         }
 
         if (! empty($search->order)) {
