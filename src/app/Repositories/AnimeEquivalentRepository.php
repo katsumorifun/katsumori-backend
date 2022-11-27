@@ -27,7 +27,7 @@ class AnimeEquivalentRepository extends RepositoryEquivalent implements AnimeRep
 
         $builder = $this->getBuilder()
             ->with(['studios', 'licensors', 'genres', 'themes'])
-            ->orWhere('approved', true)
+            ->where('approved', true)
             ->with('staff', function (Builder $query) {
                 $query
                     ->select(['id', 'mal_id', 'name_jp', 'name_en', 'name_ru', 'image_x32', 'image_x64', 'image_original'])
@@ -39,15 +39,24 @@ class AnimeEquivalentRepository extends RepositoryEquivalent implements AnimeRep
         }
 
         foreach ($search->fields as $name => $params) {
+            $notIn = [];
+            $in = [];
+
             foreach ($params as $key => $param) {
-
-                if ($key === 0) {
-                    $builder = $builder->where($name, $param['operator'], $param['name']);
-                    continue;
+                if ($param['operator'] === '=') {
+                    $in[] = $param['name'];
+                } else {
+                    $notIn[] = $param['name'];
                 }
-
-                $builder = $builder->orWhere($name, $param['operator'], $param['name']);
             }
+
+            if (!empty($in)) {
+                $builder = $builder->whereIn($name, $in);
+            }
+            if (!empty($notIn)) {
+                $builder = $builder->whereNotIn($name, $notIn);
+            }
+
         }
 
         if (! empty($search->order)) {
