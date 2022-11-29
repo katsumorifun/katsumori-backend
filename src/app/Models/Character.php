@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Timestamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Character extends BaseModel
 {
-    use HasFactory;
+    use HasFactory, Timestamps;
 
     protected $fillable = [
         'mal_id',

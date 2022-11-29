@@ -20,14 +20,15 @@ class UserEquivalentRepository extends RepositoryEquivalent implements UserRepos
      * @param  string  $password
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
      */
-    public function createOrGetUser(string $name, string $email, string $password): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
+    public function createOrGetUser(string $name, string $email, string $password, string $timestamp = 'Europe/Moscow'): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
     {
         $user = $this
             ->getBuilder()
             ->create([
-                'name'    => $name,
-                'email'   => $email,
-                'password'=> bcrypt($password),
+                'name'      => $name,
+                'email'     => $email,
+                'password'  => bcrypt($password),
+                'timestamp' => $timestamp,
             ]);
 
         $user->setGroup(Group::GUEST_GROUP_ID);

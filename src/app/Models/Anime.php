@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Timestamps;
 use App\Services\History\Traits\Model\HasHistory;
 use App\Services\Search\Traits\Model\Searchable;
 use Illuminate\Contracts\Database\Query\Builder;
@@ -10,9 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Anime extends BaseModel
 {
-    use Searchable;
-    use HasFactory;
-    use HasHistory;
+    use Searchable, HasFactory, HasHistory, Timestamps;
 
     protected $table = 'anime';
 
@@ -59,6 +58,16 @@ class Anime extends BaseModel
         'genres',
         'themes',
     ];
+
+    public function getEpisodesFromAttribute(string $data): string
+    {
+        return $this->formatData($data);
+    }
+
+    public function getEpisodesToAttribute(string $data): string
+    {
+        return $this->formatData($data);
+    }
 
     public function studios(): BelongsToMany
     {

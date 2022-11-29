@@ -586,6 +586,16 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "timezone",
+                        "in": "query",
+                        "description": "Часовой пояс пользователя (если поле окажется пустым, то будет установлено значение 'Europe/Moscow')",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "Europe/Moscow"
+                        }
                     }
                 ],
                 "responses": {

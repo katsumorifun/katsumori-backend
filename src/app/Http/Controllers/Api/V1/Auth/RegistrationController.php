@@ -69,6 +69,16 @@ class RegistrationController extends ApiController
      *             type="string"
      *         )
      *     ),
+     *     @OA\Parameter(
+     *          name = "timezone",
+     *          in = "query",
+     *          description = "Часовой пояс пользователя (если поле окажется пустым, то будет установлено значение 'Europe/Moscow')",
+     *          required=false,
+     *          @OA\Schema(
+     *             type="string",
+     *             default="Europe/Moscow",
+     *         ),
+     *     ),
      *
      *     @OA\Response(
      *          response="200",
@@ -115,7 +125,13 @@ class RegistrationController extends ApiController
      */
     public function callBack(RegistrationRequest $request): \Illuminate\Http\JsonResponse
     {
-       $user = app(UserRepository::class)->createOrGetUser($request->get('name'), $request->get('email'), $request->get('password'));
+       $user = app(UserRepository::class)
+           ->createOrGetUser(
+               $request->get('name'),
+               $request->get('email'),
+               $request->get('password'),
+               $request->get('timezone'),
+           );
 
        /**
         * @var \App\Contracts\Auth\VerifyEmail $email

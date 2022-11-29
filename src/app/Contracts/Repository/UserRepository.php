@@ -4,7 +4,7 @@ namespace App\Contracts\Repository;
 
 interface UserRepository
 {
-    public function createOrGetUser(string $name, string $email, string $password);
+    public function createOrGetUser(string $name, string $email, string $password, string $timestamp = 'Europe/Moscow');
 
     public function getByName(string $name);
 

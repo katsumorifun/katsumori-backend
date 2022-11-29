@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use ALajusticia\AuthTracker\Traits\AuthTracking;
+use App\Models\Traits\Timestamps;
 use App\Support\Enums\Group;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Database\Query\Builder;
@@ -13,7 +14,7 @@ use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, AuthTracking;
+    use HasApiTokens, HasFactory, Notifiable, AuthTracking, Timestamps;
 
     /**
      * The attributes that are mass assignable.
@@ -28,6 +29,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'description',
         'group_id',
         'custom_avatar',
+        'timezone',
     ];
 
     /**
