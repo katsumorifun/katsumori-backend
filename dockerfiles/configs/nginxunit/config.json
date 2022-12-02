@@ -1,0 +1,72 @@
+{
+  "listeners": {
+    "*:80": {
+      "pass": "routes"
+    }
+  },
+  "routes": [
+    {
+      "match": {
+        "uri": [
+          "*.manifest",
+          "*.appcache",
+          "*.html",
+          "*.json",
+          "*.rss",
+          "*.atom",
+          "*.jpg",
+          "*.jpeg",
+          "*.gif",
+          "*.png",
+          "*.ico",
+          "*.cur",
+          "*.gz",
+          "*.svg",
+          "*.svgz",
+          "*.mp4",
+          "*.ogg",
+          "*.ogv",
+          "*.webm",
+          "*.htc",
+          "*.css",
+          "*.js",
+          "*.ttf",
+          "*.ttc",
+          "*.otf",
+          "*.eot",
+          "*.woff",
+          "*.woff2",
+          "/robot.txt"
+        ]
+      },
+      "action": {
+        "share": "/var/www/html/public"
+      }
+    },
+    {
+      "action": {
+        "pass": "applications/php"
+      }
+    }
+  ],
+  "applications": {
+    "php": {
+      "type": "php 8.1.6",
+      "limits": {
+        "requests": 1000,
+        "timeout": 60
+      },
+      "processes": {
+        "max": 16,
+        "spare": 16,
+        "idle_timeout": 30
+      },
+      "user": "laravel",
+      "group": "laravel",
+      "working_directory": "/var/www/html",
+      "root": "/var/www/html/public",
+      "script": "index.php",
+      "index": "index.php"
+    }
+  }
+}
