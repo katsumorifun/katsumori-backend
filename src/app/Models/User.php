@@ -8,6 +8,7 @@ use App\Support\Enums\Group;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -85,5 +86,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function scopeWithAll(Builder $query)
     {
         $query->with($this->relations);
+    }
+
+    public function anime(): BelongsToMany
+    {
+        return $this->belongsToMany(Anime::class);
     }
 }

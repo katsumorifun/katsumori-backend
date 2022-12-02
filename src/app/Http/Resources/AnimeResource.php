@@ -10,6 +10,9 @@ use Illuminate\Http\Resources\MissingValue;
 class AnimeResource extends JsonResource
 {
     private bool $producers = false;
+    private bool $isListStatus = false;
+    private bool $isCharacters = true;
+    private bool $isStaff = true;
 
     /**
      * Transform the resource into an array.
@@ -25,6 +28,7 @@ class AnimeResource extends JsonResource
         return [
             'id'        => $this->id,
             'mal_id'    => $this->mal_id,
+            'list_status'    => $this->when($this->isListStatus, $this->list_status),
             'images'    => [
                 'original' => $this->image_original,
                 'x96'      => $this->image_x96,
@@ -81,15 +85,15 @@ class AnimeResource extends JsonResource
                     'author_url' => $this->synopsis_en_author_url,
                 ],
             ],
-            'season'     => $this->episodes_from ? $this->getSeason($aired_from->monthName) : null,
-            'year'       => $this->episodes_from ? $aired_from->year : null,
-            'producers'  => $this->when($this->producers, $this->staff),
-            'staff'      => $this->when(! $this->producers, $this->staff),
-            'licensors'  => $this->licensors,
-            'studios'    => $this->studios,
-            'genres'     => $this->genres,
-            'themes'     => $this->themes,
-            'characters' => $this->characters,
+            'season'      => $this->episodes_from ? $this->getSeason($aired_from->monthName) : null,
+            'year'        => $this->episodes_from ? $aired_from->year : null,
+            'producers'   => $this->when($this->producers, $this->staff),
+            'staff'       => $this->when($this->isStaff, $this->staff),
+            'licensors'   => $this->licensors,
+            'studios'     => $this->studios,
+            'genres'      => $this->genres,
+            'themes'      => $this->themes,
+            'characters'  => $this->when($this->isCharacters, $this->characters),
         ];
     }
 
@@ -122,10 +126,34 @@ class AnimeResource extends JsonResource
     }
 
     /**
-     * @param  bool  $producers
+     * @param  bool  $bool
      */
-    public function setProducers(bool $producers): void
+    public function setProducers(bool $bool): void
     {
-        $this->producers = $producers;
+        $this->producers = $bool;
+    }
+
+    /**
+     * @param  bool  $bool
+     */
+    public function isListStatus(bool $bool): void
+    {
+        $this->isListStatus = $bool;
+    }
+
+    /**
+     * @param  bool  $bool
+     */
+    public function isCharacters(bool $bool): void
+    {
+        $this->isCharacters = $bool;
+    }
+
+    /**
+     * @param  bool  $bool
+     */
+    public function isStaff(bool $bool): void
+    {
+        $this->isStaff = $bool;
     }
 }

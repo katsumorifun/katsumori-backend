@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Contracts\Repository\UserRepository;
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Requests\AvatarRequest;
 use App\Http\Requests\EditUsersRequest;
 use App\Http\Requests\GetUsersListRequest;
 use App\Support\Facades\Access;
@@ -297,7 +298,7 @@ class UsersApiController extends ApiController
      *
      * )
      */
-    public function uploadAvatar($user_id, Request $request)
+    public function uploadAvatar($user_id, AvatarRequest $request)
     {
         $user = app(UserRepository::class)->findById($user_id);
 

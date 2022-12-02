@@ -4,13 +4,13 @@ namespace App\Base\Filter;
 
 use Illuminate\Http\Request;
 
-class FilterDTO
+class AnimeFilterDTO
 {
     public array $relations = [];
     public array $fields = [];
     public string $order = '';
 
-    public function transform(string $model, Request $request): FilterDTO
+    public function transform(string $model, Request $request): AnimeFilterDTO
     {
         $model = new $model;
         $relations = [];

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Base\Filter\FilterDTO;
+use App\Base\Filter\AnimeFilterDTO;
 use App\Contracts\History\History;
 use App\Contracts\Repository\AnimeRepository;
 use App\Contracts\Repository\HistoryRepository;
@@ -98,7 +98,7 @@ class AnimeApiController extends ApiController
         $page = $request->get('page') ? $request->get('page') : 1;
 
         $data = app(AnimeRepository::class)
-            ->getListAndGeneralInfoPaginate((new FilterDTO())->transform(\App\Models\Anime::class, $request), $per_page, $page);
+            ->getListAndGeneralInfoPaginate((new AnimeFilterDTO())->transform(\App\Models\Anime::class, $request), $per_page, $page);
 
         return AnimeResource::collection($data, function (AnimeResource $resource) {
             $resource->setProducers(true);

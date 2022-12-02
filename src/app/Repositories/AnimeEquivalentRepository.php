@@ -2,9 +2,11 @@
 
 namespace App\Repositories;
 
-use App\Base\Filter\FilterDTO;
+use App\Base\Filter\AnimeFilterDTO;
 use App\Contracts\Repository\AnimeRepository;
+use App\Exceptions\OperationError;
 use App\Models\Anime as AnimeModel;
+use App\Models\User;
 use Illuminate\Contracts\Database\Query\Builder;
 
 class AnimeEquivalentRepository extends RepositoryEquivalent implements AnimeRepository
@@ -14,26 +16,9 @@ class AnimeEquivalentRepository extends RepositoryEquivalent implements AnimeRep
         $this->model = AnimeModel::class;
     }
 
-    /**
-     * Метод возвращает список тайтлов + студии, наличие лицензий, жанры, темы и продюсеров (таблица staff).
-     *
-     * @param  FilterDTO|null $search
-     * @param  int  $perPage
-     * @param  int  $page
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
-     */
-    public function getListAndGeneralInfoPaginate(FilterDTO|null $search, int $perPage = 12, int $page = 1)
+
+    protected function animeFilter(AnimeFilterDTO|null $search, Builder $builder): Builder
     {
-
-        $builder = $this->getBuilder()
-            ->with(['studios', 'licensors', 'genres', 'themes'])
-            ->where('approved', true)
-            ->with('staff', function (Builder $query) {
-                $query
-                    ->select(['id', 'mal_id', 'name_jp', 'name_en', 'name_ru', 'image_x32', 'image_x64', 'image_original'])
-                    ->where('position', 'producer');
-            });
-
         foreach ($search->relations as $name => $ids) {
             $builder = $builder->$name($ids);
         }
@@ -61,6 +46,34 @@ class AnimeEquivalentRepository extends RepositoryEquivalent implements AnimeRep
 
         if (! empty($search->order)) {
             $builder = $builder->orderBy($search->order);
+        }
+
+
+        return $builder;
+    }
+
+    /**
+     * Метод возвращает список тайтлов + студии, наличие лицензий, жанры, темы и продюсеров (таблица staff).
+     *
+     * @param  AnimeFilterDTO|null $search
+     * @param  int  $perPage
+     * @param  int  $page
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getListAndGeneralInfoPaginate(AnimeFilterDTO|null $filter, int $perPage = 12, int $page = 1)
+    {
+
+        $builder = $this->getBuilder()
+            ->with(['studios', 'licensors', 'genres', 'themes'])
+            ->where('approved', true)
+            ->with('staff', function (Builder $query) {
+                $query
+                    ->select(['id', 'mal_id', 'name_jp', 'name_en', 'name_ru', 'image_x32', 'image_x64', 'image_original'])
+                    ->where('position', 'producer');
+            });
+
+        if(!is_null($filter)) {
+            $builder = $this->animeFilter($filter, $builder);
         }
 
         return $builder->paginate($perPage, ['*'], 'page', $page);
@@ -99,5 +112,37 @@ class AnimeEquivalentRepository extends RepositoryEquivalent implements AnimeRep
         }
 
         return $items->where('user_id', $user_id)->get();
+    }
+
+    /**
+     * @throws OperationError
+     */
+    public function getUserList(int $user_id, AnimeFilterDTO|null $filter, null|string $status = null): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    {
+        $query = User::find($user_id);
+
+        if (empty($query)) {
+            throw new OperationError('user not found', 404, 'user');
+        }
+
+        $query = $query->anime()
+            ->with(['studios', 'licensors', 'genres', 'themes'])
+            ->where('approved', true)
+            ->with('staff', function (Builder $query) {
+                $query
+                    ->select(['id', 'mal_id', 'name_jp', 'name_en', 'name_ru', 'image_x32', 'image_x64', 'image_original'])
+                    ->where('position', 'producer');
+            })
+            ->selectRaw('anime.*, anime_user.status AS list_status');
+
+        if(!is_null($filter)) {
+            $query = $this->animeFilter($filter, $query);
+        }
+
+        if (!is_null($status)) {
+            $query->where('anime_user.status', $status);
+        }
+
+        return $query->paginate();
     }
 }

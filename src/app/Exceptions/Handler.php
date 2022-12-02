@@ -36,7 +36,12 @@ class Handler extends ExceptionHandler
     {
         $this->renderable(function (OperationError $e, $request) {
             if ($e->getCode() === 404) {
-                return response(['message' =>  $e->getItem() . ' not found'], 404);
+                return response([
+                    'message' =>  $e->getItem() . ' not found',
+                    'errors'  =>  [
+                        $e->getItem() => 'not found'
+                    ]
+                ], 404);
             }
         });
     }

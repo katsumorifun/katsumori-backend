@@ -131,4 +131,9 @@ class Anime extends BaseModel
 
         return $query;
     }
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

@@ -32,12 +32,23 @@ Route::prefix('devices')->group(function () {
     Route::get('/logout/{login_id}', [\App\Http\Controllers\Api\V1\DevicesApiController::class, 'logoutFromLoginId']);
 });
 
+//*************************************************************************************
+//******************************* Пользователи ****************************************
+//*************************************************************************************
 Route::prefix('user')->group(function () {
     Route::get('/', [\App\Http\Controllers\Api\V1\UsersApiController::class, 'getList']);
     Route::post('/', [\App\Http\Controllers\Api\V1\UsersApiController::class, 'editAuthProfile'])->middleware('auth:api');
     Route::get('/{user_id}', [\App\Http\Controllers\Api\V1\UsersApiController::class, 'getById']);
     Route::post('/{user_id}', [\App\Http\Controllers\Api\V1\UsersApiController::class, 'editProfile'])->middleware('auth:api');
     Route::post('/{user_id}/upload_avatar', [\App\Http\Controllers\Api\V1\UsersApiController::class, 'uploadAvatar'])->middleware('auth:api');
+
+
+    //**************************************************************************************
+    //******************************* Списки пользователей *********************************
+    //**************************************************************************************
+    Route::prefix('{user_id}/list')->group(function () {
+        Route::get('anime', [\App\Http\Controllers\Api\V1\UserListApiController::class, 'getAnime']);
+    });
 });
 
 Route::prefix('anime')->group(function () {

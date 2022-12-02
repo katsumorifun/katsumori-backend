@@ -885,6 +885,48 @@
                 ]
             }
         },
+        "/user/{user_id}/list/anime": {
+            "get": {
+                "tags": [
+                    "Users",
+                    "Anime"
+                ],
+                "summary": "Отображение тайтлов из библиотеки пользователя",
+                "operationId": "51d1bbc86b08ae9a73ff68f7180d2dfe",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "Id пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Статус (по умолчанию будут выведены тайты со всеми статусами)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "watching",
+                                "completed",
+                                "hold",
+                                "dropped",
+                                "planned"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Выведет список со всеми тайтлами поьзователя"
+                    }
+                }
+            }
+        },
         "/user": {
             "get": {
                 "tags": [
