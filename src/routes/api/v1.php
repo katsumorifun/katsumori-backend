@@ -42,7 +42,6 @@ Route::prefix('user')->group(function () {
     Route::post('/{user_id}', [\App\Http\Controllers\Api\V1\UsersApiController::class, 'editProfile'])->middleware('auth:api');
     Route::post('/{user_id}/upload_avatar', [\App\Http\Controllers\Api\V1\UsersApiController::class, 'uploadAvatar'])->middleware('auth:api');
 
-
     //**************************************************************************************
     //******************************* Списки пользователей *********************************
     //**************************************************************************************

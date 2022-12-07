@@ -9,7 +9,7 @@ class OperationError extends Exception
 {
     protected string $item;
 
-    public function __construct(string $message = "", int $code = 0, string $item = '', ?Throwable $previous = null)
+    public function __construct(string $message = '', int $code = 0, string $item = '', ?Throwable $previous = null)
     {
         $this->item = $item;
         parent::__construct($message, $code, $previous);

@@ -4,15 +4,9 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Base\Filter\AnimeFilterDTO;
 use App\Contracts\Repository\AnimeRepository;
-use App\Contracts\Repository\UserRepository;
 use App\Http\Controllers\Api\ApiController;
-use App\Http\Requests\EditUsersRequest;
-use App\Http\Requests\GetUsersListRequest;
 use App\Http\Resources\AnimeResource;
-use App\Support\Facades\Access;
-use App\Support\Facades\Image;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class UserListApiController extends ApiController
 {
@@ -54,7 +48,6 @@ class UserListApiController extends ApiController
                 (new AnimeFilterDTO())->transform(\App\Models\Anime::class, $request),
                 $request->get('list_status')
             );
-
 
         return AnimeResource::collection($list, function (AnimeResource $resource) {
             $resource->setProducers(false);

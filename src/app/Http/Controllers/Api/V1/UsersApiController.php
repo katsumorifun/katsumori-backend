@@ -9,7 +9,6 @@ use App\Http\Requests\EditUsersRequest;
 use App\Http\Requests\GetUsersListRequest;
 use App\Support\Facades\Access;
 use App\Support\Facades\Image;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UsersApiController extends ApiController

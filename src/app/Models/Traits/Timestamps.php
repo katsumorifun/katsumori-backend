@@ -3,7 +3,6 @@
 namespace App\Models\Traits;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 
 trait Timestamps
 {

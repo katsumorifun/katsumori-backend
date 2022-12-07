@@ -16,7 +16,6 @@ class AnimeEquivalentRepository extends RepositoryEquivalent implements AnimeRep
         $this->model = AnimeModel::class;
     }
 
-
     protected function animeFilter(AnimeFilterDTO|null $search, Builder $builder): Builder
     {
         foreach ($search->relations as $name => $ids) {
@@ -35,10 +34,10 @@ class AnimeEquivalentRepository extends RepositoryEquivalent implements AnimeRep
                 }
             }
 
-            if (!empty($in)) {
+            if (! empty($in)) {
                 $builder = $builder->whereIn($name, $in);
             }
-            if (!empty($notIn)) {
+            if (! empty($notIn)) {
                 $builder = $builder->whereNotIn($name, $notIn);
             }
 
@@ -48,14 +47,13 @@ class AnimeEquivalentRepository extends RepositoryEquivalent implements AnimeRep
             $builder = $builder->orderBy($search->order);
         }
 
-
         return $builder;
     }
 
     /**
      * Метод возвращает список тайтлов + студии, наличие лицензий, жанры, темы и продюсеров (таблица staff).
      *
-     * @param  AnimeFilterDTO|null $search
+     * @param  AnimeFilterDTO|null  $search
      * @param  int  $perPage
      * @param  int  $page
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
@@ -72,7 +70,7 @@ class AnimeEquivalentRepository extends RepositoryEquivalent implements AnimeRep
                     ->where('position', 'producer');
             });
 
-        if(!is_null($filter)) {
+        if(! is_null($filter)) {
             $builder = $this->animeFilter($filter, $builder);
         }
 
@@ -135,11 +133,11 @@ class AnimeEquivalentRepository extends RepositoryEquivalent implements AnimeRep
             })
             ->selectRaw('anime.*, anime_user.status AS list_status');
 
-        if(!is_null($filter)) {
+        if(! is_null($filter)) {
             $query = $this->animeFilter($filter, $query);
         }
 
-        if (!is_null($status)) {
+        if (! is_null($status)) {
             $query->where('anime_user.status', $status);
         }
 
