@@ -1,7 +1,7 @@
 on: push
 name: Laravel-CI
 jobs:
-  phpunit:
+  laravel-ci:
     runs-on: ubuntu-latest
     container:
       image: kirschbaumdevelopment/laravel-test-runner:8.1
@@ -59,3 +59,8 @@ jobs:
         sed -i "s/DB_PASSWORD=password/DB_PASSWORD=$MYSQL_PASSWORD/" .env.testing
         php artisan config:clear
         vendor/bin/phpunit tests/
+
+    - name: Code style checker
+      run: |
+        cd src
+        vendor/bin/php-cs-fixer fix --dry-run --diff
