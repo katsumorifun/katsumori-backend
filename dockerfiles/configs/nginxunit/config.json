@@ -6,46 +6,14 @@
   },
   "routes": [
     {
-      "match": {
-        "uri": [
-          "*.manifest",
-          "*.appcache",
-          "*.html",
-          "*.json",
-          "*.rss",
-          "*.atom",
-          "*.jpg",
-          "*.jpeg",
-          "*.gif",
-          "*.png",
-          "*.ico",
-          "*.cur",
-          "*.gz",
-          "*.svg",
-          "*.svgz",
-          "*.mp4",
-          "*.ogg",
-          "*.ogv",
-          "*.webm",
-          "*.htc",
-          "*.css",
-          "*.js",
-          "*.ttf",
-          "*.ttc",
-          "*.otf",
-          "*.eot",
-          "*.woff",
-          "*.woff2",
-          "/robot.txt"
-        ]
-      },
       "action": {
-        "share": "/var/www/html/public"
-      }
-    },
-    {
-      "action": {
-        "pass": "applications/php"
+        "share": "/var/www/html/public$uri",
+        "types": [
+          "!application/x-httpd-php"
+        ],
+        "fallback": {
+          "pass": "applications/php"
+        }
       }
     }
   ],
