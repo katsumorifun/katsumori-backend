@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Api;
 
 /**
  * @OA\Info(
- *     title="YukiDub API documentation",
+ *     title="Katsumori API documentation",
  *     version="0.0.1",
  *     @OA\Contact(
- *         email="administrator@yukidub.fun"
+ *         email="administrator@katsumori.fun"
  *     ),
  *     @OA\License(
  *         name="Apache 2.0",
@@ -33,7 +33,7 @@ namespace App\Http\Controllers\Api;
  *
  * @OA\Server(
  *     description="v1",
- *     url="http://127.0.0.1:8081/api/v1"
+ *     url="http://127.0.0.1:80/api/v1"
  * )
  * @OA\SecurityScheme(
  *     type="apiKey",

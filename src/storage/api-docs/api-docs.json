@@ -1,9 +1,9 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "YukiDub API documentation",
+        "title": "Katsumori API documentation",
         "contact": {
-            "email": "administrator@yukidub.fun"
+            "email": "administrator@katsumori.fun"
         },
         "license": {
             "name": "Apache 2.0",
@@ -13,7 +13,7 @@
     },
     "servers": [
         {
-            "url": "http://127.0.0.1:8081/api/v1",
+            "url": "http://127.0.0.1:80/api/v1",
             "description": "v1"
         }
     ],
@@ -892,7 +892,7 @@
                     "Anime"
                 ],
                 "summary": "Отображение тайтлов из библиотеки пользователя",
-                "operationId": "51d1bbc86b08ae9a73ff68f7180d2dfe",
+                "operationId": "9e5d5e70f32a7c66973101b11057f10d",
                 "parameters": [
                     {
                         "name": "user_id",
