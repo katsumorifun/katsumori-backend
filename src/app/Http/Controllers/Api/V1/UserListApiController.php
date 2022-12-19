@@ -27,7 +27,7 @@ class UserListApiController extends ApiController
      *     ),
      *
      *     @OA\Parameter(
-     *         name="status",
+     *         name="status_list",
      *         in="query",
      *         description="Статус (по умолчанию будут выведены тайты со всеми статусами)",
      *         required=false,
@@ -46,7 +46,7 @@ class UserListApiController extends ApiController
             ->getUserList(
                 $user_id,
                 (new AnimeFilterDTO())->transform(\App\Models\Anime::class, $request),
-                $request->get('list_status')
+                $request->get('status_list')
             );
 
         return AnimeResource::collection($list, function (AnimeResource $resource) {
