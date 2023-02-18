@@ -1,8 +1,8 @@
 version: '3'
 
 networks:
-  net:
-  laravel:
+  web:
+    external: true
 
 services:
   katsumori:
@@ -26,7 +26,7 @@ services:
       - schedule
       - elasticsearch
     networks:
-      - laravel
+      - web
 
   mysql:
     image: mariadb:10.8.2-rc-focal
@@ -43,7 +43,7 @@ services:
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     networks:
-      - laravel
+      - web
 
   elasticsearch:
     image: elasticsearch:8.4.3
@@ -58,7 +58,7 @@ services:
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-password} # Password for the 'elastic' user
       discovery.type: single-node
     networks:
-      - laravel
+      - web
 
   mysql_testing:
     image: mariadb:10.8.2-rc-focal
@@ -76,7 +76,7 @@ services:
       SERVICE_NAME: mysql
       MYSQL_TCP_PORT: 3307
     networks:
-      - laravel
+      - web
 
   redis:
     image: redis:alpine
@@ -85,7 +85,7 @@ services:
     ports:
       - "6379:6379"
     networks:
-      - laravel
+      - web
 
   composer:
     build:
@@ -101,7 +101,7 @@ services:
     user: laravel
     entrypoint: ['composer', '--ignore-platform-reqs']
     networks:
-      - laravel
+      - web
 
   npm:
     image: node:13.7
@@ -114,7 +114,7 @@ services:
     working_dir: /var/www/html
     entrypoint: ['npm']
     networks:
-      - laravel
+      - web
 
   artisan:
     build:
@@ -131,7 +131,7 @@ services:
     working_dir: /var/www/html
     entrypoint: ['php', '/var/www/html/artisan']
     networks:
-      - laravel
+      - web
 
   schedule:
     build:
@@ -145,7 +145,7 @@ services:
     volumes:
       - ./src:/var/www/html:delegated
     networks:
-      - laravel
+      - web
 
   work:
     build:
@@ -159,7 +159,7 @@ services:
     volumes:
       - ./src:/var/www/html:delegated
     networks:
-      - laravel
+      - web
 
 volumes:
   elasticsearch:
