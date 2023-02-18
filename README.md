@@ -54,7 +54,7 @@ export MYSQL_ROOT_PASSWORD=password
 После выполнения команд можно перейти по адресу http://127.0.0.1:80.
 
 Порты снаружи/внутри докера
-- nginx - 80:80
+- nginx unit - 8081:8081 (site), 8080 (api unit)
 - mysql - 3306:3306
 - php - 9000:9000
 - redis - 6379:6379
