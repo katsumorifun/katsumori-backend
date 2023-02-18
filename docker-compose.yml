@@ -25,6 +25,12 @@ services:
       - mysql
       - schedule
       - elasticsearch
+    labels:
+      - traefik.backend=katsumori.katsumori-backend.katsumori.fun
+      - raefik.frontend.rule=Host:dev.katsumori.fun
+      - traefik.frontend.rule=Host:dev.katsumori.fun
+      - traefik.docker.network=web
+      - traefik.port=8081
     networks:
       - web
 
@@ -42,6 +48,8 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-password}
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
+    labels:
+      - traefik.enable=false
     networks:
       - web
 
@@ -57,6 +65,8 @@ services:
       ES_JAVA_OPTS: -Xms1512m -Xmx1512m
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-password} # Password for the 'elastic' user
       discovery.type: single-node
+    labels:
+      - traefik.enable=false
     networks:
       - web
 
@@ -75,6 +85,8 @@ services:
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
       MYSQL_TCP_PORT: 3307
+    labels:
+      - traefik.enable=false
     networks:
       - web
 
@@ -84,6 +96,8 @@ services:
     restart: unless-stopped
     ports:
       - "6379:6379"
+    labels:
+      - traefik.enable=false
     networks:
       - web
 
@@ -100,6 +114,8 @@ services:
     working_dir: /var/www/html
     user: laravel
     entrypoint: ['composer', '--ignore-platform-reqs']
+    labels:
+      - traefik.enable=false
     networks:
       - web
 
@@ -113,6 +129,8 @@ services:
       - 3002:3001
     working_dir: /var/www/html
     entrypoint: ['npm']
+    labels:
+      - traefik.enable=false
     networks:
       - web
 
@@ -130,6 +148,8 @@ services:
       - mysql
     working_dir: /var/www/html
     entrypoint: ['php', '/var/www/html/artisan']
+    labels:
+      - traefik.enable=false
     networks:
       - web
 
@@ -144,6 +164,8 @@ services:
     command: php artisan schedule:work
     volumes:
       - ./src:/var/www/html:delegated
+    labels:
+      - traefik.enable=false
     networks:
       - web
 
@@ -158,6 +180,8 @@ services:
     command: php artisan queue:work --queue=high,default
     volumes:
       - ./src:/var/www/html:delegated
+    labels:
+      - traefik.enable=false
     networks:
       - web
 
