@@ -43,6 +43,11 @@ if ((size > 0));then
   export MYSQL_ROOT_PASSWORD=$root_password
 fi
 
+#Creating network
+docker network create web
+echo -en "\033[37;1;41m Creating network \033[0m" &&
+echo -en "\n" &&
+
 #Build project
 echo -en "\033[37;1;41m Building project \033[0m" &&
 echo -en "\n" &&

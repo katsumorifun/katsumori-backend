@@ -1,8 +1,8 @@
 version: '3'
 
 networks:
-  net:
-  laravel:
+  web:
+    external: true
 
 services:
   katsumori:
@@ -14,7 +14,7 @@ services:
         - GID=${GID:-1000}
     container_name: nginx
     ports:
-      - "80:80"
+      - "8080:8080"
       - "8081:8081"
     volumes:
       - ./src:/var/www/html:delegated
@@ -25,8 +25,14 @@ services:
       - mysql
       - schedule
       - elasticsearch
+    labels:
+      - traefik.backend=katsumori.katsumori-backend.katsumori.fun
+      - raefik.frontend.rule=Host:dev.katsumori.fun
+      - traefik.frontend.rule=Host:dev.katsumori.fun
+      - traefik.docker.network=web
+      - traefik.port=8081
     networks:
-      - laravel
+      - web
 
   mysql:
     image: mariadb:10.8.2-rc-focal
@@ -42,11 +48,13 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-password}
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
+    labels:
+      - traefik.enable=false
     networks:
-      - laravel
+      - web
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.4.3
+    image: elasticsearch:8.4.3
     volumes:
       - ./dockerfiles/configs/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,z
       - elasticsearch:/usr/share/elasticsearch/data:z
@@ -57,8 +65,10 @@ services:
       ES_JAVA_OPTS: -Xms1512m -Xmx1512m
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-password} # Password for the 'elastic' user
       discovery.type: single-node
+    labels:
+      - traefik.enable=false
     networks:
-      - laravel
+      - web
 
   mysql_testing:
     image: mariadb:10.8.2-rc-focal
@@ -75,8 +85,10 @@ services:
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
       MYSQL_TCP_PORT: 3307
+    labels:
+      - traefik.enable=false
     networks:
-      - laravel
+      - web
 
   redis:
     image: redis:alpine
@@ -84,8 +96,10 @@ services:
     restart: unless-stopped
     ports:
       - "6379:6379"
+    labels:
+      - traefik.enable=false
     networks:
-      - laravel
+      - web
 
   composer:
     build:
@@ -100,8 +114,10 @@ services:
     working_dir: /var/www/html
     user: laravel
     entrypoint: ['composer', '--ignore-platform-reqs']
+    labels:
+      - traefik.enable=false
     networks:
-      - laravel
+      - web
 
   npm:
     image: node:13.7
@@ -113,8 +129,10 @@ services:
       - 3002:3001
     working_dir: /var/www/html
     entrypoint: ['npm']
+    labels:
+      - traefik.enable=false
     networks:
-      - laravel
+      - web
 
   artisan:
     build:
@@ -130,8 +148,10 @@ services:
       - mysql
     working_dir: /var/www/html
     entrypoint: ['php', '/var/www/html/artisan']
+    labels:
+      - traefik.enable=false
     networks:
-      - laravel
+      - web
 
   schedule:
     build:
@@ -144,8 +164,10 @@ services:
     command: php artisan schedule:work
     volumes:
       - ./src:/var/www/html:delegated
+    labels:
+      - traefik.enable=false
     networks:
-      - laravel
+      - web
 
   work:
     build:
@@ -158,8 +180,10 @@ services:
     command: php artisan queue:work --queue=high,default
     volumes:
       - ./src:/var/www/html:delegated
+    labels:
+      - traefik.enable=false
     networks:
-      - laravel
+      - web
 
 volumes:
   elasticsearch:
