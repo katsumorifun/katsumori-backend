@@ -126,4 +126,18 @@ return [
         'attempt_count' => 10,
         'time_out' => 60 * 25,
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Passport
+    |--------------------------------------------------------------------------
+    |
+    | password_grant_client_id - id клиента laravel passport для авторизации
+    | password_grant_client_secret - секрет клиента laravel passport для авторизации
+    |
+    |*/
+    'passport' => [
+        'password_grant_client_id' => env('PASSPORT_PASSWORD_GRANT_CLIENT_ID'),
+        'password_grant_client_secret' => env('PASSPORT_PASSWORD_GRANT_CLIENT_SECRET'),
+    ],
 ];

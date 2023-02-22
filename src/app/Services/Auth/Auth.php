@@ -6,7 +6,6 @@ use App\Contracts\Auth\Auth as AuthContract;
 use App\Contracts\Guard\AuthThrottle;
 use App\Exceptions\OperationError;
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Laravel\Passport\RefreshTokenRepository;
 use Laravel\Passport\TokenRepository;
@@ -45,14 +44,10 @@ class Auth implements AuthContract
      */
     public function login(string $email, string $password)
     {
-        $client = DB::table('oauth_clients')
-            ->where('password_client', true)
-            ->first();
-
         $data = [
             'grant_type'    => 'password',
-            'client_id'     => $client->id,
-            'client_secret' => $client->secret,
+            'client_id'     => config('auth.passport.password_grant_client_id'),
+            'client_secret' => config('auth.passport.password_grant_client_secret'),
             'username'      => $email,
             'password'      => $password,
             'scope'         => '*',
@@ -74,15 +69,11 @@ class Auth implements AuthContract
 
     public function updateAccessToken(string $refreshToken)
     {
-        $client = DB::table('oauth_clients')
-            ->where('password_client', true)
-            ->first();
-
         $data = [
             'grant_type'    => 'refresh_token',
             'refresh_token' => $refreshToken,
-            'client_id'     => $client->id,
-            'client_secret' => $client->secret,
+            'client_id'     => config('auth.passport.password_grant_client_id'),
+            'client_secret' => config('auth.passport.password_grant_client_id'),
             'scope'         => '',
         ];
 
