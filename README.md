@@ -26,8 +26,24 @@ Katsumori - это платформа с возможностью просмот
 ./install.sh
 ```
 
-Во время выполнения скрипт даст возможность ввести пароль для базы данных и т.д., после его выполнения перейтиде по адресу 
-http://127.0.0.1:80
+Во время выполнения скрипт даст возможность ввести пароль для базы данных и т.д., так же, на экарне будет выведена запись типа
+
+
+`Personal access client created successfully.`
+
+`Client ID: 1`
+
+`Client secret: generated client secret`
+
+`Password grant client created successfully.`
+
+`Client ID: 2`
+
+`Client secret: generated client secret`
+
+Скопируйте секретный ключ клиента паролей (`Client secret`) и запишите его в фай .env в поле `PASSPORT_PASSWORD_GRANT_CLIENT_SECRET` 
+
+После выполнения всех действий сайт будет доступен по адресу: http://127.0.0.1:8081
 
 ### Ручная развертка  в Docker
 
@@ -50,6 +66,22 @@ export MYSQL_ROOT_PASSWORD=password
 - Генерация OpenAPI/Swagger документации: ````docker-compose run --rm artisan l5-swagger:generate````
 - Индексация всех записей для Elasticsearch (если они есть в бд): ````docker-compose run --rm artisan search:reindex````
 
+
+При генерации ключей для passport будет выведенно сообщение такого рода
+
+`Personal access client created successfully.`
+
+`Client ID: 1`
+
+`Client secret: generated client secret`
+
+`Password grant client created successfully.`
+
+`Client ID: 2`
+
+`Client secret: generated client secret`
+
+Скопируйте секретный ключ клиента паролей (`Client secret`) и запишите его в фай .env в поле `PASSPORT_PASSWORD_GRANT_CLIENT_SECRET`
 
 После выполнения команд можно перейти по адресу http://127.0.0.1:80.
 
