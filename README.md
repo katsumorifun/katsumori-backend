@@ -85,7 +85,24 @@ export MYSQL_ROOT_PASSWORD=password
 
 После выполнения команд можно перейти по адресу http://127.0.0.1:80.
 
-Порты снаружи/внутри докера
+# Настройка после запуска проекта
+
+Для создания пользователя с правами администратора выполните команду:
+``docker-compose run --rm artisan make:user 3 {email} {user_name} {password}``
+где 3 - id группы admin.
+
+Все доступные группы:
+`GUEST_GROUP_ID = 1;
+USER_GROUP_ID = 2;
+ADMIN_GROUP_ID = 3;
+ANIME_MODER_GROUP_ID = 4;
+MANGA_MODER_GROUP_ID = 5;
+RANOBE_MODER_GROUP_ID = 6
+SUPER_MODER_GROUP_ID = 7;
+USER_MODER_GROUP_ID = 8;
+STEAMER_GROUP_ID = 9;`
+
+# Порты снаружи/внутри докера
 - nginx unit - 8081:8081 (site), 8080 (api unit)
 - mysql - 3306:3306
 - php - 9000:9000
