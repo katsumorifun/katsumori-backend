@@ -4,6 +4,9 @@ namespace App\Console\Commands;
 
 use App\Models\Anime;
 use Elastic\Elasticsearch\Client;
+use Elastic\Elasticsearch\Exception\ClientResponseException;
+use Elastic\Elasticsearch\Exception\MissingParameterException;
+use Elastic\Elasticsearch\Exception\ServerResponseException;
 use Illuminate\Console\Command;
 
 class ReindexCommand extends Command
@@ -42,9 +45,16 @@ class ReindexCommand extends Command
      */
     public function handle()
     {
-        $this->anime();
+        try {
+            $this->anime();
+        } catch (ClientResponseException|ServerResponseException $e) {
 
-        $this->info('');
+            $this->info('server is not available');
+        } catch (MissingParameterException $e) {
+
+            $this->info('Done!');
+        }
+
         $this->info('Done!');
     }
 
@@ -55,6 +65,8 @@ class ReindexCommand extends Command
      */
     public function anime()
     {
+        $this->elasticsearch->indices()->deleteIndexTemplate(['anime']);
+
         $this->info('Indexing all anime. This might take a while...');
 
         $properties = Anime::$elasticProperties;
@@ -84,7 +96,7 @@ class ReindexCommand extends Command
                 'body' => $item->toSearchArray(),
             ]);
             $this->output->write('indexed title: '.$item->title_jp);
-            $this->info('');
+            $this->info('-anime indexed-');
         }
     }
 }
