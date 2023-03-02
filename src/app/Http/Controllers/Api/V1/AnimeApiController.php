@@ -124,6 +124,10 @@ class AnimeApiController extends ApiController
     {
         $data = app(Search::class)->anime($value);
 
+        if (empty($data)) {
+            return $this->response->withNotFound('Anime');
+        }
+
         return $this->response->json($data);
     }
 
