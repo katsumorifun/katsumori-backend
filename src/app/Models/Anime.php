@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\Timestamps;
 use App\Services\History\Traits\Model\HasHistory;
-use App\Services\Search\Traits\Model\Searchable;
+use App\Services\Search\Model\Traits\Searchable;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -57,6 +57,12 @@ class Anime extends BaseModel
         'staff',
         'genres',
         'themes',
+    ];
+
+    public static array $elasticProperties = [
+        'title_en' => [
+            'type' => 'wildcard'
+        ]
     ];
 
     public function getEpisodesFromAttribute(string $data): string

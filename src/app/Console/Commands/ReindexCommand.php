@@ -48,9 +48,32 @@ class ReindexCommand extends Command
         $this->info('Done!');
     }
 
+    /**
+     * @throws \Elastic\Elasticsearch\Exception\ClientResponseException
+     * @throws \Elastic\Elasticsearch\Exception\ServerResponseException
+     * @throws \Elastic\Elasticsearch\Exception\MissingParameterException
+     */
     public function anime()
     {
         $this->info('Indexing all anime. This might take a while...');
+
+        $properties = Anime::$elasticProperties;
+
+        $this->elasticsearch->indices()->create([
+            'index' => 'anime',
+            'body' => [
+                'settings' => [
+                    'number_of_shards' => 3,
+                    'number_of_replicas' => 2
+                ],
+                'mappings' => [
+                    '_source' => [
+                        'enabled' => true
+                    ],
+                    'properties' => $properties
+                ]
+            ],
+        ]);
 
         foreach (Anime::cursor() as $item)
         {
