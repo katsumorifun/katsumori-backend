@@ -62,7 +62,13 @@ class Anime extends BaseModel
     public static array $elasticProperties = [
         'title_en' => [
             'type' => 'wildcard'
-        ]
+        ],
+        'title_jp' => [
+            'type' => 'wildcard'
+        ],
+        'title_ru' => [
+            'type' => 'wildcard'
+        ],
     ];
 
     public function getEpisodesFromAttribute(string $data): string
