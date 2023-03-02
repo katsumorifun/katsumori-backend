@@ -3,7 +3,6 @@
 namespace App\Services\Search;
 
 use App\Models\Anime;
-use App\Repositories\RepositoryEquivalent;
 use Elastic\Elasticsearch\Client;
 
 class ElasticSearch implements Search
@@ -33,12 +32,12 @@ class ElasticSearch implements Search
                 'query' => [
                     'wildcard' => [
                         'title_en' => [
-                            'value' => '*' . $query . '*',
+                            'value' => '*'.$query.'*',
                             'boost' => 1,
                             'rewrite' => 'constant_score',
-                            'case_insensitive' => true
-                        ]
-                    ]
+                            'case_insensitive' => true,
+                        ],
+                    ],
                 ],
             ],
         ]);

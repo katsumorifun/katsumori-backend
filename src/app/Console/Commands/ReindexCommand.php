@@ -76,14 +76,14 @@ class ReindexCommand extends Command
             'body' => [
                 'settings' => [
                     'number_of_shards' => 3,
-                    'number_of_replicas' => 2
+                    'number_of_replicas' => 2,
                 ],
                 'mappings' => [
                     '_source' => [
-                        'enabled' => true
+                        'enabled' => true,
                     ],
-                    'properties' => $properties
-                ]
+                    'properties' => $properties,
+                ],
             ],
         ]);
 
