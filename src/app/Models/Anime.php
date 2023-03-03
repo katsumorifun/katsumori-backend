@@ -49,6 +49,7 @@ class Anime extends BaseModel
         'title_synonyms' => 'array',
         'episodes_to' => 'datetime',
         'episodes_from' => 'datetime',
+        'created_at' => 'datetime',
     ];
 
     protected $relations = [
