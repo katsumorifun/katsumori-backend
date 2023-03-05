@@ -12,10 +12,12 @@
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
         "itsgoingd/clockwork": "^5.1",
-        "laravel/framework": "^9.2",
+        "laravel/framework": "9.52.4",
         "laravel/passport": "^10.3",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
+        "league/flysystem": "3.8.0",
+        "ramsey/uuid": "4.7.0",
         "torann/geoip": "^3.0",
         "whichbrowser/parser": "^2.1"
     },
@@ -66,7 +68,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
