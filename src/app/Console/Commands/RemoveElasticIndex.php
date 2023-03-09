@@ -15,7 +15,7 @@ class RemoveElasticIndex extends Command
      *
      * @var string
      */
-    protected $signature = 'search:Remove';
+    protected $signature = 'search:remove';
 
     /**
      * The console command description.
