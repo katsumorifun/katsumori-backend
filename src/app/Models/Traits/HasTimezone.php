@@ -2,9 +2,6 @@
 
 namespace App\Models\Traits;
 
-use Carbon\Carbon;
-use Carbon\CarbonImmutable;
-use DateTimeImmutable;
 use DateTimeInterface;
 
 trait HasTimezone
@@ -21,8 +18,6 @@ trait HasTimezone
 
         return $date->format(DATE_ATOM);
     }
-
-
 
 //    public function getCreatedAtAttribute(string $data): string
 //    {

@@ -2,13 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Anime;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\Exception\ClientResponseException;
 use Elastic\Elasticsearch\Exception\MissingParameterException;
 use Elastic\Elasticsearch\Exception\ServerResponseException;
 use Illuminate\Console\Command;
-use function Termwind\ask;
 
 class RemoveElasticIndex extends Command
 {
@@ -48,7 +46,7 @@ class RemoveElasticIndex extends Command
     {
         try {
             $this->elasticsearch->indices()->delete([
-                'index' => 'anime'
+                'index' => 'anime',
             ]);
 
         } catch (ClientResponseException|ServerResponseException|MissingParameterException $e) {

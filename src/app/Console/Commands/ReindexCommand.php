@@ -8,7 +8,6 @@ use Elastic\Elasticsearch\Exception\ClientResponseException;
 use Elastic\Elasticsearch\Exception\MissingParameterException;
 use Elastic\Elasticsearch\Exception\ServerResponseException;
 use Illuminate\Console\Command;
-use function Termwind\ask;
 
 class ReindexCommand extends Command
 {

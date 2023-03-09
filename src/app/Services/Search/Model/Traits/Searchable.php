@@ -3,8 +3,6 @@
 namespace App\Services\Search\Model\Traits;
 
 use App\Observers\ElasticObserver;
-use Carbon\Carbon;
-use DateTimeInterface;
 
 trait Searchable
 {

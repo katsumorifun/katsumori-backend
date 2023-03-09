@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Models\Traits\HasTimezone;
 use App\Services\History\Traits\Model\HasHistory;
 use App\Services\Search\Model\Traits\Searchable;
-use DateTimeInterface;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

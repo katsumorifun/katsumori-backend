@@ -31,9 +31,8 @@ class ElasticObserver
     /**
      * Handle the User "updated" event.
      *
-     * @param Model $model
+     * @param  Model  $model
      * @return void
-     *
      */
     public function updated(Model $model): void
     {
@@ -43,9 +42,8 @@ class ElasticObserver
     /**
      * Handle the User "updated" event.
      *
-     * @param Model $model
+     * @param  Model  $model
      * @return void
-     *
      */
     public function saved(Model $model): void
     {
