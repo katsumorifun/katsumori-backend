@@ -26,11 +26,13 @@ services:
       - schedule
       - elasticsearch
     labels:
-      - traefik.backend=katsumori.katsumori-backend.katsumori.fun
-      - raefik.frontend.rule=Host:dev.katsumori.fun
-      - traefik.frontend.rule=Host:dev.katsumori.fun
-      - traefik.docker.network=web
-      - traefik.port=8081
+      - "traefik.enable=true"
+      - "traefik.docker.network=web"
+      - "traefik.http.routers.katsumori-backend.rule=Host(`api.katsumori.fun`)"
+      - "traefik.http.routers.katsumori-backend.entrypoints=websecure"
+      - "traefik.http.routers.katsumori-backend.service=katsumori-backend"
+      - "traefik.http.services.katsumori-backend.loadbalancer.server.port=8081"
+      - "traefik.backend=katsumori.katsumori-backend.katsumori.fun"
     networks:
       - web
 
