@@ -4,6 +4,9 @@ namespace App\Console\Commands;
 
 use App\Models\Anime;
 use Elastic\Elasticsearch\Client;
+use Elastic\Elasticsearch\Exception\ClientResponseException;
+use Elastic\Elasticsearch\Exception\MissingParameterException;
+use Elastic\Elasticsearch\Exception\ServerResponseException;
 use Illuminate\Console\Command;
 
 class ReindexCommand extends Command
@@ -13,7 +16,7 @@ class ReindexCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'search:reindex';
+    protected $signature = 'search:index';
 
     /**
      * The console command description.
@@ -42,18 +45,46 @@ class ReindexCommand extends Command
      */
     public function handle()
     {
-        $this->anime();
+        try {
+            $this->anime();
+        } catch (ClientResponseException|ServerResponseException|MissingParameterException $e) {
 
-        $this->info('');
+            $this->error($e->getMessage());
+        }
+
         $this->info('Done!');
     }
 
+    /**
+     * @throws \Elastic\Elasticsearch\Exception\ClientResponseException
+     * @throws \Elastic\Elasticsearch\Exception\ServerResponseException
+     * @throws \Elastic\Elasticsearch\Exception\MissingParameterException
+     */
     public function anime()
     {
-        $this->info('Indexing all anime. This might take a while...');
+        $properties = Anime::$elasticProperties;
 
-        foreach (Anime::cursor() as $item)
+        $this->elasticsearch->indices()->create([
+            'index' => 'anime',
+            'body' => [
+                'settings' => [
+                    'number_of_shards' => 3,
+                    'number_of_replicas' => 2,
+                ],
+                'mappings' => [
+                    '_source' => [
+                        'enabled' => true,
+                    ],
+                    'properties' => $properties,
+                ],
+            ],
+        ]);
+
+        $anime = Anime::with(['studios', 'genres'])->get();
+
+        foreach ($anime as $item)
         {
+
             $this->elasticsearch->index([
                 'index' => $item->getSearchIndex(),
                 'type' => $item->getSearchType(),
@@ -61,7 +92,9 @@ class ReindexCommand extends Command
                 'body' => $item->toSearchArray(),
             ]);
             $this->output->write('indexed title: '.$item->title_jp);
-            $this->info('');
+            $this->info(' ++indexed');
         }
+
+        $this->info('anime indexed');
     }
 }

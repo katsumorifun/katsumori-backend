@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-use App\Models\Traits\Timestamps;
+use App\Models\Traits\HasTimezone;
 use App\Services\History\Traits\Model\HasHistory;
-use App\Services\Search\Traits\Model\Searchable;
+use App\Services\Search\Model\Traits\Searchable;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Anime extends BaseModel
 {
-    use Searchable, HasFactory, HasHistory, Timestamps;
+    use HasTimezone, Searchable, HasFactory, HasHistory;
 
     protected $table = 'anime';
 
@@ -47,8 +47,8 @@ class Anime extends BaseModel
 
     protected $casts = [
         'title_synonyms' => 'array',
-        'episodes_to' => 'datetime',
-        'episodes_from' => 'datetime',
+        'episodes_to' => 'date',
+        'episodes_from' => 'date',
     ];
 
     protected $relations = [
@@ -59,15 +59,17 @@ class Anime extends BaseModel
         'themes',
     ];
 
-    public function getEpisodesFromAttribute(string $data): string
-    {
-        return $this->formatData($data);
-    }
-
-    public function getEpisodesToAttribute(string $data): string
-    {
-        return $this->formatData($data);
-    }
+    public static array $elasticProperties = [
+        'title_en' => [
+            'type' => 'wildcard',
+        ],
+        'title_jp' => [
+            'type' => 'wildcard',
+        ],
+        'title_ru' => [
+            'type' => 'wildcard',
+        ],
+    ];
 
     public function studios(): BelongsToMany
     {

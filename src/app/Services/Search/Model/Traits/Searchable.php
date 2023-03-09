@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Search\Traits\Model;
+namespace App\Services\Search\Model\Traits;
 
 use App\Observers\ElasticObserver;
 
@@ -39,6 +39,6 @@ trait Searchable
             return array_intersect_key($this->toArray(), $fieldsArray);
         }
 
-        return $this->toArray();
+        return $this->jsonSerialize();
     }
 }

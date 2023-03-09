@@ -53,7 +53,7 @@ Route::prefix('user')->group(function () {
 Route::prefix('anime')->group(function () {
     Route::get('/', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'list']);
     Route::post('/', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'create'])->middleware('auth:api');
-    Route::get('search/{value}', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'search']);
+    Route::middleware('throttle:80,1')->get('search/{value}', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'search']);
     Route::get('/{id}', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'getItem']);
     Route::post('/{id}', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'update'])->middleware('auth:api');
     Route::get('/{id}/history', [\App\Http\Controllers\Api\V1\AnimeApiController::class, 'getHistoryChangesList']);

@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use Elastic\Elasticsearch\Client;
+use Illuminate\Database\Eloquent\Model;
 
 class ElasticObserver
 {
@@ -13,24 +14,40 @@ class ElasticObserver
         $this->elastic = $elastic;
     }
 
-    /**
-     * Handle the User "deleted" event.
-     *
-     * @param $model
-     * @return void
-     *
-     * @throws \Elastic\Elasticsearch\Exception\ClientResponseException
-     * @throws \Elastic\Elasticsearch\Exception\MissingParameterException
-     * @throws \Elastic\Elasticsearch\Exception\ServerResponseException
-     */
-    public function saved($model): void
+    protected function updateElastic(Model $model): void
     {
+        if ($model->getSearchIndex() === 'anime') {
+            $model->with(['genres', 'studios']);
+        }
+
         $this->elastic->index([
             'index' => $model->getSearchIndex(),
             'type' => $model->getSearchType(),
             'id' => $model->getKey(),
             'body' => $model->toSearchArray(),
         ]);
+    }
+
+    /**
+     * Handle the User "updated" event.
+     *
+     * @param  Model  $model
+     * @return void
+     */
+    public function updated(Model $model): void
+    {
+        $this->updateElastic($model);
+    }
+
+    /**
+     * Handle the User "updated" event.
+     *
+     * @param  Model  $model
+     * @return void
+     */
+    public function saved(Model $model): void
+    {
+        $this->updateElastic($model);
     }
 
     /**
