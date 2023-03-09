@@ -17,7 +17,7 @@ class ReindexCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'search:reindex';
+    protected $signature = 'search:index';
 
     /**
      * The console command description.
