@@ -87,6 +87,7 @@ export MYSQL_ROOT_PASSWORD=password
 
 # Настройка после запуска проекта
 
+### Создание пользователя
 Для создания пользователя с правами администратора выполните команду:
 ``docker-compose run --rm artisan make:user 3 {email} {user_name} {password}``
 где 3 - id группы admin.
@@ -101,6 +102,12 @@ RANOBE_MODER_GROUP_ID = 6
 SUPER_MODER_GROUP_ID = 7;
 USER_MODER_GROUP_ID = 8;
 STEAMER_GROUP_ID = 9;`
+
+### Создание индексов для поиска 
+Для создания индексов выполните команду ``docker-compose run --rm artisan search:index``
+
+Если не создать индексы, то в дальнейшем возникнут проблемы с работой поисковика.
+
 
 # Порты снаружи/внутри докера
 - nginx unit - 8081:8081 (site), 8080 (api unit)
