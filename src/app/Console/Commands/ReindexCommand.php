@@ -8,6 +8,7 @@ use Elastic\Elasticsearch\Exception\ClientResponseException;
 use Elastic\Elasticsearch\Exception\MissingParameterException;
 use Elastic\Elasticsearch\Exception\ServerResponseException;
 use Illuminate\Console\Command;
+use function Termwind\ask;
 
 class ReindexCommand extends Command
 {
@@ -47,12 +48,9 @@ class ReindexCommand extends Command
     {
         try {
             $this->anime();
-        } catch (ClientResponseException|ServerResponseException $e) {
+        } catch (ClientResponseException|ServerResponseException|MissingParameterException $e) {
 
-            $this->info('server is not available');
-        } catch (MissingParameterException $e) {
-
-            $this->info('Done!');
+            $this->error($e->getMessage());
         }
 
         $this->info('Done!');
@@ -65,10 +63,6 @@ class ReindexCommand extends Command
      */
     public function anime()
     {
-        $this->elasticsearch->indices()->deleteIndexTemplate(['anime']);
-
-        $this->info('Indexing all anime. This might take a while...');
-
         $properties = Anime::$elasticProperties;
 
         $this->elasticsearch->indices()->create([
@@ -87,8 +81,11 @@ class ReindexCommand extends Command
             ],
         ]);
 
-        foreach (Anime::cursor() as $item)
+        $anime = Anime::with(['studios', 'genres'])->get();
+
+        foreach ($anime as $item)
         {
+
             $this->elasticsearch->index([
                 'index' => $item->getSearchIndex(),
                 'type' => $item->getSearchType(),
@@ -96,7 +93,9 @@ class ReindexCommand extends Command
                 'body' => $item->toSearchArray(),
             ]);
             $this->output->write('indexed title: '.$item->title_jp);
-            $this->info('-anime indexed-');
+            $this->info(' ++indexed');
         }
+
+        $this->info('anime indexed');
     }
 }

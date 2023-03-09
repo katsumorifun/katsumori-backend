@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use App\Models\Traits\Timestamps;
+use App\Models\Traits\HasTimezone;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Character extends BaseModel
 {
-    use HasFactory, Timestamps;
+    use HasFactory, HasTimezone;
 
     protected $fillable = [
         'mal_id',
