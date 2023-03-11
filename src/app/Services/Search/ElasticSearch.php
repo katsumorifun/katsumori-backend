@@ -16,12 +16,13 @@ class ElasticSearch implements Search
 
     public function anime($query)
     {
-        $items = $this->searchOnElasticsearch($query);
+        $fields = ['title_en', 'title_ru', 'title_jp'];
+        $items = $this->searchOnElasticsearch($fields, $query);
 
         return $this->buildCollection($items);
     }
 
-    private function searchOnElasticsearch($query = '')
+    private function searchOnElasticsearch(array $fields, $query = '')
     {
         $model = new Anime();
 
@@ -30,13 +31,9 @@ class ElasticSearch implements Search
             'type' => $model->getSearchType(),
             'body' => [
                 'query' => [
-                    'wildcard' => [
-                        'title_en' => [
-                            'value' => '*'.$query.'*',
-                            'boost' => 1,
-                            'rewrite' => 'constant_score',
-                            'case_insensitive' => true,
-                        ],
+                    'multi_match' => [
+                        'query' => $query,
+                        'fields' => $fields,
                     ],
                 ],
             ],

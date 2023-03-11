@@ -61,13 +61,19 @@ class Anime extends BaseModel
 
     public static array $elasticProperties = [
         'title_en' => [
-            'type' => 'wildcard',
+            'type' => 'text',
+            'analyzer' => 'autocomplete',
+            'search_analyzer' => 'standard',
         ],
         'title_jp' => [
-            'type' => 'wildcard',
+            'type' => 'text',
+            'analyzer' => 'autocomplete',
+            'search_analyzer' => 'standard',
         ],
         'title_ru' => [
-            'type' => 'wildcard',
+            'type' => 'text',
+            'analyzer' => 'autocomplete',
+            'search_analyzer' => 'standard',
         ],
     ];
 

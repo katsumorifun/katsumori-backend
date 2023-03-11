@@ -70,6 +70,25 @@ class ReindexCommand extends Command
                 'settings' => [
                     'number_of_shards' => 3,
                     'number_of_replicas' => 2,
+                    'analysis' => [
+                        'filter' => [
+                            'autocomplete_filter' => [
+                                'type' => 'edge_ngram',
+                                'min_gram' => 1,
+                                'max_gram' => 20,
+                            ],
+                        ],
+                        'analyzer' => [
+                            'autocomplete' => [
+                                'type' => 'custom',
+                                'tokenizer' => 'standard',
+                                'filter' => [
+                                    'autocomplete_filter',
+                                    'lowercase',
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
                 'mappings' => [
                     '_source' => [
