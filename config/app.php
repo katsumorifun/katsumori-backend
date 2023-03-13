@@ -203,7 +203,6 @@ return [
         'geoIp' => \Torann\GeoIP\Facades\GeoIP::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'access' => \App\Support\Facades\Access::class,
-        'Clockwork' => Clockwork\Support\Laravel\Facade::class,
     ])->toArray(),
 
 ];
