@@ -7,6 +7,42 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\MissingValue;
 
+/**
+ * @property mixed $episodes_from
+ * @property mixed $episodes_to
+ * @property int $id
+ * @property int $mal_id
+ * @property string $image_original
+ * @property string $image_x96
+ * @property string $image_x48
+ * @property string image_preview
+ * @property string title_en
+ * @property string title_ru
+ * @property string title_jp
+ * @property boolean approved
+ * @property mixed $title_synonyms
+ * @property mixed $type
+ * @property mixed $source
+ * @property mixed $episodes
+ * @property mixed $episodes_aired
+ * @property string $status
+ * @property boolean $airing
+ * @property mixed $duration
+ * @property string $age_rating
+ * @property float $mal_score
+ * @property mixed $synopsis_ru
+ * @property mixed $synopsis_ru_author
+ * @property mixed $synopsis_ru_author_url
+ * @property mixed $licensors
+ * @property mixed $synopsis_en
+ * @property mixed $synopsis_en_author
+ * @property mixed $synopsis_en_author_url
+ * @property array $staff
+ * @property array $studios
+ * @property array $genres
+ * @property array $themes
+ * @property array $characters
+ */
 class AnimeResource extends JsonResource
 {
     private bool $producers = false;
