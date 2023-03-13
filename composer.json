@@ -24,7 +24,7 @@
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",
         "fakerphp/faker": "^1.9.1",
-        "jubeki/laravel-code-style": "^1.1",
+        "friendsofphp/php-cs-fixer": "^3.15",
         "laravel/sail": "^1.0.1",
         "laravel/telescope": "^4.14",
         "mockery/mockery": "^1.4.4",
@@ -61,8 +61,9 @@
         ],
         "phpunit": "@php ./vendor/bin/phpunit -d memory_limit=512M",
         "phpstan": "@php -d 'opcache.enable=0' ./vendor/bin/phpstan analyze -c ./phpstan.neon --no-progress --ansi",
-        "check-style": "php-cs-fixer fix --dry-run --diff",
-        "fix-style": "php-cs-fixer fix",
+        "phpstan-xdebug": "@php -d 'opcache.enable=0' ./vendor/bin/phpstan analyze -c ./phpstan.neon --no-progress --ansi --xdebug",
+        "check-style": "./vendor/bin/php-cs-fixer fix -vvv --dry-run",
+        "fix-style": "./vendor/bin/php-cs-fixer fix -vvv --show-progress=dots",
         "test": [
           "@phpstan",
           "@phpunit"
