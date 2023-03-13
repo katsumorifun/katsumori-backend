@@ -4,6 +4,12 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @property mixed $name
+ * @property mixed $email
+ * @property mixed $email_verified_at
+ * @property mixed $created_at
+ */
 class UserResource extends JsonResource
 {
     /**
