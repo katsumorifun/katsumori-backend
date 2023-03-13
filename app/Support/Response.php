@@ -2,6 +2,7 @@
 
 namespace App\Support;
 
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection as Collection;
 use Illuminate\Routing\ResponseFactory;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
@@ -18,7 +19,7 @@ class Response
     /**
      * Collection.
      */
-    private $resource;
+    private JsonResource|null $resource;
 
     /**
      * Http status code.
@@ -42,28 +43,31 @@ class Response
     /**
      * Return json.
      *
-     * @param $data
-     * @param  array  $headers
+     * @param array<string>|array<Collection> $data
+     * @param array<string> $headers
      * @return \Illuminate\Http\JsonResponse
      */
-    public function json($data = [], array $headers = []): \Illuminate\Http\JsonResponse
+    public function json(array $data = [], array $headers = []): \Illuminate\Http\JsonResponse
     {
         return $this->response->json($data, $this->statusCode, $headers);
     }
 
     /**
      * Return collection.
+     *
+     * @param array $data
+     * @return Collection
      */
-    public function withCollection($data): Collection
+    public function withCollection(array $data): Collection
     {
         return $this->resource::collection($data);
     }
 
     /**
-     * @param  null  $resource
+     * @param JsonResource|null $resource
      * @return \Illuminate\Http\JsonResponse
      */
-    public function withCreated($resource = null): \Illuminate\Http\JsonResponse
+    public function withCreated(JsonResource $resource = null): \Illuminate\Http\JsonResponse
     {
         $this->statusCode = HttpResponse::HTTP_CREATED;
 
@@ -134,10 +138,10 @@ class Response
     /**
      * Make a JSON response with the transformed items.
      *
-     * @param $data
+     * @param array<string> $data
      * @return \Illuminate\Http\JsonResponse
      */
-    public function withItem($data): \Illuminate\Http\JsonResponse
+    public function withItem(array $data): \Illuminate\Http\JsonResponse
     {
         return $this->json(new $this->resource($data));
     }
@@ -145,11 +149,11 @@ class Response
     /**
      * Make an error response.
      *
-     * @param $message
-     * @param  array  $errors
+     * @param string $message
+     * @param  array<string>  $errors
      * @return \Illuminate\Http\JsonResponse
      */
-    public function withError($message, array $errors = []): \Illuminate\Http\JsonResponse
+    public function withError(string $message, array $errors = []): \Illuminate\Http\JsonResponse
     {
         $json = [
             'message' => $message,
@@ -234,9 +238,10 @@ class Response
     /**
      * Set collection class.
      *
-     * @param  mixed  $resource
+     * @param JsonResource $resource
+     * @return Response
      */
-    public function setResource($resource): Response
+    public function setResource(JsonResource $resource): Response
     {
         $this->resource = $resource;
 
