@@ -15,11 +15,11 @@ use Illuminate\Http\Resources\MissingValue;
  * @property string $image_original
  * @property string $image_x96
  * @property string $image_x48
- * @property string image_preview
- * @property string title_en
- * @property string title_ru
- * @property string title_jp
- * @property boolean approved
+ * @property string $image_preview
+ * @property string $title_en
+ * @property string $title_ru
+ * @property string $title_jp
+ * @property boolean $approved
  * @property mixed $title_synonyms
  * @property mixed $type
  * @property mixed $source
@@ -42,6 +42,7 @@ use Illuminate\Http\Resources\MissingValue;
  * @property array $genres
  * @property array $themes
  * @property array $characters
+ * @property mixed $list_status
  */
 class AnimeResource extends JsonResource
 {
@@ -56,7 +57,7 @@ class AnimeResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-    public function toArray($request)
+    public function toArray($request): array|\JsonSerializable|\Illuminate\Contracts\Support\Arrayable
     {
         $aired_from = $this->episodes_from ? Carbon::make($this->episodes_from) : null;
         $aired_to = $this->episodes_to ? Carbon::make($this->episodes_to) : null;

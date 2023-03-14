@@ -4,11 +4,10 @@ namespace App\Services\History;
 
 use App\Contracts\History\History as HistoryContract;
 use App\Models\History as HistoryModel;
-use Illuminate\Database\Eloquent\Model;
 
 class History implements HistoryContract
 {
-    public function add(Model $model, int $user_id, bool $moderate = false)
+    public function add($model, int $user_id, bool $moderate = false)
     {
         $diff = array_diff($model->getRawOriginal(), $model->getAttributes());
 

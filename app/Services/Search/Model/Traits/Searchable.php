@@ -13,7 +13,7 @@ trait Searchable
         }
     }
 
-    public function getSearchIndex()
+    public function getSearchIndex(): string
     {
         return $this->getTable();
     }

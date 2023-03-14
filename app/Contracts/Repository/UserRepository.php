@@ -2,13 +2,15 @@
 
 namespace App\Contracts\Repository;
 
+use App\Models\User;
+
 interface UserRepository
 {
-    public function createOrGetUser(string $name, string $email, string $password, null|string $timestamp = 'Europe/Moscow');
+    public function createOrGetUser(string $name, string $email, string $password, null|string $timestamp = 'Europe/Moscow'): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|array|null;
 
-    public function getByName(string $name);
+    public function getByName(string $name): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|array|null;
 
-    public function getByEmail(string $email);
+    public function getByEmail(string $email): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|array|null;
 
     public function setEmailVerifiedNow(int $user_id);
 
@@ -20,7 +22,7 @@ interface UserRepository
 
     public function updateMinimizedAvatars(int $user_id, string $extension);
 
-    public function getUserProfile(int $id);
+    public function getUserProfile(int $id): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder|array|null;
 
     public function changeUserGroupToUsers(int $days = 2);
 }

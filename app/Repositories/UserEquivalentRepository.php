@@ -15,13 +15,17 @@ class UserEquivalentRepository extends RepositoryEquivalent implements UserRepos
     }
 
     /**
-     * @param  string  $name
-     * @param  string  $email
-     * @param  string  $password
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
+     * @param string $name
+     * @param string $email
+     * @param string $password
+     * @param string|null $timestamp
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|array|null
      */
-    public function createOrGetUser(string $name, string $email, string $password, null|string $timestamp = 'Europe/Moscow'): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
+    public function createOrGetUser(string $name, string $email, string $password, null|string $timestamp = 'Europe/Moscow'): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|array|null
     {
+        /**
+         * @var \App\Models\User UserModel
+         */
         $user = $this
             ->getBuilder()
             ->create([
@@ -37,25 +41,21 @@ class UserEquivalentRepository extends RepositoryEquivalent implements UserRepos
     }
 
     /**
-     * @param  string  $name
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null
+     * @param string $name
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|array|null
      */
-    public function getByName(string $name): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null
+    public function getByName(string $name): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|array|null
     {
-        return $this
-            ->getBuilder()
-            ->firstWhere(['name', '=', $name]);
+        return $this->getBuilder()->firstWhere(['name', '=', $name]);
     }
 
     /**
-     * @param  string  $email
+     * @param string $email
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null
      */
     public function getByEmail(string $email): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null
     {
-        return $this
-            ->getBuilder()
-            ->firstWhere('email', '=', $email);
+        return $this->getBuilder()->firstWhere('email', '=', $email);
     }
 
     public function setEmailVerifiedNow(int $user_id)
@@ -75,8 +75,7 @@ class UserEquivalentRepository extends RepositoryEquivalent implements UserRepos
      */
     public function removeUsersUnconfirmedEmail(int $days = 1)
     {
-        $this
-            ->getBuilder()
+        $this->getBuilder()
             ->where('created_at', '<', now()->subDays($days))
             ->where('email_verified_at', '=', null)
             ->delete();
@@ -102,9 +101,10 @@ class UserEquivalentRepository extends RepositoryEquivalent implements UserRepos
 
     public function updateMinimizedAvatars(int $user_id, string $extension)
     {
-        $user = $this
-            ->getBuilder()
-            ->find($user_id);
+        /**
+         * @var \App\Models\User $user
+         */
+        $user = $this->getBuilder()->find($user_id);
 
         $user->avatar_x32 = '/x32/'.$user->id.'_'.$user->name.'.'.$extension;
         $user->avatar_x64 = '/x64/'.$user->id.'_'.$user->name.'.'.$extension;
@@ -121,10 +121,10 @@ class UserEquivalentRepository extends RepositoryEquivalent implements UserRepos
     /**
      * Смена группы guest у пользователей с датой гергистрации выше days на группу user.
      *
-     * @param  int  $dayAgo
+     * @param int $days
      * @return void
      */
-    public function changeUserGroupToUsers(int $days = 2)
+    public function changeUserGroupToUsers(int $days = 2): void
     {
         $guests = $this->getBuilder()
             ->where('group_id', Group::GUEST_GROUP_ID)

@@ -49,7 +49,7 @@ class AuthThrottle implements AuthThrottleContract
                 /*
                  * Время блокировки подошло к концу.
                  */
-                if ($this->cache->get($key.':TimeOut') + $this->throttle_settings['time_out'] < time()) {
+                if ($this->cache->get($key.':TimeOut') + (int) $this->throttle_settings['time_out'] < time()) {
                     return true;
                 } else {
                     return false;

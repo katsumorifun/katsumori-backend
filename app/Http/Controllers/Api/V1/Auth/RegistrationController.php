@@ -125,6 +125,9 @@ class RegistrationController extends ApiController
      */
     public function callBack(RegistrationRequest $request): \Illuminate\Http\JsonResponse
     {
+        /**
+         * @var \App\Models\User $user
+         */
        $user = app(UserRepository::class)
            ->createOrGetUser(
                $request->get('name'),

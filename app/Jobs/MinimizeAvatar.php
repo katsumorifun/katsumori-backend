@@ -22,7 +22,7 @@ class MinimizeAvatar implements ShouldQueue
      */
     private array $sizes;
     private string $path;
-    private string $user_id;
+    private int $user_id;
     private string $extension;
 
     /**

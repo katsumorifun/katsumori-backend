@@ -7,9 +7,11 @@ use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\AvatarRequest;
 use App\Http\Requests\EditUsersRequest;
 use App\Http\Requests\GetUsersListRequest;
+use App\Models\User;
 use App\Support\Facades\Access;
 use App\Support\Facades\Image;
 use Illuminate\Support\Facades\Auth;
+use OpenApi\Annotations as OA;
 
 class UsersApiController extends ApiController
 {
@@ -89,6 +91,9 @@ class UsersApiController extends ApiController
      */
     public function getById($user_id)
     {
+        /**
+         * @var User $user
+         */
         $user = app(UserRepository::class)->getUserProfile($user_id);
 
         if (empty($user)) {
@@ -177,6 +182,9 @@ class UsersApiController extends ApiController
             return $this->response->noChanges();
         }
 
+        /**
+         * @var User $user
+         */
         $user = app(UserRepository::class)
             ->update($user_id, $request->all(), ['name', 'description', 'gender']);
 
@@ -248,6 +256,9 @@ class UsersApiController extends ApiController
      */
     public function editAuthProfile(EditUsersRequest $request)
     {
+        /**
+         * @var User $user
+         */
         $user = app(UserRepository::class)
             ->update(Auth::user()->id, $request->validationData());
 
@@ -299,6 +310,9 @@ class UsersApiController extends ApiController
      */
     public function uploadAvatar($user_id, AvatarRequest $request)
     {
+        /**
+         * @var User $user
+         */
         $user = app(UserRepository::class)->findById($user_id);
 
         if (empty($user)) {

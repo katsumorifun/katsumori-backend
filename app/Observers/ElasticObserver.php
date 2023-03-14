@@ -3,6 +3,9 @@
 namespace App\Observers;
 
 use Elastic\Elasticsearch\Client;
+use Elastic\Elasticsearch\Exception\ClientResponseException;
+use Elastic\Elasticsearch\Exception\MissingParameterException;
+use Elastic\Elasticsearch\Exception\ServerResponseException;
 use Illuminate\Database\Eloquent\Model;
 
 class ElasticObserver
@@ -14,7 +17,12 @@ class ElasticObserver
         $this->elastic = $elastic;
     }
 
-    protected function updateElastic(Model $model): void
+    /**
+     * @throws \Elastic\Elasticsearch\Exception\ServerResponseException
+     * @throws \Elastic\Elasticsearch\Exception\ClientResponseException
+     * @throws \Elastic\Elasticsearch\Exception\MissingParameterException
+     */
+    protected function updateElastic($model): void
     {
         if ($model->getSearchIndex() === 'anime') {
             $model->with(['genres', 'studios']);
@@ -36,18 +44,26 @@ class ElasticObserver
      */
     public function updated(Model $model): void
     {
-        $this->updateElastic($model);
+        try {
+            $this->updateElastic($model);
+        } catch (ServerResponseException|MissingParameterException|ClientResponseException $e) {
+            $this->logError($e);
+        }
     }
 
     /**
      * Handle the User "updated" event.
      *
-     * @param  Model  $model
+     * @param Model $model
      * @return void
      */
     public function saved(Model $model): void
     {
-        $this->updateElastic($model);
+        try {
+            $this->updateElastic($model);
+        } catch (ServerResponseException|MissingParameterException|ClientResponseException $e) {
+            $this->logError($e);
+        }
     }
 
     /**
@@ -67,5 +83,10 @@ class ElasticObserver
             'type' => $model->getSearchType(),
             'id' => $model->getKey(),
         ]);
+    }
+
+    private function logError(\Exception $e): void
+    {
+        error_log($e.' > '.$e->getMessage(), 0, 'ElasticSearch error');
     }
 }

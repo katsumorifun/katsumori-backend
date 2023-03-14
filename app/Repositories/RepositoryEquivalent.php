@@ -46,12 +46,12 @@ class RepositoryEquivalent
 
     /**
      * @param  string|array  $column
-     * @param  null  $operator
-     * @param  null  $value
+     * @param  string|null  $operator
+     * @param  string|null  $value
      * @param  array  $columns
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Collection|array
      */
-    public function findBy(string|array $column, $operator = null, $value = null, array $columns = ['*'])
+    public function findBy(string|array $column, string|null $operator = null, string|null $value = null, array $columns = ['*']): \Illuminate\Database\Eloquent\Collection|array
     {
         return $this
             ->query()
@@ -60,11 +60,11 @@ class RepositoryEquivalent
     }
 
     /**
-     * @param  int  $id
-     * @param  array  $columns
-     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @param int $id
+     * @param array $columns
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder|array|null
      */
-    public function findById(int $id, array $columns = ['*'])
+    public function findById(int $id, array $columns = ['*']): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder|array|null
     {
         return $this
             ->query()
@@ -75,7 +75,7 @@ class RepositoryEquivalent
      * Обновление информации по id записи.
      *
      * @param  int  $id
-     * @param  array  $data ['field' => 'value', ...], для связей нужно перечислить id через запятую, пример: {'studios' => '1,2,3'}
+     * @param  array<string, string>  $data ['field' => 'value', ...], для связей нужно перечислить id через запятую, пример: {'studios' => '1,2,3'}
      * @param  array  $columns
      * @return false|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
      *
@@ -120,7 +120,7 @@ class RepositoryEquivalent
      * Обновление информации по id записи без сохранения в базу данных.
      *
      * @param  int  $id
-     * @param  array  $data ['field' => 'value', ...]
+     * @param  array<string, string>  $data ['field' => 'value', ...]
      * @param  array  $columns
      * @return false|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      */
@@ -142,7 +142,7 @@ class RepositoryEquivalent
     /**
      * Создание новой записи.
      *
-     * @param  array  $data ['field' => 'value', ...]
+     * @param  array<string, string>  $data ['field' => 'value', ...]
      * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder|null
      *
      * @throws \Exception

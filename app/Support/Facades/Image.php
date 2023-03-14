@@ -6,10 +6,11 @@ use App\Contracts\Resources\Images\Factory\ImageFactory;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \App\Contracts\Resources\Images\Factory\ImageFactory avatar: Image;
- * @method static \App\Contracts\Resources\Images\Factory\ImageFactory poster: Image;
+ * @method static \App\Contracts\Resources\Images\Image avatar()
+ * @method static \App\Contracts\Resources\Images\Image poster()
  *
  * @see \Illuminate\Contracts\Auth\Access\Gate
+ * @mixin ImageFactory
  */
 class Image extends Facade
 {

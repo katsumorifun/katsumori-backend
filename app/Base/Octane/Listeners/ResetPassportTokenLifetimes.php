@@ -14,7 +14,7 @@ class ResetPassportTokenLifetimes implements ListenerInterface
     public function handle($event): void
     {
         Passport::tokensExpireIn(now()->addMonths(6));
-        Passport::refreshTokensExpireIn(now()->addMonth(12));
+        Passport::refreshTokensExpireIn(now()->addMonths(12));
         Passport::personalAccessTokensExpireIn(now()->addMonths(6));
     }
 }

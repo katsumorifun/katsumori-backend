@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \App\Contracts\Access\Roles getRole(Group $role_id): Role
  *
  * @see \Illuminate\Contracts\Auth\Access\Gate
+ * @mixin Roles
  */
 class Access extends Facade
 {

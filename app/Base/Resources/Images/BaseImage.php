@@ -8,7 +8,6 @@ use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Http\UploadedFile;
 use Intervention\Image\Facades\Image;
-use JetBrains\PhpStorm\ArrayShape;
 
 abstract class BaseImage implements \App\Contracts\Resources\Images\Image
 {
@@ -19,9 +18,18 @@ abstract class BaseImage implements \App\Contracts\Resources\Images\Image
 
     protected string $urlsName = '_';
 
-    #[ArrayShape(['image/pjpeg', '...'])]
+    /**
+     * Форматы изображений
+     *
+     * @var  array<string> $mimeTypes - ['image/pjpeg', ...]
+     */
     protected array $mimeTypes = [];
 
+    /**
+     * Размеры изображений
+     *
+     * @var  array<string> $mimeTypes - ['x32', 'x64', ...]
+     */
     protected array $sizes = [];
 
     protected ?int $width = null;

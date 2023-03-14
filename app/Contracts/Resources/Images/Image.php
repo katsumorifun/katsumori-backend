@@ -11,6 +11,5 @@ interface Image
 
     public function get(int $id): array;
 
-    #[ArrayShape(['avatar_original' => 'string', 'x240' => 'string', 'x42' => 'string'])]
     public function getDefault(): array;
 }

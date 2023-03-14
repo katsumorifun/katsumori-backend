@@ -53,12 +53,12 @@ class AnimeEquivalentRepository extends RepositoryEquivalent implements AnimeRep
     /**
      * Метод возвращает список тайтлов + студии, наличие лицензий, жанры, темы и продюсеров (таблица staff).
      *
-     * @param  AnimeFilterDTO|null  $search
-     * @param  int  $perPage
-     * @param  int  $page
+     * @param AnimeFilterDTO|null $filter
+     * @param int $perPage
+     * @param int $page
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getListAndGeneralInfoPaginate(AnimeFilterDTO|null $filter, int $perPage = 12, int $page = 1)
+    public function getListAndGeneralInfoPaginate(AnimeFilterDTO|null $filter, int $perPage = 12, int $page = 1): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
 
         $builder = $this->getBuilder()
@@ -93,7 +93,7 @@ class AnimeEquivalentRepository extends RepositoryEquivalent implements AnimeRep
     {
         return $this->getBuilder()
             ->find($id, ['id'])
-            ->histories
+            ->histories()
             ->where('type', 'history');
     }
 

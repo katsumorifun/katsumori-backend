@@ -102,7 +102,7 @@ return [
 
     'reset_providers' => [
         ...Defaults::providersToReset(),
-        // Laravel\Passport\PassportServiceProvider::class, // Работает, но сильно замедляет проект, поэтому лучше токены ресетить отдельно
+         Laravel\Passport\PassportServiceProvider::class, // Работает, но сильно замедляет проект, поэтому лучше токены ресетить отдельно
         // Illuminate\Auth\AuthServiceProvider::class,             // is not required for Laravel >= v8.35
         // Illuminate\Pagination\PaginationServiceProvider::class, // is not required for Laravel >= v8.35
     ],

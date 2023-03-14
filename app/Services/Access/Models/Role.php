@@ -3,7 +3,6 @@
 namespace App\Services\Access\Models;
 
 use App\Services\Access\AccessException;
-use JetBrains\PhpStorm\ArrayShape;
 
 class Role
 {
@@ -53,7 +52,6 @@ class Role
         return $this->permissions;
     }
 
-    #[ArrayShape(['id' => 'int', 'name_en' => 'string', 'name_ru' => 'string', 'permissions' => 'array'])]
     public function getToArray(): array
     {
         $permissions = [];

@@ -4,13 +4,13 @@ namespace App\Services\Access;
 
 use App\Services\Access\Models\Role;
 
-class RolesBuilder
+final class RolesBuilder
 {
     private array $roles = [];
 
-    public static function create()
+    public static function create(): RolesBuilder
     {
-        return new static();
+        return new RolesBuilder();
     }
 
     /**
