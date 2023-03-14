@@ -24,11 +24,11 @@ class GeoIpProvider implements IpProvider
     /**
      * Get the Guzzle request.
      *
-     * @return GuzzleRequest
+     * @return \GuzzleHttp\Psr7\Request
      */
-    public function getRequest()
+    public function getRequest(): GuzzleRequest
     {
-        return request();
+        return new GuzzleRequest('GET', '/');
     }
 
     /**
@@ -36,7 +36,7 @@ class GeoIpProvider implements IpProvider
      *
      * @return string
      */
-    public function getCountry()
+    public function getCountry(): string
     {
         return $this->result->country;
     }
@@ -46,7 +46,7 @@ class GeoIpProvider implements IpProvider
      *
      * @return string
      */
-    public function getRegion()
+    public function getRegion(): string
     {
         return $this->result->country;
     }
@@ -56,7 +56,7 @@ class GeoIpProvider implements IpProvider
      *
      * @return string
      */
-    public function getCity()
+    public function getCity(): string
     {
         return $this->result->city;
     }
