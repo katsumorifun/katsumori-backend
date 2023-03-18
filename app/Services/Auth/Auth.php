@@ -4,9 +4,9 @@ namespace App\Services\Auth;
 
 use App\Contracts\Auth\Auth as AuthContract;
 use App\Contracts\Guard\AuthThrottle;
-use App\Exceptions\OperationError;
+use App\Exceptions\AuthException;
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Http;
 use Laravel\Passport\RefreshTokenRepository;
 use Laravel\Passport\TokenRepository;
 
@@ -14,10 +14,6 @@ class Auth implements AuthContract
 {
     protected TokenRepository $token_repository;
     protected RefreshTokenRepository $refresh_token_repository;
-    protected string $refresh_token;
-    protected string $access_token;
-    protected string $expires_in;
-    protected string $token_type;
     protected AuthThrottle $auth_throttle;
 
     public function __construct(Application $app)
@@ -28,21 +24,24 @@ class Auth implements AuthContract
     }
 
     /**
-     * @throws OperationError
+     * @throws AuthException
      */
-    public function attempt(string $email, string $password)
+    public function attempt(string $email, string $password): array
     {
         if(! $this->auth_throttle->check()) {
-            throw new OperationError(__('auth.throttle', ['seconds' => $this->getThrottleTimeOut()]));
+            throw new AuthException(__('auth.throttle', ['seconds' => $this->getThrottleTimeOut()]));
         }
 
-        $this->login($email, $password);
+        return $this->login($email, $password);
     }
 
     /**
-     * @throws OperationError
+     * @param string $email
+     * @param string $password
+     * @return array
+     * @throws AuthException
      */
-    public function login(string $email, string $password)
+    protected function login(string $email, string $password): array
     {
         $data = [
             'grant_type'    => 'password',
@@ -53,27 +52,19 @@ class Auth implements AuthContract
             'scope'         => '*',
         ];
 
-        try {
-            $data = $this->oauthToken($data);
-
-            $this->refresh_token = $data->refresh_token;
-            $this->access_token = $data->access_token;
-            $this->expires_in = $data->expires_in;
-            $this->token_type = $data->token_type;
-
-        } catch (\ErrorException|\Exception $ex) {
-            $this->auth_throttle->addFailCount();
-            throw new OperationError(__('auth.password'));
-        }
+        return $this->oauthToken($data);
     }
 
-    public function updateAccessToken(string $refreshToken)
+    /**
+     * @throws AuthException
+     */
+    public function updateAccessToken(string $refreshToken): array
     {
         $data = [
             'grant_type'    => 'refresh_token',
             'refresh_token' => $refreshToken,
             'client_id'     => config('auth.passport.password_grant_client_id'),
-            'client_secret' => config('auth.passport.password_grant_client_id'),
+            'client_secret' => config('auth.passport.password_grant_client_secret'),
             'scope'         => '',
         ];
 
@@ -86,64 +77,29 @@ class Auth implements AuthContract
         $this->refresh_token_repository->revokeRefreshTokensByAccessTokenId($token_id);
     }
 
-    /**
-     * @return string
-     */
-    public function getRefreshToken(): string
-    {
-        return $this->refresh_token;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAccessToken(): string
-    {
-        return $this->access_token;
-    }
-
-    /**
-     * @return string
-     */
-    public function getExpiresIn(): string
-    {
-        return $this->expires_in;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTokenType(): string
-    {
-        return $this->token_type;
-    }
-
     private function getThrottleTimeOut(): int
     {
         return $this->auth_throttle->getTimeOut();
     }
 
-    public function getData(): array
+    /**
+     * @throws AuthException
+     */
+    protected function oauthToken(array $data): array
     {
-        return [
-            'expires_in'  => $this->expires_in,
-            'token_type'  => $this->token_type,
-            'access_token'  => $this->access_token,
-            'refresh_token' => $this->refresh_token,
-        ];
-    }
+        $response = Http::post(config('app.url') . '/oauth/token', $data);
 
-    protected function oauthToken(array $data)
-    {
-        $request = Request::create(
-            '/oauth/token',
-            'POST',
-            $data,
-            [],
-            [],
-            ['HTTP_USER_AGENT' => config('app.name')],
-        );
+        $data = $response->json();
 
-        return json_decode(app()->handle($request)->getContent());
+        if ($response->status() == 400) {
+            $this->auth_throttle->addFailCount();
+            throw new AuthException(__('auth.password'));
+        }
+
+        if ($response->status() == 401) {
+            throw new AuthException(__('auth.token'));
+        }
+
+        return $data;
     }
 }

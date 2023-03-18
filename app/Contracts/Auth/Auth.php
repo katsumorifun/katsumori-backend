@@ -2,25 +2,28 @@
 
 namespace App\Contracts\Auth;
 
-use App\Exceptions\OperationError;
+use App\Exceptions\AuthException;
 
 interface Auth
 {
     /**
      * Попытка авторизаваться.
      *
-     * @throws OperationError
+     * @throws AuthException
      */
-    public function attempt(string $email, string $password);
+    public function attempt(string $email, string $password): array;
 
     /**
-     * @throws OperationError
+     * Обновлление токена доступа.
+     *
+     * @throws AuthException
      */
-    public function login(string $email, string $password);
+    public function updateAccessToken(string $refreshToken): array;
 
-    public function getData(): array;
-
-    public function updateAccessToken(string $refreshToken);
-
+    /**
+     * Отзыв токенов.
+     *
+     * @throws AuthException
+     */
     public function revokeTokens(string $token_id);
 }

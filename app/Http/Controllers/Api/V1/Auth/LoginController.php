@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Api\V1\Auth;
 
 use App\Contracts\Repository\UserRepository;
-use App\Exceptions\OperationError;
+use App\Exceptions\AuthException;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UpdateTokens;
+use App\Models\User;
 use App\Notifications\NotifyLogin;
 
 class LoginController extends ApiController
@@ -89,11 +90,14 @@ class LoginController extends ApiController
      *
      * )
      */
-    public function login(LoginRequest $request)
+    public function login(LoginRequest $request): \Illuminate\Http\JsonResponse
     {
+        /**
+         * @var User $user
+         */
         $user = app(UserRepository::class)->getByEmail($request->get('email'));
 
-        if (empty($user)) {
+        if (is_null($user)) {
             return $this->response->withNotFound('user');
         }
 
@@ -103,7 +107,8 @@ class LoginController extends ApiController
              * @var \App\Contracts\Auth\Auth $auth
              */
             $auth = app('app.auth');
-            $auth->attempt($request->get('email'), $request->get('password'));
+
+            $data = $auth->attempt($request->get('email'), $request->get('password'));
 
             $geo_ip = geoip($request->getClientIp());
 
@@ -117,9 +122,9 @@ class LoginController extends ApiController
 
             return $this
                 ->response
-                ->json(['tokens' => $auth->getData(), 'user' => $user]);
+                ->json(['tokens' => $data, 'user' => $user]);
 
-        } catch (OperationError $e) {
+        } catch (AuthException $e) {
             return $this->response->withError($e->getMessage());
         }
     }
@@ -154,18 +159,18 @@ class LoginController extends ApiController
      *
      * )
      */
-    public function updateTokens(UpdateTokens $request)
+    public function updateTokens(UpdateTokens $request): \Illuminate\Http\JsonResponse
     {
         /**
          * @var \App\Contracts\Auth\Auth $auth
          */
         $auth = app('app.auth');
-        $data = $auth->updateAccessToken($request->get('refresh_token'));
+        try {
+            $data = $auth->updateAccessToken($request->get('refresh_token'));
+            return $this->response->json($data);
 
-        if (isset($data->error)) {
-            return $this->response->withError($data->message);
+        } catch (AuthException $e) {
+            return $this->response->withError($e->getMessage());
         }
-
-        return $this->response->json(['tokens' => $data]);
     }
 }
