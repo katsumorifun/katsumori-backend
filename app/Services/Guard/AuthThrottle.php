@@ -29,9 +29,14 @@ class AuthThrottle implements AuthThrottleContract
         $this->throttle_settings = config('auth.throttle');
     }
 
+    /**
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
     public function check(): bool
     {
-        if(\App::environment() == 'testing') {
+        if(app()->environment() == 'testing') {
             return true;
         }
 
@@ -62,6 +67,9 @@ class AuthThrottle implements AuthThrottleContract
         return true;
     }
 
+    /**
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
     public function addFailCount()
     {
         $key = $this->getKey();
@@ -76,6 +84,11 @@ class AuthThrottle implements AuthThrottleContract
         }
     }
 
+    /**
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
     public function getTimeOut(): int
     {
         $key = $this->getKey();

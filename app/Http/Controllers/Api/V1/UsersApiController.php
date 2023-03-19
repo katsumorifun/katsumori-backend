@@ -96,7 +96,7 @@ class UsersApiController extends ApiController
          */
         $user = app(UserRepository::class)->getUserProfile($user_id);
 
-        if (empty($user)) {
+        if (is_null($user)) {
             return $this->response->withNotFound('user');
         }
 
@@ -188,7 +188,7 @@ class UsersApiController extends ApiController
         $user = app(UserRepository::class)
             ->update($user_id, $request->all(), ['name', 'description', 'gender']);
 
-        if (! $user) {
+        if (is_null($user)) {
             return $this->response->withNotFound('user');
         }
 
@@ -315,7 +315,7 @@ class UsersApiController extends ApiController
          */
         $user = app(UserRepository::class)->findById($user_id);
 
-        if (empty($user)) {
+        if (is_null($user)) {
             return $this->response->withNotFound('user');
         }
 
