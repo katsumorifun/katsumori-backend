@@ -8,14 +8,19 @@ use Illuminate\Http\Request;
 class AuthThrottle implements AuthThrottleContract
 {
     /**
-     * Настройки тротлинга.
-     */
-    protected array $throttle_settings;
-
-    /**
      * Кеш.
      */
     protected \Illuminate\Contracts\Cache\Repository $cache;
+
+    /**
+     * Время тротлинга.
+     */
+    protected int $timeOut = 60 * 25;
+
+    /**
+     * Кол-во попыток.
+     */
+    protected int $attempt_count = 10;
 
     /**
      * Request.
@@ -26,7 +31,6 @@ class AuthThrottle implements AuthThrottleContract
     {
         $this->request = $request;
         $this->cache = app('cache.store');
-        $this->throttle_settings = config('auth.throttle');
     }
 
     /**
@@ -36,10 +40,6 @@ class AuthThrottle implements AuthThrottleContract
      */
     public function check(): bool
     {
-        if(app()->environment() == 'testing') {
-            return true;
-        }
-
         $key = $this->getKey();
 
         if ($this->cache->has($key)) {
@@ -47,14 +47,14 @@ class AuthThrottle implements AuthThrottleContract
             /*
              * Количество неудачных попыток аутентификации не превышает заданное количество.
              */
-            if ($this->cache->get($key) < $this->throttle_settings['attempt_count']) {
+            if ($this->cache->get($key) < $this->attempt_count) {
                 return true;
             } else {
 
                 /*
                  * Время блокировки подошло к концу.
                  */
-                if ($this->cache->get($key.':TimeOut') + (int) $this->throttle_settings['time_out'] < time()) {
+                if ($this->cache->get($key.':TimeOut') + (int) $this->timeOut < time()) {
                     return true;
                 } else {
                     return false;
@@ -79,8 +79,8 @@ class AuthThrottle implements AuthThrottleContract
             $this->cache->increment($key);
 
         } else {
-            $this->cache->put($key, 1, $this->throttle_settings['time_out']);
-            $this->cache->put($key.':TimeOut', time(), $this->throttle_settings['time_out']);
+            $this->cache->put($key, 1, $this->timeOut);
+            $this->cache->put($key.':TimeOut', time(), $this->timeOut);
         }
     }
 
@@ -94,7 +94,7 @@ class AuthThrottle implements AuthThrottleContract
         $key = $this->getKey();
 
         if ($this->cache->has($key)) {
-            return $this->cache->get($key.':TimeOut') + $this->throttle_settings['time_out'] - time();
+            return $this->cache->get($key.':TimeOut') + $this->timeOut - time();
         } else {
             return 0;
         }
@@ -107,5 +107,21 @@ class AuthThrottle implements AuthThrottleContract
     protected function getKey(): string
     {
         return 'AuthThrottle:'.$this->request->ip();
+    }
+
+    /**
+     * @param int $timeOut
+     */
+    public function setTimeOut(int $timeOut)
+    {
+        $this->timeOut = $timeOut;
+    }
+
+    /**
+     * @param int $attempt_count
+     */
+    public function setAttemptCount(int $attempt_count)
+    {
+        $this->attempt_count = $attempt_count;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\Guard\AuthThrottle;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,8 +15,8 @@ class GuardServiceProvider extends ServiceProvider implements DeferrableProvider
      */
     public function register()
     {
-        $this->app->bind(\App\Contracts\Guard\AuthThrottle::class, \App\Services\Guard\AuthThrottle::class);
-        $this->app->singleton(\App\Contracts\Guard\AuthThrottle::class, \App\Services\Guard\AuthThrottle::class);
+        $this->bindAuthThrottle();
+
         $this->app->alias(\App\Contracts\Guard\AuthThrottle::class, 'app.auth_throttle');
     }
 
@@ -35,5 +36,16 @@ class GuardServiceProvider extends ServiceProvider implements DeferrableProvider
             'app.guard.auth_throttle',
             'App\Contracts\Guard\AuthThrottle',
         ];
+    }
+
+    private function bindAuthThrottle()
+    {
+        $this->app->bind(\App\Contracts\Guard\AuthThrottle::class, function ($app) {
+            $throttle = new AuthThrottle($app->request);
+            $throttle->setAttemptCount(config('auth.throttle.attempt_count'));
+            $throttle->setTimeOut(config('auth.throttle.time_out'));
+
+            return $throttle;
+        });
     }
 }
