@@ -21,7 +21,8 @@ shell: ## Start shell into app container
 
 init: ## Make full application initialization
 	docker-compose run $(DC_RUN_ARGS) app php ./artisan migrate --force --seed
-	docker-compose run $(DC_RUN_ARGS) app php ./artisan passport:install --force
+	docker-compose run $(DC_RUN_ARGS) app php ./artisan passport:init
+	docker-compose run $(DC_RUN_ARGS) app php ./artisan cache:clear
 	-docker-compose run $(DC_RUN_ARGS) --no-deps app php ./artisan storage:link
 
 test: ## Execute app tests
