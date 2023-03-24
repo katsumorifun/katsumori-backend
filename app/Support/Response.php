@@ -2,24 +2,25 @@
 
 namespace App\Support;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection as Collection;
 use Illuminate\Routing\ResponseFactory;
-use Symfony\Component\HttpFoundation\Response as HttpResponse;
+use Illuminate\Http\Response as HttpResponse;
 
 class Response
 {
     /**
      * Http response.
      *
-     * @var \Illuminate\Contracts\Routing\ResponseFactory
+     * @var ResponseFactory
      */
-    private \Illuminate\Contracts\Routing\ResponseFactory|ResponseFactory $response;
+    private ResponseFactory $response;
 
     /**
      * Collection.
      */
-    private JsonResource|null $resource;
+    private null|string|JsonResource $resource;
 
     /**
      * Http status code.
@@ -43,11 +44,11 @@ class Response
     /**
      * Return json.
      *
-     * @param array<string>|array<Collection> $data
+     * @param array<string>|array<Collection>|Collection|JsonResource $data
      * @param array<string> $headers
      * @return \Illuminate\Http\JsonResponse
      */
-    public function json(array $data = [], array $headers = []): \Illuminate\Http\JsonResponse
+    public function json(array|Collection|JsonResource $data = [], array $headers = []): \Illuminate\Http\JsonResponse
     {
         return $this->response->json($data, $this->statusCode, $headers);
     }
@@ -64,10 +65,10 @@ class Response
     }
 
     /**
-     * @param JsonResource|null $resource
+     * @param string|null $resource
      * @return \Illuminate\Http\JsonResponse
      */
-    public function withCreated(JsonResource $resource = null): \Illuminate\Http\JsonResponse
+    public function withCreated(null|string $resource = null): \Illuminate\Http\JsonResponse
     {
         $this->statusCode = HttpResponse::HTTP_CREATED;
 
@@ -138,10 +139,10 @@ class Response
     /**
      * Make a JSON response with the transformed items.
      *
-     * @param array<string> $data
+     * @param Model $data
      * @return \Illuminate\Http\JsonResponse
      */
-    public function withItem(array $data): \Illuminate\Http\JsonResponse
+    public function withItem(Model $data): \Illuminate\Http\JsonResponse
     {
         return $this->json(new $this->resource($data));
     }
@@ -238,10 +239,10 @@ class Response
     /**
      * Set collection class.
      *
-     * @param JsonResource $resource
+     * @param string $resource
      * @return Response
      */
-    public function setResource(JsonResource $resource): Response
+    public function setResource(string $resource): Response
     {
         $this->resource = $resource;
 

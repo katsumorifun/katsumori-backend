@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Support\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class ApiController extends Controller
 {
     use Swagger;
 
     protected Response $response;
-    protected $resource;
+    protected null|string $resource = null;
 
     public function __construct()
     {
