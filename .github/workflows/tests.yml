@@ -59,8 +59,8 @@ jobs: # Docs: <https://help.github.com/en/articles/workflow-syntax-for-github-ac
       - name: Run php-cs-fixer
         run: composer check-style
 
-  phpunit:
-    name: Run PHPUnit tests
+  tests:
+    name: Run PHPUnit/Feature tests
     runs-on: ubuntu-20.04
     timeout-minutes: 5
 
@@ -109,8 +109,8 @@ jobs: # Docs: <https://help.github.com/en/articles/workflow-syntax-for-github-ac
           php artisan passport:init
           php artisan cache:clear
 
-      - name: Run PHPUnit
-        run: composer phpunit
+      - name: Run PHPUnit/Feature tests
+        run: php artisan test
 
   phpstan:
     name: Run PHPStan (Static Analysis Tool)
@@ -145,7 +145,7 @@ jobs: # Docs: <https://help.github.com/en/articles/workflow-syntax-for-github-ac
   docker-image:
     name: Build docker image
     runs-on: ubuntu-20.04
-    needs: [phpunit, phpstan]
+    needs: [tests, phpstan]
     timeout-minutes: 10
     steps:
       - name: Check out code
