@@ -167,6 +167,7 @@ class LoginController extends ApiController
         $auth = app('app.auth');
         try {
             $data = $auth->updateAccessToken($request->get('refresh_token'));
+
             return $this->response->json($data);
 
         } catch (AuthException $e) {

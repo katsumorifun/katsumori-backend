@@ -3,7 +3,6 @@
 namespace App\Contracts\Resources\Images;
 
 use Illuminate\Http\UploadedFile;
-use JetBrains\PhpStorm\ArrayShape;
 
 interface Image
 {

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * App\Models\Anime
+ * App\Models\Anime.
  *
  * @property int $id
  * @property \Illuminate\Support\Carbon|null $created_at

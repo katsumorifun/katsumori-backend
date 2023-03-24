@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * App\Models\Studio
+ * App\Models\Studio.
  *
  * @property int $id
  * @property string $name

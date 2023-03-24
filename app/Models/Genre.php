@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * App\Models\Genre
+ * App\Models\Genre.
  *
  * @property int $id
  * @property string $name_jp

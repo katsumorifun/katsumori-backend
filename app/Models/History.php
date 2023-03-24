@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * App\Models\History
+ * App\Models\History.
  *
  * @property int $id
  * @property array $old_data

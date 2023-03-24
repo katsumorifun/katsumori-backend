@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Models\OAuth\ClientInfo
+ * App\Models\OAuth\ClientInfo.
  *
  * @property int $id
  * @property int $client_id

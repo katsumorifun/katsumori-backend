@@ -5,8 +5,8 @@ namespace App\Support;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection as Collection;
-use Illuminate\Routing\ResponseFactory;
 use Illuminate\Http\Response as HttpResponse;
+use Illuminate\Routing\ResponseFactory;
 
 class Response
 {

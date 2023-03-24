@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Support\Response;
-use Illuminate\Http\Resources\Json\JsonResource;
 
 class ApiController extends Controller
 {

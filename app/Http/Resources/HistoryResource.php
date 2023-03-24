@@ -11,7 +11,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $updated_at
  * @property array $old_data
  * @property array $new_data
- * @property boolean $rejected
+ * @property bool $rejected
  * @property User $user
  * @property bool $moderator
  */

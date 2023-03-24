@@ -2,8 +2,6 @@
 
 namespace App\Contracts\Repository;
 
-use App\Models\User;
-
 interface UserRepository
 {
     public function createOrGetUser(string $name, string $email, string $password, null|string $timestamp = 'Europe/Moscow'): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|array|null;

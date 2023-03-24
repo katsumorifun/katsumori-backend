@@ -19,14 +19,14 @@ use Illuminate\Http\Resources\MissingValue;
  * @property string $title_en
  * @property string $title_ru
  * @property string $title_jp
- * @property boolean $approved
+ * @property bool $approved
  * @property mixed $title_synonyms
  * @property mixed $type
  * @property mixed $source
  * @property mixed $episodes
  * @property mixed $episodes_aired
  * @property string $status
- * @property boolean $airing
+ * @property bool $airing
  * @property mixed $duration
  * @property string $age_rating
  * @property float $mal_score

@@ -20,7 +20,6 @@ class PassportInitCommand extends Command
      */
     protected $description = 'Passport install and create web client';
 
-
     public function handle()
     {
         $this->call('passport:install');
@@ -28,7 +27,7 @@ class PassportInitCommand extends Command
         $clientRepo = app('Laravel\Passport\ClientRepository');
         $client = $clientRepo->createPasswordGrantClient(
             null,
-            config('app.name') . ' Password Web Grant Client',
+            config('app.name').' Password Web Grant Client',
             'http://localhost',
             'users'
         );

@@ -120,7 +120,6 @@ class AuthThrottleTest extends TestCase
             ->method('put')
             ->willReturn(false);
 
-
         $this->authThrottle->addFailCount();
     }
 
@@ -166,5 +165,4 @@ class AuthThrottleTest extends TestCase
 
         $this->authThrottle->getTimeOut();
     }
-
 }

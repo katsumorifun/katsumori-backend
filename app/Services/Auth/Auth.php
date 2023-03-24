@@ -87,7 +87,7 @@ class Auth implements AuthContract
      */
     protected function oauthToken(array $data): array
     {
-        $response = Http::post(config('app.url') . '/oauth/token', $data);
+        $response = Http::post(config('app.url').'/oauth/token', $data);
 
         $data = $response->json();
 

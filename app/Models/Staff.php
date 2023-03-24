@@ -6,7 +6,7 @@ use App\Models\Traits\HasTimezone;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * App\Models\Staff
+ * App\Models\Staff.
  *
  * @property int $id
  * @property \Illuminate\Support\Carbon|null $created_at

@@ -19,16 +19,16 @@ abstract class BaseImage implements \App\Contracts\Resources\Images\Image
     protected string $urlsName = '_';
 
     /**
-     * Форматы изображений
+     * Форматы изображений.
      *
-     * @var  array<string> $mimeTypes - ['image/pjpeg', ...]
+     * @var  array<string> - ['image/pjpeg', ...]
      */
     protected array $mimeTypes = [];
 
     /**
-     * Размеры изображений
+     * Размеры изображений.
      *
-     * @var  array<string> $mimeTypes - ['x32', 'x64', ...]
+     * @var  array<string> - ['x32', 'x64', ...]
      */
     protected array $sizes = [];
 

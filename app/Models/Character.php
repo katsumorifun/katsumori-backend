@@ -6,7 +6,7 @@ use App\Models\Traits\HasTimezone;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * App\Models\Character
+ * App\Models\Character.
  *
  * @property int $id
  * @property int|null $mal_id
