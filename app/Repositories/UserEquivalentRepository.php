@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Contracts\Repository\UserRepository;
+use App\Models\User;
 use App\Models\User as UserModel;
 use App\Support\Enums\Group;
 use Carbon\Carbon;
@@ -60,6 +61,7 @@ class UserEquivalentRepository extends RepositoryEquivalent implements UserRepos
 
     public function setEmailVerifiedNow(int $user_id)
     {
+        /** @var User $user */
         $user = $this
             ->getBuilder()
             ->find($user_id);
@@ -92,6 +94,7 @@ class UserEquivalentRepository extends RepositoryEquivalent implements UserRepos
 
     public function getCustomAvatarStatus($user_id): bool
     {
+        /** @var User $user */
         $user = $this
             ->getBuilder()
             ->find($user_id, ['id', 'custom_avatar']);
@@ -130,7 +133,7 @@ class UserEquivalentRepository extends RepositoryEquivalent implements UserRepos
             ->where('group_id', Group::GUEST_GROUP_ID)
             ->get();
 
-        $guests->each(function ($user) use ($days) {
+        $guests->each(function (User $user) use ($days) {
             if ($user->hasVerifiedEmail()) {
                 $dayToCheck = Carbon::parse($user->created_at)->addDays($days);
 

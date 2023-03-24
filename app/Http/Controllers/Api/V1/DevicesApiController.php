@@ -50,7 +50,7 @@ class DevicesApiController extends ApiController
      */
     public function listDevices()
     {
-        return Auth::user()->logins;
+        return Auth::user()->logins();
     }
 
     /**
