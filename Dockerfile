@@ -28,9 +28,19 @@ ENV COMPOSER_HOME="/tmp/composer"
 RUN set -x \
     # install permanent dependencies
     && apk add --no-cache \
+        gd \
+        freetype \
+        libpng \
+        libwebp \
+        libjpeg-turbo\
         icu-libs \
     # install build-time dependencies
     && apk add --no-cache --virtual .build-deps \
+        zlib-dev \
+        freetype-dev \
+        libpng-dev \
+        libwebp-dev \
+        libjpeg-turbo-dev\
         postgresql-dev \
         linux-headers \
         autoconf \
@@ -38,7 +48,9 @@ RUN set -x \
         make \
         g++ \
     # install PHP extensions (CFLAGS usage reason - https://bit.ly/3ALS5NU)
+    && docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp \
     && CFLAGS="$CFLAGS -D_GNU_SOURCE" docker-php-ext-install -j$(nproc) \
+        gd \
         pdo_mysql \
         sockets \
         opcache \

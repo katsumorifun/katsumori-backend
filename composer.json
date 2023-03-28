@@ -72,8 +72,7 @@
     "extra": {
         "laravel": {
             "dont-discover": [
-              "laravel/telescope",
-              "barryvdh/laravel-ide-helper"
+              "laravel/telescope"
             ]
         }
     },
