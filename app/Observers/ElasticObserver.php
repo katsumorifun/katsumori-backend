@@ -78,7 +78,7 @@ class ElasticObserver
      */
     public function deleted($model): void
     {
-        $this->elasticsearch->delete([
+        $this->elastic->delete([
             'index' => $model->getSearchIndex(),
             'type' => $model->getSearchType(),
             'id' => $model->getKey(),
