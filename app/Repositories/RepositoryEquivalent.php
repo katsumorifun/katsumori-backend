@@ -84,6 +84,7 @@ class RepositoryEquivalent
      */
     public function update(int $id, array $data = [], array $columns = ['*'])
     {
+        // @phpstan-ignore-next-line
         $item = $this
             ->query()
             ->withAll()

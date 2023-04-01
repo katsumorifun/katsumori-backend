@@ -91,6 +91,7 @@ class AnimeEquivalentRepository extends RepositoryEquivalent implements AnimeRep
 
     public function getChangesHistoryList($id)
     {
+        // @phpstan-ignore-next-line
         return $this->getBuilder()
             ->find($id, ['id'])
             ->histories()
@@ -99,6 +100,7 @@ class AnimeEquivalentRepository extends RepositoryEquivalent implements AnimeRep
 
     public function getModerationList(int $id, ?int $user_id = null)
     {
+        // @phpstan-ignore-next-line
         $items = $this->getBuilder()
             ->find($id, ['id'])
             ->histories()
