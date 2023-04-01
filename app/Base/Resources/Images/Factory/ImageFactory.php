@@ -4,10 +4,10 @@ namespace App\Base\Resources\Images\Factory;
 
 use App\Base\Resources\Images\Avatar;
 use App\Base\Resources\Images\Poster;
+use App\Contracts\Resources\Images\Factory\ImageFactory as ImageFactoryContract;
 use App\Contracts\Resources\Images\Image;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Filesystem\FilesystemManager;
-use \App\Contracts\Resources\Images\Factory\ImageFactory as ImageFactoryContract;
 
 class ImageFactory implements ImageFactoryContract
 {

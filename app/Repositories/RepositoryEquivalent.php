@@ -65,7 +65,7 @@ class RepositoryEquivalent
      * @param array $columns
      * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder|array|null
      */
-    public function findById(int $id, array $columns = ['*']): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder|array|null
+    public function findById(int $id, array $columns = ['*']): Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder|array|null
     {
         return $this
             ->query()
@@ -126,7 +126,7 @@ class RepositoryEquivalent
      * @param  array  $columns
      * @return false|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      */
-    public function updateWithoutSaving(int $id, array $data = [], array $columns = ['*']): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|bool|\Illuminate\Database\Eloquent\Builder|array
+    public function updateWithoutSaving(int $id, array $data = [], array $columns = ['*']): Model|\Illuminate\Database\Eloquent\Collection|bool|\Illuminate\Database\Eloquent\Builder|array
     {
         $item = $this
             ->query()
@@ -149,7 +149,7 @@ class RepositoryEquivalent
      *
      * @throws \Exception
      */
-    public function create(array $data = []): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder|null
+    public function create(array $data = []): Model|\Illuminate\Database\Eloquent\Builder|null
     {
         return $this->query()->create(array_diff($data, ['', ' ']));
     }

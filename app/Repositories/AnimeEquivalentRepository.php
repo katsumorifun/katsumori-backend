@@ -77,6 +77,11 @@ class AnimeEquivalentRepository extends RepositoryEquivalent implements AnimeRep
         return $builder->paginate($perPage, ['*'], 'page', $page);
     }
 
+    /**
+     * Метод возвращает список тайтлов со всеми связями.
+     *
+     * @param int $id
+     */
     public function getItemWithRelations($id)
     {
         return $this->getBuilder()
