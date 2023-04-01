@@ -24,8 +24,7 @@ Route::prefix('auth')->group(function () {
 
 Route::get('/email/verify/{user_id}/{hash}', [\App\Http\Controllers\Auth\VerifyEmail::class, 'check'])->name('verification.verify');
 
-
-/**
+/*
  * @internal   Just for a test
  * @deprecated Remove this routes group
  */
