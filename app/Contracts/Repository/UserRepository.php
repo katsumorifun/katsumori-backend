@@ -18,8 +18,6 @@ interface UserRepository
 
     public function getCustomAvatarStatus($user_id): bool;
 
-    public function updateMinimizedAvatars(int $user_id, string $extension);
-
     public function getUserProfile(int $id): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder|array|null;
 
     public function changeUserGroupToUsers(int $days = 2);

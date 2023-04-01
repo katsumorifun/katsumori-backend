@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 
 class RepositoryEquivalent
@@ -9,9 +10,9 @@ class RepositoryEquivalent
     /**
      * Eloquent model.
      *
-     * @var string model class eloquent
+     * @var string|Model model class eloquent
      */
-    protected string $model;
+    protected string|Model $model;
 
     protected function query(): \Illuminate\Database\Eloquent\Builder
     {

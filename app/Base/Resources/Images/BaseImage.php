@@ -28,7 +28,7 @@ abstract class BaseImage implements \App\Contracts\Resources\Images\Image
     /**
      * Размеры изображений.
      *
-     * @var  array<string> - ['x32', 'x64', ...]
+     * @var  array<string, array<string, int>> - ['x32', 'x64', ...]
      */
     protected array $sizes = [];
 
@@ -79,8 +79,9 @@ abstract class BaseImage implements \App\Contracts\Resources\Images\Image
 
         $this->disk->put('original/'.$name, $img->__toString());
 
+        /** @var array $params */
         foreach ($this->sizes as $size => $params) {
-            $this->disk->put($size.'/'.$name, $img->resize($params['width'], $params['height'])->__toString());
+            $this->disk->put($size.'/'.$name, $img->resize((int) $params['width'], (int) $params['height'])->__toString());
         }
 
         return $this->getUrls($user_id);
@@ -97,7 +98,7 @@ abstract class BaseImage implements \App\Contracts\Resources\Images\Image
 
     protected function checkDefault(int $id): bool
     {
-     return true;
+        return true;
     }
 
     private function getUrls(int $user_id): array

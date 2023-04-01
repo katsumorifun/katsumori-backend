@@ -7,8 +7,9 @@ use App\Base\Resources\Images\Poster;
 use App\Contracts\Resources\Images\Image;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Filesystem\FilesystemManager;
+use \App\Contracts\Resources\Images\Factory\ImageFactory as ImageFactoryContract;
 
-class ImageFactory implements \App\Contracts\Resources\Images\Factory\ImageFactory
+class ImageFactory implements ImageFactoryContract
 {
     private AuthManager $auth;
     private FilesystemManager $filesystem_manager;

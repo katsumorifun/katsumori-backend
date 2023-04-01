@@ -10,6 +10,7 @@ class Avatar extends BaseImage implements Image
     protected string $diskName = 'avatars';
     protected string $urlsName = 'avatar';
 
+    
     protected array $mimeTypes = [
         'image/pjpeg',
         'image/jpeg',
@@ -17,6 +18,11 @@ class Avatar extends BaseImage implements Image
         'image/png',
     ];
 
+    /**
+     * Размеры изображений.
+     *
+     * @var  array<string, array<string, int>> - ['x32', 'x64', ...]
+     */
     protected array $sizes = [
         'x240' => [
             'width' => 240,

@@ -102,20 +102,6 @@ class UserEquivalentRepository extends RepositoryEquivalent implements UserRepos
         return $user->custom_avatar;
     }
 
-    public function updateMinimizedAvatars(int $user_id, string $extension)
-    {
-        /**
-         * @var \App\Models\User $user
-         */
-        $user = $this->getBuilder()->find($user_id);
-
-        $user->avatar_x32 = '/x32/'.$user->id.'_'.$user->name.'.'.$extension;
-        $user->avatar_x64 = '/x64/'.$user->id.'_'.$user->name.'.'.$extension;
-        $user->avatar_x128 = '/x128/'.$user->id.'_'.$user->name.'.'.$extension;
-
-        $user->update();
-    }
-
     public function getUserProfile(int $id): \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder|array|null
     {
         return $this->getBuilder()->find($id);

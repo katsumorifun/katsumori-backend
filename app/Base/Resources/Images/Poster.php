@@ -16,6 +16,11 @@ class Poster extends BaseImage implements ImageContract
         'image/png',
     ];
 
+    /**
+     * Размеры изображений.
+     *
+     * @var  array<string, array<string, int>> - ['x32', 'x64', ...]
+     */
     protected array $sizes = [
         'x96' => [
             'width'  => 96,
