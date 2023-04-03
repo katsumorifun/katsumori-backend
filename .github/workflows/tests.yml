@@ -202,12 +202,12 @@ jobs: # Docs: <https://help.github.com/en/articles/workflow-syntax-for-github-ac
         uses: actions/checkout@v3
 
       - name: Create docker network
-        run: docker network create "app-network"
+        run: docker network create "web"
 
       - name: Start mysql server
         run: |
           docker run --rm -d \
-            --network "app-network" \
+            --network "web" \
             --name=mysql \
             -p "3306:3306" \
             -e "MYSQL_DATABASE=forge" \
@@ -219,7 +219,7 @@ jobs: # Docs: <https://help.github.com/en/articles/workflow-syntax-for-github-ac
       - name: Start redis server
         run: |
           docker run --rm -d \
-            --network "app-network" \
+            --network "web" \
             --name=redis \
             -p "6379/tcp" \
               redis:7-alpine \
@@ -228,7 +228,7 @@ jobs: # Docs: <https://help.github.com/en/articles/workflow-syntax-for-github-ac
       - name: Start elasticsearch server
         run: |
           docker run --rm -d \
-            --network "app-network" \
+            --network "web" \
             --name=elasticsearch \
             -e "ES_JAVA_OPTS=-Xms24m -Xmx24m" \
             -e "xpack.license.self_generated.type=trial" \
@@ -249,10 +249,10 @@ jobs: # Docs: <https://help.github.com/en/articles/workflow-syntax-for-github-ac
         working-directory: .artifact
         run: docker load < docker-image.tar
 
-      - name: Migrate the database
+      - name: Migrating database
         run: |
           docker run --rm \
-            --network "app-network" \
+            --network "web" \
             -e "DB_HOST=mysql" \
             -e "DB_CONNECTION=mysql" \
             -e "DB_DATABASE=forge" \
@@ -264,7 +264,7 @@ jobs: # Docs: <https://help.github.com/en/articles/workflow-syntax-for-github-ac
       - name: Start application queue worker
         run: |
           docker run --rm -d \
-            --network "app-network" \
+            --network "web" \
             -e "REDIS_HOST=redis" \
             -e "REDIS_PASSWORD=redis_password" \
             -e "DB_HOST=mysql" \
@@ -277,7 +277,7 @@ jobs: # Docs: <https://help.github.com/en/articles/workflow-syntax-for-github-ac
       - name: Start application HTTP server
         run: |
           docker run --rm -d \
-            --network "app-network" \
+            --network "web" \
             -p "8080:8080/tcp" \
             -p "8443:8443/tcp" \
             -e "REDIS_HOST=redis" \
