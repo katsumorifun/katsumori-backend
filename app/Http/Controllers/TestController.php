@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Contracts\Cache\Repository as CacheRepository;
 use Illuminate\Contracts\Filesystem\Filesystem;
@@ -19,6 +20,43 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class TestController extends \Illuminate\Routing\Controller
 {
+    /**
+     * Test database reading/writing using eloquent model.
+     *
+     * @return JsonResponse
+     */
+    public function database(): JsonResponse
+    {
+        $started_at    = \microtime(true);
+        $memory_bytes  = \memory_get_usage();
+        $random_string = Str::random();
+
+        $user           = new User();
+        $user->name     = "foo_${random_string}";
+        $user->email    = "foo_${random_string}@example.com";
+        $user->password = 'bar';
+
+        if (!$user->save()) {
+            return new JsonResponse([
+                'success' => false,
+                'error'   => 'cannot save the model',
+            ], 500);
+        }
+
+        if (!$user->delete()) {
+            return new JsonResponse([
+                'success' => false,
+                'error'   => 'cannot delete the model',
+            ], 500);
+        }
+
+        return new JsonResponse([
+            'success'      => true,
+            'duration_sec' => \microtime(true) - $started_at,
+            'memory_bytes' => \memory_get_usage() - $memory_bytes,
+        ]);
+    }
+
     /**
      * Test queue job dispatching and processing.
      *

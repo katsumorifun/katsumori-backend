@@ -29,6 +29,9 @@ Route::get('/email/verify/{user_id}/{hash}', [\App\Http\Controllers\Auth\VerifyE
  * @deprecated Remove this routes group
  */
 Route::prefix('test')->group(static function () {
+    Route::get('/database', [\App\Http\Controllers\TestController::class, 'database'])
+        ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+
     Route::get('/queue', [\App\Http\Controllers\TestController::class, 'queue'])
         ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
 
