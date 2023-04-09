@@ -27,13 +27,13 @@ class TestController extends \Illuminate\Routing\Controller
      */
     public function database(): JsonResponse
     {
-        $started_at    = \microtime(true);
-        $memory_bytes  = \memory_get_usage();
+        $started_at = \microtime(true);
+        $memory_bytes = \memory_get_usage();
         $random_string = Str::random();
 
-        $user           = new User();
-        $user->name     = "foo_${random_string}";
-        $user->email    = "foo_${random_string}@example.com";
+        $user = new User();
+        $user->name = "foo_${random_string}";
+        $user->email = "foo_${random_string}@example.com";
         $user->password = 'bar';
 
         if (!$user->save()) {
