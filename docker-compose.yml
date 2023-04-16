@@ -1,191 +1,125 @@
-version: '3'
+# Docker-compose file is used only for local development. This is not production-ready example.
+
+version: '3.8'
 
 networks:
   web:
     external: true
 
+volumes:
+  mysql-data: {}
+  redis-data: {}
+  tmp-data: {}
+  elastic-data: {}
+
 services:
-  katsumori:
+  app: &app
     build:
-      context: ./dockerfiles
-      dockerfile: nginxunit.dockerfile
-      args:
-        - UID=${_UID:-1000}
-        - GID=${GID:-1000}
-    container_name: nginx
-    ports:
-      - "8080:8080"
-      - "8081:8081"
+      context: .
+      dockerfile: Dockerfile
+    user: "${APP_UID:-10001}:${APP_GID:-10001}"
+    environment:
+      PS1: '\[\033[1;32m\]\[\033[1;36m\][\u@\h] \[\033[1;34m\]\w\[\033[0;35m\] \[\033[1;36m\]# \[\033[0m\]'
+      HOME: /tmp
+      APP_DEBUG: 'true'
+      APP_ENV: local
+      REDIS_HOST: redis
+      REDIS_PASSWORD: redis_password
+      DB_HOST: mysql
+      DB_CONNECTION: mysql
+      DB_DATABASE: forge
+      DB_USERNAME: forge
+      DB_PASSWORD: forge
+      ELASTICSEARCH_ENABLED: true
+      ELASTICSEARCH_HOSTS: elasticsearch:9200
+      ELASTICSEARCH_SCHEME: http
+      ELASTICSEARCH_USER: elastic
     volumes:
-      - ./src:/var/www/html:delegated
-      - ./dockerfiles/configs/nginxunit/:/docker-entrypoint.d/
-#      - ./dockerfiles/logs/unit.log:/var/log/unit.log
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/group:/etc/group:ro
+      - tmp-data:/tmp:rw
+      - .:/app:rw
     depends_on:
-      - redis
-      - mysql
-      - schedule
-      - elasticsearch
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=web"
-      - "traefik.http.routers.katsumori-backend.rule=Host(`api.katsumori.fun`)"
-      - "traefik.http.routers.katsumori-backend.entrypoints=websecure"
-      - "traefik.http.routers.katsumori-backend.service=katsumori-backend"
-      - "traefik.http.services.katsumori-backend.loadbalancer.server.port=8081"
-      - "traefik.backend=katsumori.katsumori-backend.katsumori.fun"
+      mysql: {condition: service_healthy}
+      redis: {condition: service_healthy}
+      elasticsearch: {condition: service_healthy}
     networks:
       - web
 
-  mysql:
-    image: mariadb:10.8.2-rc-focal
-    container_name: mysql
-    restart: unless-stopped
-    tty: true
+  web:
+    <<: *app
+    command: rr serve -c .rr.local.yaml
     ports:
-      - 3306:3306
+      - '8080:8080/tcp'
+      - '8443:8443/tcp'
+    healthcheck:
+      test: ['CMD-SHELL', 'wget --spider -q "http://127.0.0.1:8082/health?plugin=http&plugin=rpc"']
+      interval: 2s
+      timeout: 2s
+    networks:
+      - web
+
+  queue:
+    <<: *app
+    command: php /app/artisan queue:work --memory=256 --sleep=1
+
+  cron:
+    <<: *app
+    command: supercronic /etc/supercronic/laravel # it runs artisan schedule:run
+
+  mysql:
+    image: mariadb:10.8.2-rc-focal # Image page: <https://hub.docker.com/_/mariadb>
+    tty: true
     environment:
-      MYSQL_DATABASE: katsumori
-      MYSQL_USER: ${MYSQL_USER:-Laravel}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-password}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-password}
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
-    labels:
-      - traefik.enable=false
+      MYSQL_DATABASE: forge
+      MYSQL_USER: forge
+      MYSQL_PASSWORD: forge
+      MYSQL_ROOT_PASSWORD: forge
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck: # Healthcheck docs: <https://docs.docker.com/engine/reference/builder/#healthcheck>
+      test: ["CMD", 'mysqladmin', 'ping', '-u', 'root', '-p$$MYSQL_ROOT_PASSWORD' ]
+      interval: 25s
+      timeout: 15s
+      start_period: 10s
+    networks:
+      - web
+
+  redis:
+    image: redis:7-alpine # Image page: <https://hub.docker.com/_/redis>
+    command: redis-server --requirepass redis_password
+    volumes:
+      - redis-data:/data:rw
+    ports:
+      - '6379/tcp'
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 500ms
+      timeout: 1s
     networks:
       - web
 
   elasticsearch:
-    image: elasticsearch:8.4.3
+    image: elasticsearch:8.4.3 # Image page: <https://registry.hub.docker.com/_/elasticsearch>
     volumes:
-      - ./dockerfiles/configs/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,z
-      - elasticsearch:/usr/share/elasticsearch/data:z
+      - elastic-data:/usr/share/elasticsearch/data:z
     ports:
       - "9200:9200"
       - "9300:9300"
     environment:
       ES_JAVA_OPTS: -Xms1512m -Xmx1512m
-      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-password} # Password for the 'elastic' user
+      ELASTIC_PASSWORD: forge # Password for the 'elastic' user
       discovery.type: single-node
-    labels:
-      - traefik.enable=false
+      xpack.license.self_generated.type: trial
+      xpack.security.enabled: false
+      cluster.name: "docker-cluster"
+      network.host: 0.0.0.0
+    healthcheck:
+      test: curl -u elastic:elastic -s -f elasticsearch:9200/_cat/health >/dev/null || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 5
     networks:
       - web
-
-  mysql_testing:
-    image: mariadb:10.8.2-rc-focal
-    container_name: mysql_testing
-    restart: unless-stopped
-    tty: true
-    ports:
-      - 3307:3307
-    environment:
-      MYSQL_DATABASE: yukidub_testing
-      MYSQL_USER: testing
-      MYSQL_PASSWORD: password
-      MYSQL_ROOT_PASSWORD: password
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
-      MYSQL_TCP_PORT: 3307
-    labels:
-      - traefik.enable=false
-    networks:
-      - web
-
-  redis:
-    image: redis:alpine
-    container_name: redis
-    restart: unless-stopped
-    ports:
-      - "6379:6379"
-    labels:
-      - traefik.enable=false
-    networks:
-      - web
-
-  composer:
-    build:
-      context: ./dockerfiles
-      dockerfile: composer.dockerfile
-      args:
-        - UID=${_UID:-1000}
-        - GID=${GID:-1000}
-    container_name: composer
-    volumes:
-      - ./src:/var/www/html
-    working_dir: /var/www/html
-    user: laravel
-    entrypoint: ['composer', '--ignore-platform-reqs']
-    labels:
-      - traefik.enable=false
-    networks:
-      - web
-
-  npm:
-    image: node:13.7
-    container_name: npm
-    volumes:
-      - ./src:/var/www/html
-    ports:
-      - 3001:3000
-      - 3002:3001
-    working_dir: /var/www/html
-    entrypoint: ['npm']
-    labels:
-      - traefik.enable=false
-    networks:
-      - web
-
-  artisan:
-    build:
-      context: ./dockerfiles
-      dockerfile: nginxunit.dockerfile
-      args:
-        - UID=${_UID:-1000}
-        - GID=${GID:-1000}
-    container_name: artisan
-    volumes:
-      - ./src:/var/www/html:delegated
-    depends_on:
-      - mysql
-    working_dir: /var/www/html
-    entrypoint: ['php', '/var/www/html/artisan']
-    labels:
-      - traefik.enable=false
-    networks:
-      - web
-
-  schedule:
-    build:
-      context: ./dockerfiles
-      dockerfile: nginxunit.dockerfile
-      args:
-        - UID=${_UID:-1000}
-        - GID=${GID:-1000}
-    restart: always
-    command: php artisan schedule:work
-    volumes:
-      - ./src:/var/www/html:delegated
-    labels:
-      - traefik.enable=false
-    networks:
-      - web
-
-  work:
-    build:
-      context: ./dockerfiles
-      dockerfile: nginxunit.dockerfile
-      args:
-        - UID=${_UID:-1000}
-        - GID=${GID:-1000}
-    restart: always
-    command: php artisan queue:work --queue=high,default
-    volumes:
-      - ./src:/var/www/html:delegated
-    labels:
-      - traefik.enable=false
-    networks:
-      - web
-
-volumes:
-  elasticsearch:
