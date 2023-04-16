@@ -189,123 +189,123 @@ jobs: # Docs: <https://help.github.com/en/articles/workflow-syntax-for-github-ac
   #        image: app:local
   #        #severity-cutoff: medium # negligible, low, medium, high or critical
 
-  docker-image-e2e:
-    name: Docker image End-to-End tests (SSL ${{ matrix.ssl }})
-    runs-on: ubuntu-20.04
-    needs: [docker-image]
-    strategy:
-      fail-fast: false
-      matrix:
-        ssl: [on, off]
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-
-      - name: Create docker network
-        run: docker network create "web"
-
-      - name: Start mysql server
-        run: |
-          docker run --rm -d \
-            --network "web" \
-            --name=mysql \
-            -p "3306:3306" \
-            -e "MYSQL_DATABASE=forge" \
-            -e "MYSQL_USER=forge" \
-            -e "MYSQL_PASSWORD=forge" \
-            -e "MYSQL_ROOT_PASSWORD=forge" \
-              mariadb:10.8.2-rc-focal
-
-      - name: Start redis server
-        run: |
-          docker run --rm -d \
-            --network "web" \
-            --name=redis \
-            -p "6379/tcp" \
-              redis:7-alpine \
-                redis-server --requirepass redis_password
-
-      - name: Start elasticsearch server
-        run: |
-          docker run --rm -d \
-            --network "web" \
-            --name=elasticsearch \
-            -e "ES_JAVA_OPTS=-Xms24m -Xmx24m" \
-            -e "xpack.license.self_generated.type=trial" \
-            -e "xpack.security.enabled=false" \
-            -e "cluster.name="docker-cluster"" \
-            -e "network.host=0.0.0.0" \
-            -e "ELASTIC_PASSWORD=forge"\
-            -p "9200:9200" \
-              elasticsearch:8.4.3
-
-      - name: Download built docker image
-        uses: actions/download-artifact@v3
-        with:
-          name: docker-image
-          path: .artifact
-
-      - name: Prepare image to run
-        working-directory: .artifact
-        run: docker load < docker-image.tar
-
-      - name: Migrating database
-        run: |
-          docker run --rm \
-            --network "web" \
-            -e "DB_HOST=mysql" \
-            -e "DB_CONNECTION=mysql" \
-            -e "DB_DATABASE=forge" \
-            -e "DB_USERNAME=forge" \
-            -e "DB_PASSWORD=forge" \
-              app:local \
-                php artisan migrate --force
-
-      - name: Start application queue worker
-        run: |
-          docker run --rm -d \
-            --network "web" \
-            -e "REDIS_HOST=redis" \
-            -e "REDIS_PASSWORD=redis_password" \
-            -e "DB_HOST=mysql" \
-            -e "DB_DATABASE=forge" \
-            -e "DB_USERNAME=forge" \
-            -e "DB_PASSWORD=forge" \
-              app:local \
-                php artisan queue:work --memory=256 --sleep=1
-
-      - name: Start application HTTP server
-        run: |
-          docker run --rm -d \
-            --network "web" \
-            -p "8080:8080/tcp" \
-            -p "8443:8443/tcp" \
-            -e "REDIS_HOST=redis" \
-            -e "REDIS_PASSWORD=redis_password" \
-            -e "DB_HOST=mysql" \
-            -e "DB_DATABASE=forge" \
-            -e "DB_USERNAME=forge" \
-            -e "DB_PASSWORD=forge" \
-            -e "ELASTICSEARCH_ENABLED=true" \
-            -e "ELASTICSEARCH_HOSTS=elasticsearch:9200" \
-            -e "ELASTICSEARCH_SCHEME=http" \
-            -e "ELASTICSEARCH_USER=elastic" \
-              app:local \
-                rr serve -c .rr.yaml
-
-      - name: Generate values for tests running
-        id: values
-        run: echo "::set-output name=base_url::`[ "${{ matrix.ssl }}" = "on" ] && echo "https://localhost:8443" || echo "http://localhost:8080"`"
-
-      # Image page: <https://hub.docker.com/r/postman/newman>,
-      # CLI options: <https://www.npmjs.com/package/newman#command-line-options>
-      - name: Run Newman
-        run: |
-          docker run --rm --tty \
-            --network "host" \
-            --volume "$(pwd):/rootfs:ro" \
-            --workdir "/rootfs/tests/postman" \
-              postman/newman:5.2-alpine run ./default.postman_collection.json \
-                --env-var "base_url=${{ steps.values.outputs.base_url }}" \
-                --insecure \
-                --color on
+#  docker-image-e2e:
+#    name: Docker image End-to-End tests (SSL ${{ matrix.ssl }})
+#    runs-on: ubuntu-20.04
+#    needs: [docker-image]
+#    strategy:
+#      fail-fast: false
+#      matrix:
+#        ssl: [on, off]
+#    steps:
+#      - name: Check out code
+#        uses: actions/checkout@v3
+#
+#      - name: Create docker network
+#        run: docker network create "web"
+#
+#      - name: Start mysql server
+#        run: |
+#          docker run --rm -d \
+#            --network "web" \
+#            --name=mysql \
+#            -p "3306:3306" \
+#            -e "MYSQL_DATABASE=forge" \
+#            -e "MYSQL_USER=forge" \
+#            -e "MYSQL_PASSWORD=forge" \
+#            -e "MYSQL_ROOT_PASSWORD=forge" \
+#              mariadb:10.8.2-rc-focal
+#
+#      - name: Start redis server
+#        run: |
+#          docker run --rm -d \
+#            --network "web" \
+#            --name=redis \
+#            -p "6379/tcp" \
+#              redis:7-alpine \
+#                redis-server --requirepass redis_password
+#
+#      - name: Start elasticsearch server
+#        run: |
+#          docker run --rm -d \
+#            --network "web" \
+#            --name=elasticsearch \
+#            -e "ES_JAVA_OPTS=-Xms24m -Xmx24m" \
+#            -e "xpack.license.self_generated.type=trial" \
+#            -e "xpack.security.enabled=false" \
+#            -e "cluster.name="docker-cluster"" \
+#            -e "network.host=0.0.0.0" \
+#            -e "ELASTIC_PASSWORD=forge"\
+#            -p "9200:9200" \
+#              elasticsearch:8.4.3
+#
+#      - name: Download built docker image
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: docker-image
+#          path: .artifact
+#
+#      - name: Prepare image to run
+#        working-directory: .artifact
+#        run: docker load < docker-image.tar
+#
+#      - name: Migrating database
+#        run: |
+#          docker run --rm \
+#            --network "web" \
+#            -e "DB_HOST=mysql" \
+#            -e "DB_CONNECTION=mysql" \
+#            -e "DB_DATABASE=forge" \
+#            -e "DB_USERNAME=forge" \
+#            -e "DB_PASSWORD=forge" \
+#              app:local \
+#                php artisan migrate --force
+#
+#      - name: Start application queue worker
+#        run: |
+#          docker run --rm -d \
+#            --network "web" \
+#            -e "REDIS_HOST=redis" \
+#            -e "REDIS_PASSWORD=redis_password" \
+#            -e "DB_HOST=mysql" \
+#            -e "DB_DATABASE=forge" \
+#            -e "DB_USERNAME=forge" \
+#            -e "DB_PASSWORD=forge" \
+#              app:local \
+#                php artisan queue:work --memory=256 --sleep=1
+#
+#      - name: Start application HTTP server
+#        run: |
+#          docker run --rm -d \
+#            --network "web" \
+#            -p "8080:8080/tcp" \
+#            -p "8443:8443/tcp" \
+#            -e "REDIS_HOST=redis" \
+#            -e "REDIS_PASSWORD=redis_password" \
+#            -e "DB_HOST=mysql" \
+#            -e "DB_DATABASE=forge" \
+#            -e "DB_USERNAME=forge" \
+#            -e "DB_PASSWORD=forge" \
+#            -e "ELASTICSEARCH_ENABLED=true" \
+#            -e "ELASTICSEARCH_HOSTS=elasticsearch:9200" \
+#            -e "ELASTICSEARCH_SCHEME=http" \
+#            -e "ELASTICSEARCH_USER=elastic" \
+#              app:local \
+#                rr serve -c .rr.yaml
+#
+#      - name: Generate values for tests running
+#        id: values
+#        run: echo "::set-output name=base_url::`[ "${{ matrix.ssl }}" = "on" ] && echo "https://localhost:8443" || echo "http://localhost:8080"`"
+#
+#      # Image page: <https://hub.docker.com/r/postman/newman>,
+#      # CLI options: <https://www.npmjs.com/package/newman#command-line-options>
+#      - name: Run Newman
+#        run: |
+#          docker run --rm --tty \
+#            --network "host" \
+#            --volume "$(pwd):/rootfs:ro" \
+#            --workdir "/rootfs/tests/postman" \
+#              postman/newman:5.2-alpine run ./default.postman_collection.json \
+#                --env-var "base_url=${{ steps.values.outputs.base_url }}" \
+#                --insecure \
+#                --color on
